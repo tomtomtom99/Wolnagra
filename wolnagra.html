@@ -1,0 +1,1517 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WolnaGra — Wolność zaczyna się tutaj</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF4;
+    --sand: #E8DCC8;
+    --sage: #7A9E7E;
+    --sage-dark: #5C7A60;
+    --sage-light: #A8C5AC;
+    --earth: #8B6E4E;
+    --earth-light: #C4A882;
+    --text-dark: #2C2416;
+    --text-mid: #5C4A32;
+    --text-light: #8B7355;
+    --accent: #C17B3A;
+    --danger: #C0392B;
+    --white: #FFFFFF;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Lato’, sans-serif;
+background: var(–cream);
+color: var(–text-dark);
+overflow-x: hidden;
+}
+
+/* ─── NAV ─── */
+nav {
+position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+background: rgba(245,240,232,0.95);
+backdrop-filter: blur(10px);
+border-bottom: 1px solid var(–sand);
+padding: 0 24px;
+height: 64px;
+display: flex; align-items: center; justify-content: space-between;
+}
+
+.nav-logo {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.5rem;
+font-weight: 900;
+color: var(–sage-dark);
+text-decoration: none;
+display: flex; align-items: center; gap: 8px;
+}
+
+.nav-logo span { color: var(–accent); }
+
+.nav-links {
+display: flex; gap: 8px; align-items: center;
+}
+
+.nav-link {
+font-size: 0.85rem;
+color: var(–text-mid);
+text-decoration: none;
+padding: 6px 14px;
+border-radius: 20px;
+transition: all 0.2s;
+font-weight: 700;
+letter-spacing: 0.03em;
+text-transform: uppercase;
+}
+
+.nav-link:hover { background: var(–sand); color: var(–text-dark); }
+
+.nav-cta {
+background: var(–sage);
+color: white !important;
+padding: 8px 18px !important;
+}
+
+.nav-cta:hover { background: var(–sage-dark) !important; }
+
+.lang-toggle {
+display: flex; gap: 4px;
+background: var(–sand);
+border-radius: 20px;
+padding: 3px;
+}
+
+.lang-btn {
+padding: 4px 10px;
+border-radius: 16px;
+border: none;
+background: transparent;
+font-size: 0.75rem;
+font-weight: 700;
+cursor: pointer;
+color: var(–text-light);
+transition: all 0.2s;
+font-family: ‘Lato’, sans-serif;
+}
+
+.lang-btn.active {
+background: var(–white);
+color: var(–sage-dark);
+box-shadow: 0 1px 4px rgba(0,0,0,0.1);
+}
+
+/* ─── HERO ─── */
+.hero {
+min-height: 100vh;
+display: flex; align-items: center;
+padding: 100px 24px 60px;
+position: relative;
+overflow: hidden;
+}
+
+.hero-bg {
+position: absolute; inset: 0;
+background:
+radial-gradient(ellipse 80% 60% at 70% 40%, rgba(122,158,126,0.12) 0%, transparent 60%),
+radial-gradient(ellipse 60% 80% at 20% 70%, rgba(193,123,58,0.08) 0%, transparent 50%),
+var(–warm-white);
+}
+
+.hero-texture {
+position: absolute; inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg width=‘60’ height=‘60’ viewBox=‘0 0 60 60’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=‘none’ fill-rule=‘evenodd’%3E%3Cg fill=’%237A9E7E’ fill-opacity=‘0.04’%3E%3Ccircle cx=‘30’ cy=‘30’ r=‘2’/%3E%3C/g%3E%3C/g%3E%3C/svg%3E”);
+}
+
+.hero-content {
+position: relative; z-index: 1;
+max-width: 680px;
+animation: fadeUp 0.8s ease both;
+}
+
+@keyframes fadeUp {
+from { opacity: 0; transform: translateY(30px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.hero-badge {
+display: inline-flex; align-items: center; gap: 8px;
+background: var(–sage-light);
+color: var(–sage-dark);
+padding: 6px 16px;
+border-radius: 20px;
+font-size: 0.8rem;
+font-weight: 700;
+letter-spacing: 0.05em;
+text-transform: uppercase;
+margin-bottom: 24px;
+}
+
+.hero-badge::before {
+content: ‘🌿’;
+}
+
+h1 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(2.4rem, 6vw, 4rem);
+font-weight: 900;
+line-height: 1.1;
+color: var(–text-dark);
+margin-bottom: 20px;
+}
+
+h1 em {
+font-style: italic;
+color: var(–sage-dark);
+}
+
+.hero-sub {
+font-size: 1.1rem;
+color: var(–text-mid);
+line-height: 1.7;
+margin-bottom: 36px;
+font-weight: 300;
+max-width: 520px;
+}
+
+.hero-actions {
+display: flex; flex-wrap: wrap; gap: 12px;
+}
+
+.btn {
+display: inline-flex; align-items: center; gap: 8px;
+padding: 14px 28px;
+border-radius: 40px;
+font-size: 0.95rem;
+font-weight: 700;
+text-decoration: none;
+border: none;
+cursor: pointer;
+transition: all 0.25s;
+font-family: ‘Lato’, sans-serif;
+}
+
+.btn-primary {
+background: var(–sage);
+color: white;
+box-shadow: 0 4px 20px rgba(122,158,126,0.4);
+}
+
+.btn-primary:hover {
+background: var(–sage-dark);
+transform: translateY(-2px);
+box-shadow: 0 6px 24px rgba(122,158,126,0.5);
+}
+
+.btn-secondary {
+background: transparent;
+color: var(–text-mid);
+border: 2px solid var(–sand);
+}
+
+.btn-secondary:hover {
+background: var(–sand);
+color: var(–text-dark);
+transform: translateY(-2px);
+}
+
+.hero-stats {
+display: flex; gap: 32px; flex-wrap: wrap;
+margin-top: 48px;
+padding-top: 40px;
+border-top: 1px solid var(–sand);
+}
+
+.stat { text-align: center; }
+
+.stat-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 2rem;
+font-weight: 900;
+color: var(–sage-dark);
+display: block;
+}
+
+.stat-label {
+font-size: 0.8rem;
+color: var(–text-light);
+text-transform: uppercase;
+letter-spacing: 0.05em;
+font-weight: 700;
+}
+
+.hero-image-area {
+position: absolute; right: 5%; top: 50%;
+transform: translateY(-50%);
+width: 340px; height: 420px;
+display: none;
+}
+
+@media (min-width: 900px) { .hero-image-area { display: block; } }
+
+.hero-card {
+position: absolute;
+background: white;
+border-radius: 20px;
+padding: 20px;
+box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+border: 1px solid var(–sand);
+animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+0%, 100% { transform: translateY(0); }
+50% { transform: translateY(-10px); }
+}
+
+.hero-card-1 { top: 30px; left: 0; width: 200px; animation-delay: 0s; }
+.hero-card-2 { bottom: 40px; right: 0; width: 220px; animation-delay: 2s; }
+.hero-card-3 { top: 50%; left: 60%; transform: translateX(-50%); width: 180px; animation-delay: 4s; }
+
+.card-icon { font-size: 1.5rem; margin-bottom: 8px; }
+.card-title { font-size: 0.75rem; font-weight: 700; color: var(–text-light); text-transform: uppercase; letter-spacing: 0.05em; }
+.card-value { font-family: ‘Playfair Display’, serif; font-size: 1.4rem; font-weight: 900; color: var(–sage-dark); }
+.card-sub { font-size: 0.7rem; color: var(–text-light); margin-top: 2px; }
+
+/* ─── SECTIONS ─── */
+section {
+padding: 80px 24px;
+max-width: 1100px;
+margin: 0 auto;
+}
+
+.section-label {
+font-size: 0.75rem;
+font-weight: 700;
+letter-spacing: 0.12em;
+text-transform: uppercase;
+color: var(–accent);
+margin-bottom: 12px;
+}
+
+h2 {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.8rem, 4vw, 2.8rem);
+font-weight: 900;
+color: var(–text-dark);
+line-height: 1.2;
+margin-bottom: 16px;
+}
+
+h2 em { font-style: italic; color: var(–sage-dark); }
+
+.section-desc {
+font-size: 1rem;
+color: var(–text-mid);
+line-height: 1.7;
+max-width: 600px;
+margin-bottom: 48px;
+font-weight: 300;
+}
+
+/* ─── FEATURES ─── */
+.features-bg {
+background: var(–warm-white);
+padding: 80px 0;
+width: 100%;
+}
+
+.features-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 24px;
+}
+
+.features-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+gap: 20px;
+margin-top: 48px;
+}
+
+.feature-card {
+background: white;
+border-radius: 20px;
+padding: 32px;
+border: 1px solid var(–sand);
+transition: all 0.3s;
+position: relative;
+overflow: hidden;
+}
+
+.feature-card::before {
+content: ‘’;
+position: absolute;
+top: 0; left: 0; right: 0;
+height: 3px;
+background: var(–sage);
+transform: scaleX(0);
+transition: transform 0.3s;
+transform-origin: left;
+}
+
+.feature-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(0,0,0,0.08); }
+.feature-card:hover::before { transform: scaleX(1); }
+
+.feature-icon {
+width: 52px; height: 52px;
+background: var(–cream);
+border-radius: 14px;
+display: flex; align-items: center; justify-content: center;
+font-size: 1.5rem;
+margin-bottom: 20px;
+}
+
+.feature-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.2rem;
+font-weight: 700;
+color: var(–text-dark);
+margin-bottom: 10px;
+}
+
+.feature-desc {
+font-size: 0.9rem;
+color: var(–text-light);
+line-height: 1.65;
+}
+
+/* ─── DIARY PREVIEW ─── */
+.diary-section {
+display: grid;
+grid-template-columns: 1fr 1fr;
+gap: 60px;
+align-items: center;
+}
+
+@media (max-width: 700px) { .diary-section { grid-template-columns: 1fr; gap: 32px; } }
+
+.diary-mockup {
+background: white;
+border-radius: 24px;
+padding: 28px;
+box-shadow: 0 16px 60px rgba(0,0,0,0.1);
+border: 1px solid var(–sand);
+}
+
+.diary-header {
+display: flex; align-items: center; justify-content: space-between;
+margin-bottom: 20px;
+padding-bottom: 16px;
+border-bottom: 1px solid var(–sand);
+}
+
+.diary-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.1rem;
+font-weight: 700;
+}
+
+.diary-streak {
+display: flex; align-items: center; gap: 6px;
+background: var(–cream);
+padding: 6px 12px;
+border-radius: 12px;
+font-size: 0.8rem;
+font-weight: 700;
+color: var(–sage-dark);
+}
+
+.diary-entry {
+background: var(–cream);
+border-radius: 14px;
+padding: 16px;
+margin-bottom: 12px;
+}
+
+.entry-date {
+font-size: 0.7rem;
+color: var(–text-light);
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+margin-bottom: 6px;
+}
+
+.entry-mood {
+display: flex; gap: 6px; margin-bottom: 10px;
+}
+
+.mood-dot {
+width: 10px; height: 10px;
+border-radius: 50%;
+cursor: pointer;
+transition: transform 0.2s;
+}
+
+.mood-dot:hover { transform: scale(1.3); }
+.mood-1 { background: #e74c3c; }
+.mood-2 { background: #e67e22; }
+.mood-3 { background: #f1c40f; }
+.mood-4 { background: #2ecc71; }
+.mood-5 { background: #27ae60; }
+
+.entry-text {
+font-size: 0.85rem;
+color: var(–text-mid);
+line-height: 1.6;
+font-style: italic;
+}
+
+.diary-add-btn {
+width: 100%;
+padding: 12px;
+border: 2px dashed var(–sand);
+border-radius: 12px;
+background: transparent;
+color: var(–text-light);
+font-size: 0.85rem;
+cursor: pointer;
+transition: all 0.2s;
+font-family: ‘Lato’, sans-serif;
+font-weight: 700;
+}
+
+.diary-add-btn:hover {
+background: var(–cream);
+border-color: var(–sage-light);
+color: var(–sage-dark);
+}
+
+/* ─── STORIES ─── */
+.stories-bg {
+background: linear-gradient(135deg, var(–sage-dark) 0%, #3D5E40 100%);
+padding: 80px 0;
+width: 100%;
+}
+
+.stories-inner {
+max-width: 1100px;
+margin: 0 auto;
+padding: 0 24px;
+}
+
+.stories-bg h2 { color: white; }
+.stories-bg .section-label { color: var(–sage-light); }
+.stories-bg .section-desc { color: rgba(255,255,255,0.7); }
+
+.stories-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+gap: 20px;
+margin-top: 48px;
+}
+
+.story-card {
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.15);
+border-radius: 20px;
+padding: 28px;
+backdrop-filter: blur(10px);
+transition: all 0.3s;
+}
+
+.story-card:hover {
+background: rgba(255,255,255,0.14);
+transform: translateY(-4px);
+}
+
+.story-avatar {
+width: 52px; height: 52px;
+border-radius: 50%;
+background: var(–sage-light);
+display: flex; align-items: center; justify-content: center;
+font-size: 1.4rem;
+margin-bottom: 16px;
+}
+
+.story-name {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.1rem;
+font-weight: 700;
+color: white;
+margin-bottom: 4px;
+}
+
+.story-meta {
+font-size: 0.75rem;
+color: rgba(255,255,255,0.5);
+margin-bottom: 14px;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+
+.story-text {
+font-size: 0.88rem;
+color: rgba(255,255,255,0.8);
+line-height: 1.7;
+font-style: italic;
+}
+
+.story-days {
+display: inline-flex; align-items: center; gap: 6px;
+margin-top: 16px;
+background: rgba(168,197,172,0.2);
+padding: 6px 14px;
+border-radius: 20px;
+font-size: 0.78rem;
+font-weight: 700;
+color: var(–sage-light);
+}
+
+/* ─── FORUM ─── */
+.forum-mockup {
+background: white;
+border-radius: 24px;
+overflow: hidden;
+box-shadow: 0 16px 60px rgba(0,0,0,0.1);
+border: 1px solid var(–sand);
+}
+
+.forum-header-bar {
+background: var(–sage);
+padding: 16px 24px;
+display: flex; align-items: center; gap: 10px;
+}
+
+.forum-header-bar span {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+font-weight: 700;
+color: white;
+}
+
+.forum-post {
+padding: 20px 24px;
+border-bottom: 1px solid var(–cream);
+transition: background 0.2s;
+cursor: pointer;
+}
+
+.forum-post:hover { background: var(–cream); }
+
+.post-top {
+display: flex; align-items: center; gap: 10px;
+margin-bottom: 8px;
+}
+
+.post-avatar {
+width: 36px; height: 36px;
+border-radius: 50%;
+background: var(–sand);
+display: flex; align-items: center; justify-content: center;
+font-size: 1rem;
+flex-shrink: 0;
+}
+
+.post-author {
+font-weight: 700;
+font-size: 0.88rem;
+color: var(–text-dark);
+}
+
+.post-time {
+font-size: 0.75rem;
+color: var(–text-light);
+margin-left: auto;
+}
+
+.post-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+font-weight: 700;
+color: var(–text-dark);
+margin-bottom: 6px;
+}
+
+.post-preview {
+font-size: 0.83rem;
+color: var(–text-light);
+line-height: 1.5;
+}
+
+.post-tags {
+display: flex; gap: 6px; flex-wrap: wrap;
+margin-top: 10px;
+}
+
+.tag {
+font-size: 0.7rem;
+padding: 3px 10px;
+border-radius: 12px;
+background: var(–cream);
+color: var(–text-light);
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.04em;
+}
+
+.tag-green { background: rgba(122,158,126,0.15); color: var(–sage-dark); }
+.tag-warm { background: rgba(193,123,58,0.12); color: var(–accent); }
+
+/* ─── TASKS ─── */
+.tasks-grid {
+display: grid;
+grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+gap: 16px;
+margin-top: 48px;
+}
+
+.task-card {
+background: white;
+border-radius: 18px;
+padding: 24px;
+border: 1px solid var(–sand);
+display: flex; gap: 16px; align-items: flex-start;
+transition: all 0.3s;
+cursor: pointer;
+}
+
+.task-card:hover {
+box-shadow: 0 8px 30px rgba(0,0,0,0.07);
+transform: translateY(-2px);
+}
+
+.task-num {
+width: 40px; height: 40px;
+border-radius: 12px;
+background: var(–sage);
+color: white;
+display: flex; align-items: center; justify-content: center;
+font-family: ‘Playfair Display’, serif;
+font-size: 1.1rem;
+font-weight: 900;
+flex-shrink: 0;
+}
+
+.task-body {}
+
+.task-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1rem;
+font-weight: 700;
+color: var(–text-dark);
+margin-bottom: 6px;
+}
+
+.task-desc {
+font-size: 0.83rem;
+color: var(–text-light);
+line-height: 1.6;
+}
+
+.task-badge {
+display: inline-block;
+margin-top: 10px;
+font-size: 0.7rem;
+padding: 3px 10px;
+border-radius: 12px;
+background: var(–cream);
+color: var(–text-light);
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.04em;
+}
+
+/* ─── CTA ─── */
+.cta-section {
+text-align: center;
+padding: 100px 24px;
+background: var(–warm-white);
+position: relative;
+overflow: hidden;
+}
+
+.cta-section::before {
+content: ‘’;
+position: absolute;
+top: -100px; left: 50%; transform: translateX(-50%);
+width: 600px; height: 600px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(122,158,126,0.12) 0%, transparent 70%);
+}
+
+.cta-section h2 { position: relative; margin: 0 auto 16px; }
+.cta-section .section-desc { margin: 0 auto 36px; text-align: center; }
+
+/* ─── FOOTER ─── */
+footer {
+background: var(–text-dark);
+color: rgba(255,255,255,0.6);
+padding: 48px 24px 32px;
+}
+
+.footer-inner {
+max-width: 1100px;
+margin: 0 auto;
+display: grid;
+grid-template-columns: 2fr 1fr 1fr;
+gap: 40px;
+margin-bottom: 40px;
+}
+
+@media (max-width: 600px) { .footer-inner { grid-template-columns: 1fr; gap: 24px; } }
+
+.footer-logo {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.6rem;
+font-weight: 900;
+color: white;
+margin-bottom: 12px;
+}
+
+.footer-logo span { color: var(–sage-light); }
+
+.footer-tagline {
+font-size: 0.85rem;
+line-height: 1.6;
+max-width: 280px;
+}
+
+.footer-col-title {
+font-size: 0.75rem;
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+color: white;
+margin-bottom: 16px;
+}
+
+.footer-link {
+display: block;
+font-size: 0.85rem;
+color: rgba(255,255,255,0.5);
+text-decoration: none;
+margin-bottom: 8px;
+transition: color 0.2s;
+}
+
+.footer-link:hover { color: var(–sage-light); }
+
+.footer-bottom {
+max-width: 1100px;
+margin: 0 auto;
+padding-top: 24px;
+border-top: 1px solid rgba(255,255,255,0.08);
+display: flex; justify-content: space-between; align-items: center;
+flex-wrap: wrap; gap: 12px;
+}
+
+.footer-bottom-text { font-size: 0.8rem; }
+
+.crisis-bar {
+background: #C0392B;
+color: white;
+text-align: center;
+padding: 10px 24px;
+font-size: 0.85rem;
+font-weight: 700;
+}
+
+.crisis-bar a { color: white; }
+
+/* ─── TABS ─── */
+.tabs {
+display: flex; gap: 4px;
+background: var(–sand);
+border-radius: 12px;
+padding: 4px;
+width: fit-content;
+margin-bottom: 32px;
+}
+
+.tab {
+padding: 8px 20px;
+border-radius: 8px;
+border: none;
+background: transparent;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.85rem;
+font-weight: 700;
+cursor: pointer;
+color: var(–text-light);
+transition: all 0.2s;
+}
+
+.tab.active {
+background: white;
+color: var(–sage-dark);
+box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+/* ─── PROGRESS BAR ─── */
+.progress-section {
+margin-top: 20px;
+}
+
+.progress-label {
+display: flex; justify-content: space-between;
+font-size: 0.8rem;
+color: var(–text-light);
+font-weight: 700;
+margin-bottom: 8px;
+}
+
+.progress-bar {
+height: 8px;
+background: var(–cream);
+border-radius: 4px;
+overflow: hidden;
+margin-bottom: 12px;
+}
+
+.progress-fill {
+height: 100%;
+background: linear-gradient(90deg, var(–sage-light), var(–sage-dark));
+border-radius: 4px;
+transition: width 1s ease;
+}
+
+/* ─── RESPONSIVE NAV ─── */
+@media (max-width: 600px) {
+.nav-links .nav-link:not(.nav-cta) { display: none; }
+}
+
+/* Animations on scroll */
+.reveal {
+opacity: 0;
+transform: translateY(20px);
+transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.reveal.visible {
+opacity: 1;
+transform: translateY(0);
+}
+
+/* ─── UNIFIED SIDEBAR NAV ─── */
+.sidenav {
+position: fixed; left: 0; top: 0; bottom: 0;
+width: 220px; background: #2C4430; z-index: 200;
+display: flex; flex-direction: column;
+transform: translateX(-100%);
+transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+}
+.sidenav.open { transform: translateX(0); }
+
+.sidenav-logo {
+padding: 20px 18px 16px;
+border-bottom: 1px solid rgba(255,255,255,0.08);
+display: flex; align-items: center; justify-content: space-between;
+}
+
+.sidenav-logo-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.3rem; font-weight: 900; color: white;
+text-decoration: none;
+}
+.sidenav-logo-text span { color: #A8C5AC; }
+
+.sidenav-close {
+width: 28px; height: 28px; border-radius: 8px;
+background: rgba(255,255,255,0.08); border: none;
+color: rgba(255,255,255,0.6); font-size: 0.9rem;
+cursor: pointer; display: flex; align-items: center; justify-content: center;
+transition: all 0.2s;
+}
+.sidenav-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+.sidenav-streak {
+margin: 14px 16px;
+background: rgba(255,255,255,0.06);
+border-radius: 12px; padding: 10px 14px;
+display: flex; align-items: center; gap: 8px;
+}
+.sidenav-streak-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.3rem; font-weight: 900; color: #A8C5AC;
+}
+.sidenav-streak-label {
+font-size: 0.72rem; color: rgba(255,255,255,0.5);
+font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.sidenav-links {
+flex: 1; padding: 8px 10px; overflow-y: auto;
+}
+
+.sidenav-section {
+font-size: 0.62rem; font-weight: 700;
+text-transform: uppercase; letter-spacing: 0.1em;
+color: rgba(255,255,255,0.3); padding: 12px 8px 6px;
+}
+
+.sidenav-link {
+display: flex; align-items: center; gap: 10px;
+padding: 10px 10px; border-radius: 10px;
+text-decoration: none; color: rgba(255,255,255,0.65);
+font-size: 0.88rem; font-weight: 700;
+transition: all 0.2s; margin-bottom: 2px;
+cursor: pointer; border: none; background: none;
+font-family: ‘Lato’, sans-serif; width: 100%; text-align: left;
+}
+
+.sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+.sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
+
+.sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+.sidenav-bottom {
+padding: 14px 10px;
+border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidenav-crisis {
+display: flex; align-items: center; gap: 8px;
+padding: 10px 12px; border-radius: 10px;
+background: rgba(192,57,43,0.2); color: #E88080;
+text-decoration: none; font-size: 0.82rem; font-weight: 700;
+transition: all 0.2s; margin-bottom: 8px;
+}
+.sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
+
+.sidenav-logout {
+display: flex; align-items: center; gap: 8px;
+padding: 8px 12px; border-radius: 10px;
+color: rgba(255,255,255,0.35); font-size: 0.8rem; font-weight: 700;
+cursor: pointer; transition: all 0.2s; border: none; background: none;
+font-family: ‘Lato’, sans-serif; width: 100%;
+}
+.sidenav-logout:hover { color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.05); }
+
+/* Hamburger button */
+.hamburger {
+position: fixed; top: 14px; left: 14px; z-index: 199;
+width: 36px; height: 36px; border-radius: 10px;
+background: #5C7A60; border: none; cursor: pointer;
+display: flex; flex-direction: column; align-items: center;
+justify-content: center; gap: 4px; transition: all 0.2s;
+box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.hamburger:hover { background: #3D5E40; }
+.hamburger span {
+display: block; width: 16px; height: 2px;
+background: white; border-radius: 2px; transition: all 0.3s;
+}
+
+/* Overlay */
+.nav-overlay {
+position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+z-index: 199; display: none;
+backdrop-filter: blur(2px);
+}
+.nav-overlay.open { display: block; }
+
+/* Push topbar right when nav open on desktop */
+@media (min-width: 900px) {
+.sidenav { transform: translateX(-100%); }
+.hamburger { display: flex; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Sidebar Nav -->
+
+  <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+
+  <nav class="sidenav" id="sidenav">
+    <div class="sidenav-logo">
+      <a href="/wolnagra.html" class="sidenav-logo-text">Wolna<span>Gra</span></a>
+      <button class="sidenav-close" onclick="closeNav()">✕</button>
+    </div>
+    <div class="sidenav-streak">
+      <span class="sidenav-streak-num">47</span>
+      <div>
+        <div style="color:white;font-size:0.78rem;font-weight:700;">🔥 dni bez hazardu</div>
+        <div class="sidenav-streak-label">Twoja passa</div>
+      </div>
+    </div>
+    <div class="sidenav-links">
+      <div class="sidenav-section">Główne</div>
+      <a href="/wolnagra.html" class="sidenav-link active"><span class="sidenav-link-icon">🏠</span> Strona główna</a>
+      <a href="/wolnagra-dziennik.html" class="sidenav-link "><span class="sidenav-link-icon">📓</span> Mój Dziennik</a>
+      <a href="/wolnagra-zadania.html" class="sidenav-link "><span class="sidenav-link-icon">✅</span> Zadania dnia</a>
+      <a href="/wolnagra-historie.html" class="sidenav-link "><span class="sidenav-link-icon">📚</span> Historie</a>
+      <div class="sidenav-section">Wsparcie</div>
+      <a href="/wolnagra-kryzys.html" class="sidenav-link "><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
+      <a href="/wolnagra-auth.html" class="sidenav-link "><span class="sidenav-link-icon">👤</span> Mój profil</a>
+    </div>
+    <div class="sidenav-bottom">
+      <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
+      <button class="sidenav-logout" onclick="alert('Wylogowuję...')">← Wyloguj się</button>
+    </div>
+  </nav>
+
+  <button class="hamburger" id="hamburger" onclick="openNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+<!-- Crisis Bar -->
+
+<div class="crisis-bar">
+  🆘 Potrzebujesz pomocy teraz? Zadzwoń: <a href="tel:116123">116 123</a> (Telefon Zaufania) | Need help now? Call: <a href="tel:116123">116 123</a>
+</div>
+
+<!-- Navigation -->
+
+<nav>
+  <a href="#" class="nav-logo">Wolna<span>Gra</span></a>
+  <div style="display:flex;align-items:center;gap:12px;">
+    <div class="lang-toggle">
+      <button class="lang-btn active" onclick="setLang('pl')">PL</button>
+      <button class="lang-btn" onclick="setLang('en')">EN</button>
+    </div>
+    <div class="nav-links">
+      <a href="#features" class="nav-link" data-pl="Funkcje" data-en="Features">Funkcje</a>
+      <a href="#stories" class="nav-link" data-pl="Historie" data-en="Stories">Historie</a>
+      <a href="#forum" class="nav-link" data-pl="Forum" data-en="Forum">Forum</a>
+      <a href="#register" class="nav-link nav-cta" data-pl="Dołącz" data-en="Join us">Dołącz</a>
+    </div>
+  </div>
+</nav>
+
+<!-- Hero -->
+
+<div class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-texture"></div>
+  <div class="hero-content">
+    <div class="hero-badge" data-pl="Bezpieczna przestrzeń do zdrowienia" data-en="A safe space for recovery">Bezpieczna przestrzeń do zdrowienia</div>
+    <h1 data-pl="Pierwszy krok<br>do <em>wolności</em><br>zaczyna się tutaj." data-en="Your first step<br>to <em>freedom</em><br>starts here.">Pierwszy krok<br>do <em>wolności</em><br>zaczyna się tutaj.</h1>
+    <p class="hero-sub" data-pl="WolnaGra to miejsce bez oceniania. Prowadź swój dziennik, czytaj prawdziwe historie, rozmawiaj z ludźmi którzy rozumieją — i wracaj do siebie, dzień po dniu." data-en="WolnaGra is a place without judgment. Keep your journal, read real stories, talk with people who understand — and find your way back, day by day.">WolnaGra to miejsce bez oceniania. Prowadź swój dziennik, czytaj prawdziwe historie, rozmawiaj z ludźmi którzy rozumieją — i wracaj do siebie, dzień po dniu.</p>
+    <div class="hero-actions">
+      <a href="#register" class="btn btn-primary">🌿 <span data-pl="Zacznij swoją drogę" data-en="Start your journey">Zacznij swoją drogę</span></a>
+      <a href="#stories" class="btn btn-secondary"><span data-pl="Przeczytaj historie" data-en="Read stories">Przeczytaj historie</span></a>
+    </div>
+    <div class="hero-stats">
+      <div class="stat">
+        <span class="stat-num">1 247</span>
+        <span class="stat-label" data-pl="Osób w społeczności" data-en="Community members">Osób w społeczności</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">84 tys.</span>
+        <span class="stat-label" data-pl="Wpisów w dziennikach" data-en="Journal entries">Wpisów w dziennikach</span>
+      </div>
+      <div class="stat">
+        <span class="stat-num">96%</span>
+        <span class="stat-label" data-pl="Czuje wsparcie" data-en="Feel supported">Czuje wsparcie</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Floating cards -->
+
+  <div class="hero-image-area">
+    <div class="hero-card hero-card-1">
+      <div class="card-icon">🔥</div>
+      <div class="card-title" data-pl="Twoja passa" data-en="Your streak">Twoja passa</div>
+      <div class="card-value">47 dni</div>
+      <div class="card-sub" data-pl="bez hazardu" data-en="without gambling">bez hazardu</div>
+    </div>
+    <div class="hero-card hero-card-2">
+      <div class="card-icon">💬</div>
+      <div class="card-title" data-pl="Forum dziś" data-en="Forum today">Forum dziś</div>
+      <div class="card-value">23 wpisy</div>
+      <div class="card-sub" data-pl="nowe tematy" data-en="new topics">nowe tematy</div>
+    </div>
+    <div class="hero-card hero-card-3" style="position:absolute;top:45%;left:55%;">
+      <div class="card-icon">📖</div>
+      <div class="card-title" data-pl="Zadanie dnia" data-en="Daily task">Zadanie dnia</div>
+      <div class="card-value" style="font-size:0.95rem;" data-pl="Zadzwoń do bliskiej osoby" data-en="Call a loved one">Zadzwoń do bliskiej osoby</div>
+    </div>
+  </div>
+</div>
+
+<!-- Features -->
+
+<div class="features-bg" id="features">
+  <div class="features-inner">
+    <div class="reveal">
+      <div class="section-label" data-pl="Co znajdziesz na WolnaGra" data-en="What you'll find at WolnaGra">Co znajdziesz na WolnaGra</div>
+      <h2 data-pl="Wszystko czego <em>potrzebujesz</em>" data-en="Everything you <em>need</em>">Wszystko czego <em>potrzebujesz</em></h2>
+      <p class="section-desc" data-pl="Stworzyliśmy miejsce gdzie zdrowienie jest możliwe — z narzędziami, wsparciem i ludźmi którzy przeszli przez to samo." data-en="We created a space where recovery is possible — with tools, support, and people who've been through the same.">Stworzyliśmy miejsce gdzie zdrowienie jest możliwe — z narzędziami, wsparciem i ludźmi którzy przeszli przez to samo.</p>
+    </div>
+    <div class="features-grid">
+      <div class="feature-card reveal">
+        <div class="feature-icon">📓</div>
+        <div class="feature-title" data-pl="Prywatny Dziennik" data-en="Private Journal">Prywatny Dziennik</div>
+        <p class="feature-desc" data-pl="Zapisuj swoje myśli, ślub postępy i śledź nastrój każdego dnia. Twój dziennik jest widoczny tylko dla Ciebie." data-en="Write your thoughts, track progress and follow your mood each day. Your journal is visible only to you.">Zapisuj swoje myśli, śledź postępy i nastrój każdego dnia. Twój dziennik jest widoczny tylko dla Ciebie.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🔥</div>
+        <div class="feature-title" data-pl="Licznik Dni" data-en="Day Counter">Licznik Dni</div>
+        <p class="feature-desc" data-pl="Widzisz każdy dzień bez hazardu. Odznaki i milestony motywują do dalszego działania." data-en="See every day without gambling. Badges and milestones keep you motivated.">Widzisz każdy dzień bez hazardu. Odznaki i milestony motywują do dalszego działania.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">💬</div>
+        <div class="feature-title" data-pl="Forum Społeczności" data-en="Community Forum">Forum Społeczności</div>
+        <p class="feature-desc" data-pl="Rozmawiaj z ludźmi którzy rozumieją. Anonimowo lub pod własnym imieniem — Twój wybór." data-en="Talk with people who understand. Anonymously or under your own name — your choice.">Rozmawiaj z ludźmi którzy rozumieją. Anonimowo lub pod własnym imieniem — Twój wybór.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">📚</div>
+        <div class="feature-title" data-pl="Prawdziwe Historie" data-en="Real Stories">Prawdziwe Historie</div>
+        <p class="feature-desc" data-pl="Czytaj jak inni wyszli z uzależnienia. Szczere, nieocenzurowane, budujące nadzieję." data-en="Read how others recovered. Honest, uncensored, hope-building stories.">Czytaj jak inni wyszli z uzależnienia. Szczere, nieocenzurowane, budujące nadzieję.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">✅</div>
+        <div class="feature-title" data-pl="Zadania i Wyzwania" data-en="Tasks & Challenges">Zadania i Wyzwania</div>
+        <p class="feature-desc" data-pl="Małe, codzienne zadania które budują nowe nawyki. Oparte na metodach terapeutycznych." data-en="Small daily tasks that build new habits. Based on therapeutic methods.">Małe, codzienne zadania które budują nowe nawyki. Oparte na metodach terapeutycznych.</p>
+      </div>
+      <div class="feature-card reveal">
+        <div class="feature-icon">🛡️</div>
+        <div class="feature-title" data-pl="Plan Kryzysowy" data-en="Crisis Plan">Plan Kryzysowy</div>
+        <p class="feature-desc" data-pl="Gdy pokusa jest silna — masz pod ręką swój plan, kontakty i ćwiczenia które pomagają." data-en="When temptation is strong — your plan, contacts and exercises are at hand.">Gdy pokusa jest silna — masz pod ręką swój plan, kontakty i ćwiczenia które pomagają.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Diary Preview -->
+
+<section>
+  <div class="diary-section">
+    <div class="reveal">
+      <div class="section-label" data-pl="Twoje miejsce" data-en="Your space">Twoje miejsce</div>
+      <h2 data-pl="Dziennik który <em>słucha</em>" data-en="A journal that <em>listens</em>">Dziennik który <em>słucha</em></h2>
+      <p class="section-desc" data-pl="Każdy wpis to krok naprzód. Śledź swój nastrój, zapisuj myśli — i obserwuj jak z czasem wszystko się zmienia." data-en="Every entry is a step forward. Track your mood, write your thoughts — and watch how everything changes over time.">Każdy wpis to krok naprzód. Śledź swój nastrój, zapisuj myśli — i obserwuj jak z czasem wszystko się zmienia.</p>
+
+```
+  <div class="progress-section">
+    <div class="progress-label">
+      <span data-pl="Cel tygodniowy: 7 wpisów" data-en="Weekly goal: 7 entries">Cel tygodniowy: 7 wpisów</span>
+      <span>5/7</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width: 71%"></div></div>
+    <div class="progress-label">
+      <span data-pl="Obecna passa" data-en="Current streak">Obecna passa</span>
+      <span>47 dni 🔥</span>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" style="width: 85%"></div></div>
+  </div>
+</div>
+
+<div class="diary-mockup reveal">
+  <div class="diary-header">
+    <div class="diary-title">📓 <span data-pl="Mój Dziennik" data-en="My Journal">Mój Dziennik</span></div>
+    <div class="diary-streak">🔥 <span data-pl="47 dni" data-en="47 days">47 dni</span></div>
+  </div>
+
+  <div class="diary-entry">
+    <div class="entry-date" data-pl="Dziś, 18 Kwiecień" data-en="Today, April 18">Dziś, 18 Kwiecień</div>
+    <div class="entry-mood">
+      <div class="mood-dot mood-1" title="Bardzo źle"></div>
+      <div class="mood-dot mood-2" title="Źle"></div>
+      <div class="mood-dot mood-3" title="Tak sobie"></div>
+      <div class="mood-dot mood-4 active" title="Dobrze" style="outline:2px solid #2ecc71;outline-offset:2px"></div>
+      <div class="mood-dot mood-5" title="Świetnie"></div>
+    </div>
+    <p class="entry-text" data-pl="Dziś miałem trudny dzień w pracy, ale zamiast sięgnąć po apkę bukmacherską zadzwoniłem do brata. Pogadaliśmy godzinę. Czuję się znacznie lepiej..." data-en="Had a tough day at work, but instead of opening the betting app I called my brother. We talked for an hour. Feeling much better...">Dziś miałem trudny dzień w pracy, ale zamiast sięgnąć po apkę bukmacherską zadzwoniłem do brata. Pogadaliśmy godzinę. Czuję się znacznie lepiej...</p>
+  </div>
+
+  <div class="diary-entry">
+    <div class="entry-date" data-pl="Wczoraj, 17 Kwiecień" data-en="Yesterday, April 17">Wczoraj, 17 Kwiecień</div>
+    <div class="entry-mood">
+      <div class="mood-dot mood-1"></div>
+      <div class="mood-dot mood-2"></div>
+      <div class="mood-dot mood-3 active" style="outline:2px solid #f1c40f;outline-offset:2px"></div>
+      <div class="mood-dot mood-4"></div>
+      <div class="mood-dot mood-5"></div>
+    </div>
+    <p class="entry-text" data-pl="Pokusa była dziś spora. Przypomniałem sobie swój plan kryzysowy i poszedłem pobiegać. Pomogło." data-en="Temptation was strong today. I remembered my crisis plan and went for a run. It helped.">Pokusa była dziś spora. Przypomniałem sobie swój plan kryzysowy i poszedłem pobiegać. Pomogło.</p>
+  </div>
+
+  <button class="diary-add-btn">+ <span data-pl="Dodaj dzisiejszy wpis" data-en="Add today's entry">Dodaj dzisiejszy wpis</span></button>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- Stories -->
+
+<div class="stories-bg" id="stories">
+  <div class="stories-inner">
+    <div class="reveal">
+      <div class="section-label" data-pl="Prawdziwe Historie" data-en="Real Stories">Prawdziwe Historie</div>
+      <h2 data-pl="Oni to zrobili.<br><em>Ty też możesz.</em>" data-en="They did it.<br><em>So can you.</em>">Oni to zrobili.<br><em>Ty też możesz.</em></h2>
+      <p class="section-desc" data-pl="Prawdziwe relacje od prawdziwych ludzi — bez cenzury, bez filtra." data-en="Real accounts from real people — uncensored, unfiltered.">Prawdziwe relacje od prawdziwych ludzi — bez cenzury, bez filtra.</p>
+    </div>
+
+```
+<div class="stories-grid">
+  <div class="story-card reveal">
+    <div class="story-avatar">👨</div>
+    <div class="story-name">Marek, 38 lat</div>
+    <div class="story-meta" data-pl="Hazard sportowy • 6 lat uzależnienia" data-en="Sports betting • 6 years addicted">Hazard sportowy • 6 lat uzależnienia</div>
+    <p class="story-text" data-pl="Straciłem oszczędności życia, prawie straciłem rodzinę. Dziś mam 2 lata bez zakładów. Każdy dzień nadal jest walką — ale warto walczyć." data-en="I lost my life savings, almost lost my family. Today I have 2 years without betting. Every day is still a fight — but worth fighting.">"Straciłem oszczędności życia, prawie straciłem rodzinę. Dziś mam 2 lata bez zakładów. Każdy dzień nadal jest walką — ale warto walczyć."</p>
+    <div class="story-days">🔥 <span data-pl="730 dni wolności" data-en="730 days free">730 dni wolności</span></div>
+  </div>
+
+  <div class="story-card reveal">
+    <div class="story-avatar">👩</div>
+    <div class="story-name">Ania, 31 lat</div>
+    <div class="story-meta" data-pl="Kasyno online • 3 lata uzależnienia" data-en="Online casino • 3 years addicted">Kasyno online • 3 lata uzależnienia</div>
+    <p class="story-text" data-pl="Grałam w nocy, po cichu, żeby mąż nie wiedział. Dług urósł do 40 tysięcy. Poproszenie o pomoc było najtrudniejszą i najlepszą decyzją mojego życia." data-en="I played at night, secretly, so my husband wouldn't know. Debt grew to 40,000. Asking for help was the hardest and best decision of my life.">"Grałam w nocy, po cichu, żeby mąż nie wiedział. Poproszenie o pomoc było najtrudniejszą i najlepszą decyzją mojego życia."</p>
+    <div class="story-days">🔥 <span data-pl="412 dni wolności" data-en="412 days free">412 dni wolności</span></div>
+  </div>
+
+  <div class="story-card reveal">
+    <div class="story-avatar">👨‍🦳</div>
+    <div class="story-name">Tomek, 52 lat</div>
+    <div class="story-meta" data-pl="Automaty • 15 lat uzależnienia" data-en="Slot machines • 15 years addicted">Automaty • 15 lat uzależnienia</div>
+    <p class="story-text" data-pl="Myślałem, że w moim wieku to już niemożliwe. Ale 8 miesięcy temu przestałem. Tu znalazłem ludzi którzy nie oceniają — po prostu rozumieją." data-en="I thought at my age it was impossible. But 8 months ago I stopped. Here I found people who don't judge — they just understand.">"Myślałem, że w moim wieku to już niemożliwe. Ale 8 miesięcy temu przestałem. Tu znalazłem ludzi którzy po prostu rozumieją."</p>
+    <div class="story-days">🔥 <span data-pl="243 dni wolności" data-en="243 days free">243 dni wolności</span></div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- Forum Preview -->
+
+<section id="forum">
+  <div class="reveal">
+    <div class="section-label" data-pl="Społeczność" data-en="Community">Społeczność</div>
+    <h2 data-pl="Forum gdzie <em>nikt nie jest sam</em>" data-en="A forum where <em>no one is alone</em>">Forum gdzie <em>nikt nie jest sam</em></h2>
+    <p class="section-desc" data-pl="Pisz anonimowo lub pod imieniem. Zadawaj pytania, dziel się historią, wspieraj innych." data-en="Write anonymously or by name. Ask questions, share your story, support others.">Pisz anonimowo lub pod imieniem. Zadawaj pytania, dziel się historią, wspieraj innych.</p>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" data-pl="Wszystkie" data-en="All">Wszystkie</button>
+    <button class="tab" data-pl="Wsparcie" data-en="Support">Wsparcie</button>
+    <button class="tab" data-pl="Historie" data-en="Stories">Historie</button>
+    <button class="tab" data-pl="Porady" data-en="Tips">Porady</button>
+  </div>
+
+  <div class="forum-mockup reveal">
+    <div class="forum-header-bar">
+      <span>💬 </span><span data-pl="Forum Społeczności" data-en="Community Forum">Forum Społeczności</span>
+    </div>
+
+```
+<div class="forum-post">
+  <div class="post-top">
+    <div class="post-avatar">🙋</div>
+    <div>
+      <div class="post-author">Anonimowy_Marek</div>
+    </div>
+    <div class="post-time" data-pl="2 godz. temu" data-en="2 hours ago">2 godz. temu</div>
+  </div>
+  <div class="post-title" data-pl="Trudny wieczór — potrzebuję wsparcia" data-en="Tough evening — I need support">Trudny wieczór — potrzebuję wsparcia</div>
+  <p class="post-preview" data-pl="Siedzę sam w domu i mam silną chęć. Zrobiłem wszystko co w planie kryzysowym ale nadal jest ciężko. Czy ktoś może napisać?" data-en="I'm sitting home alone and the urge is strong. Done everything in my crisis plan but it's still hard. Can someone write?">Siedzę sam w domu i mam silną chęć. Zrobiłem wszystko co w planie kryzysowym ale nadal jest ciężko...</p>
+  <div class="post-tags">
+    <span class="tag tag-warm" data-pl="Kryzys" data-en="Crisis">Kryzys</span>
+    <span class="tag" data-pl="Wsparcie" data-en="Support">Wsparcie</span>
+  </div>
+</div>
+
+<div class="forum-post">
+  <div class="post-top">
+    <div class="post-avatar">🌟</div>
+    <div>
+      <div class="post-author">Ania_nowe_zycie</div>
+    </div>
+    <div class="post-time" data-pl="5 godz. temu" data-en="5 hours ago">5 godz. temu</div>
+  </div>
+  <div class="post-title" data-pl="100 dni! Nie mogę uwierzyć 🎉" data-en="100 days! I can't believe it 🎉">100 dni! Nie mogę uwierzyć 🎉</div>
+  <p class="post-preview" data-pl="Rok temu byłam na dnie. Dziś mam 100 dni bez hazardu. Chcę podziękować tej społeczności — naprawdę uratowaliście mi życie." data-en="A year ago I was at rock bottom. Today I have 100 days without gambling. I want to thank this community — you truly saved my life.">Rok temu byłam na dnie. Dziś mam 100 dni bez hazardu. Chcę podziękować tej społeczności...</p>
+  <div class="post-tags">
+    <span class="tag tag-green" data-pl="Sukces" data-en="Success">Sukces</span>
+    <span class="tag" data-pl="Mileston" data-en="Milestone">Milestone</span>
+  </div>
+</div>
+
+<div class="forum-post">
+  <div class="post-top">
+    <div class="post-avatar">🤔</div>
+    <div>
+      <div class="post-author">Tomek52</div>
+    </div>
+    <div class="post-time" data-pl="Wczoraj" data-en="Yesterday">Wczoraj</div>
+  </div>
+  <div class="post-title" data-pl="Jak powiedzieć rodzinie o problemie?" data-en="How to tell family about the problem?">Jak powiedzieć rodzinie o problemie?</div>
+  <p class="post-preview" data-pl="Żona nic nie wie. Boję się jak zareaguje. Jak wy to zrobiliście? Jakieś rady?" data-en="My wife doesn't know. I'm scared of her reaction. How did you do it? Any advice?">Żona nic nie wie. Boję się jak zareaguje. Jak wy to zrobiliście?</p>
+  <div class="post-tags">
+    <span class="tag" data-pl="Rodzina" data-en="Family">Rodzina</span>
+    <span class="tag" data-pl="Pytanie" data-en="Question">Pytanie</span>
+  </div>
+</div>
+```
+
+  </div>
+</section>
+
+<!-- Tasks -->
+
+<div class="features-bg">
+  <div class="features-inner">
+    <div class="reveal">
+      <div class="section-label" data-pl="Zadania dnia" data-en="Daily tasks">Zadania dnia</div>
+      <h2 data-pl="Małe kroki,<br><em>wielka zmiana</em>" data-en="Small steps,<br><em>big change</em>">Małe kroki,<br><em>wielka zmiana</em></h2>
+      <p class="section-desc" data-pl="Każdego dnia nowe zadania oparte na terapii CBT i grupach wsparcia. Budujesz nowe nawyki — krok po kroku." data-en="New tasks every day based on CBT therapy and support groups. You build new habits — step by step.">Każdego dnia nowe zadania oparte na terapii CBT i grupach wsparcia. Budujesz nowe nawyki — krok po kroku.</p>
+    </div>
+
+```
+<div class="tasks-grid">
+  <div class="task-card reveal">
+    <div class="task-num">1</div>
+    <div class="task-body">
+      <div class="task-title" data-pl="Zadzwoń do kogoś bliskiego" data-en="Call someone close">Zadzwoń do kogoś bliskiego</div>
+      <p class="task-desc" data-pl="Izolacja wzmacnia uzależnienie. Dziś zadzwoń do kogoś komu ufasz — nawet na 5 minut." data-en="Isolation strengthens addiction. Today call someone you trust — even for 5 minutes.">Izolacja wzmacnia uzależnienie. Dziś zadzwoń do kogoś komu ufasz — nawet na 5 minut.</p>
+      <span class="task-badge" data-pl="🧠 Relacje" data-en="🧠 Relationships">🧠 Relacje</span>
+    </div>
+  </div>
+
+  <div class="task-card reveal">
+    <div class="task-num">2</div>
+    <div class="task-body">
+      <div class="task-title" data-pl="Zapisz 3 dobre rzeczy z dnia" data-en="Write 3 good things about your day">Zapisz 3 dobre rzeczy z dnia</div>
+      <p class="task-desc" data-pl="Mózg uzależniony skupia się na negatywach. Trenuj wdzięczność — to zmienia chemię mózgu." data-en="The addicted brain focuses on negatives. Train gratitude — it changes brain chemistry.">Mózg uzależniony skupia się na negatywach. Trenuj wdzięczność — to zmienia chemię mózgu.</p>
+      <span class="task-badge" data-pl="💚 Mindfulness" data-en="💚 Mindfulness">💚 Mindfulness</span>
+    </div>
+  </div>
+
+  <div class="task-card reveal">
+    <div class="task-num">3</div>
+    <div class="task-body">
+      <div class="task-title" data-pl="Zidentyfikuj swój wyzwalacz" data-en="Identify your trigger">Zidentyfikuj swój wyzwalacz</div>
+      <p class="task-desc" data-pl="Co uruchamia chęć grania? Nuda? Stres? Samotność? Zapisz to — świadomość to pierwsza broń." data-en="What triggers the urge to play? Boredom? Stress? Loneliness? Write it down — awareness is the first weapon.">Co uruchamia chęć grania? Nuda? Stres? Samotność? Zapisz to — świadomość to pierwsza broń.</p>
+      <span class="task-badge" data-pl="🎯 Samoświadomość" data-en="🎯 Self-awareness">🎯 Samoświadomość</span>
+    </div>
+  </div>
+
+  <div class="task-card reveal">
+    <div class="task-num">4</div>
+    <div class="task-body">
+      <div class="task-title" data-pl="15 minut ruchu" data-en="15 minutes of movement">15 minut ruchu</div>
+      <p class="task-desc" data-pl="Spacer, bieganie, cokolwiek. Ruch produkuje dopaminę — tę samą której szukasz w hazardzie." data-en="A walk, a run, anything. Movement produces dopamine — the same one you seek in gambling.">Spacer, bieganie, cokolwiek. Ruch produkuje dopaminę — tę samą której szukasz w hazardzie.</p>
+      <span class="task-badge" data-pl="🏃 Ciało" data-en="🏃 Body">🏃 Ciało</span>
+    </div>
+  </div>
+</div>
+```
+
+  </div>
+</div>
+
+<!-- CTA / Register -->
+
+<div class="cta-section" id="register">
+  <div class="section-label" data-pl="Zaczyna się teraz" data-en="It starts now">Zaczyna się teraz</div>
+  <h2 style="max-width:600px;margin:0 auto 16px;" data-pl="Dołącz do <em>WolnaGra</em> — bezpłatnie" data-en="Join <em>WolnaGra</em> — for free">Dołącz do <em>WolnaGra</em> — bezpłatnie</h2>
+  <p class="section-desc" data-pl="Rejestracja jest anonimowa. Nie musisz podawać prawdziwego imienia ani żadnych danych osobowych." data-en="Registration is anonymous. You don't need to provide your real name or any personal data.">Rejestracja jest anonimowa. Nie musisz podawać prawdziwego imienia ani żadnych danych osobowych.</p>
+
+  <div style="display:flex;gap:12px;justify-content:center;flex-wrap:wrap;">
+    <a href="#" class="btn btn-primary" style="font-size:1rem;padding:16px 36px;">🌿 <span data-pl="Stwórz konto (bezpłatnie)" data-en="Create account (free)">Stwórz konto (bezpłatnie)</span></a>
+    <a href="#" class="btn btn-secondary" style="font-size:1rem;padding:16px 36px;"><span data-pl="Zaloguj się" data-en="Log in">Zaloguj się</span></a>
+  </div>
+
+  <p style="margin-top:24px;font-size:0.8rem;color:var(--text-light);" data-pl="Bez kart kredytowych. Bez danych osobowych. Tylko Ty i Twoja droga do wolności." data-en="No credit cards. No personal data. Just you and your path to freedom.">Bez kart kredytowych. Bez danych osobowych. Tylko Ty i Twoja droga do wolności.</p>
+</div>
+
+<!-- Footer -->
+
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-logo">Wolna<span>Gra</span></div>
+      <p class="footer-tagline" data-pl="Bezpieczna przestrzeń dla osób wychodzących z uzależnienia od hazardu. Zbudowana z troską, nie dla zysku." data-en="A safe space for people recovering from gambling addiction. Built with care, not for profit.">Bezpieczna przestrzeń dla osób wychodzących z uzależnienia od hazardu. Zbudowana z troską, nie dla zysku.</p>
+    </div>
+    <div>
+      <div class="footer-col-title" data-pl="Strona" data-en="Site">Strona</div>
+      <a href="#" class="footer-link" data-pl="O nas" data-en="About us">O nas</a>
+      <a href="#" class="footer-link" data-pl="Jak to działa" data-en="How it works">Jak to działa</a>
+      <a href="#" class="footer-link" data-pl="Historie" data-en="Stories">Historie</a>
+      <a href="#" class="footer-link" data-pl="Forum" data-en="Forum">Forum</a>
+    </div>
+    <div>
+      <div class="footer-col-title" data-pl="Pomoc" data-en="Help">Pomoc</div>
+      <a href="tel:116123" class="footer-link">📞 116 123</a>
+      <a href="#" class="footer-link" data-pl="Polityka prywatności" data-en="Privacy policy">Polityka prywatności</a>
+      <a href="#" class="footer-link" data-pl="Kontakt" data-en="Contact">Kontakt</a>
+      <a href="#" class="footer-link" data-pl="FAQ" data-en="FAQ">FAQ</a>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-bottom-text">© 2026 WolnaGra. <span data-pl="Wszelkie prawa zastrzeżone." data-en="All rights reserved.">Wszelkie prawa zastrzeżone.</span></span>
+    <span class="footer-bottom-text" style="color:var(--sage-light);" data-pl="Zrobione z ❤️ dla tych którzy walczą." data-en="Made with ❤️ for those who fight.">Zrobione z ❤️ dla tych którzy walczą.</span>
+  </div>
+</footer>
+
+<script>
+  // Language toggle
+  let currentLang = 'pl';
+
+  function setLang(lang) {
+    currentLang = lang;
+    document.querySelectorAll('.lang-btn').forEach(b => b.classList.remove('active'));
+    document.querySelector(`.lang-btn[onclick="setLang('${lang}')"]`).classList.add('active');
+
+    document.querySelectorAll('[data-pl]').forEach(el => {
+      const text = el.getAttribute(`data-${lang}`);
+      if (text) el.innerHTML = text;
+    });
+  }
+
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+  // Tab switching (visual only for prototype)
+  document.querySelectorAll('.tab').forEach(tab => {
+    tab.addEventListener('click', () => {
+      document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+    });
+  });
+
+  // Diary add button
+  document.querySelector('.diary-add-btn').addEventListener('click', () => {
+    alert(currentLang === 'pl' ? 'Po zalogowaniu możesz dodać swój wpis 📓' : 'Log in to add your entry 📓');
+  });
+
+  // Animate progress bars on load
+  setTimeout(() => {
+    document.querySelectorAll('.progress-fill').forEach(bar => {
+      const width = bar.style.width;
+      bar.style.width = '0';
+      setTimeout(() => { bar.style.width = width; }, 100);
+    });
+  }, 500);
+
+  function openNav() {
+    document.getElementById('sidenav').classList.add('open');
+    document.getElementById('nav-overlay').classList.add('open');
+  }
+  function closeNav() {
+    document.getElementById('sidenav').classList.remove('open');
+    document.getElementById('nav-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeNav();
+  });
+
+</script>
+
+</body>
+</html>
