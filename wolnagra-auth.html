@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WolnaGra — Logowanie</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF4;
+    --sand: #E8DCC8;
+    --sage: #7A9E7E;
+    --sage-dark: #5C7A60;
+    --sage-light: #A8C5AC;
+    --earth: #8B6E4E;
+    --accent: #C17B3A;
+    --text-dark: #2C2416;
+    --text-mid: #5C4A32;
+    --text-light: #8B7355;
+    --error: #C0392B;
+    --error-bg: #FDECEA;
+    --success: #27AE60;
+    --success-bg: #E8F8EE;
+  }
+
+- { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+
+body {
+font-family: ‘Lato’, sans-serif;
+background: var(–cream);
+color: var(–text-dark);
+min-height: 100vh;
+display: flex;
+flex-direction: column;
+}
+
+/* ─── LAYOUT ─── */
+.page {
+display: grid;
+grid-template-columns: 1fr 1fr;
+min-height: 100vh;
+}
+
+@media (max-width: 768px) {
+.page { grid-template-columns: 1fr; }
+.left-panel { display: none; }
+}
+
+/* ─── LEFT PANEL ─── */
+.left-panel {
+background: linear-gradient(145deg, var(–sage-dark) 0%, #3D5E40 60%, #2C4430 100%);
+padding: 48px;
+display: flex;
+flex-direction: column;
+justify-content: space-between;
+position: relative;
+overflow: hidden;
+}
+
+.left-panel::before {
+content: ‘’;
+position: absolute; inset: 0;
+background-image: url(“data:image/svg+xml,%3Csvg width=‘80’ height=‘80’ viewBox=‘0 0 80 80’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=‘none’ fill-rule=‘evenodd’%3E%3Cg fill=’%23A8C5AC’ fill-opacity=‘0.06’%3E%3Ccircle cx=‘40’ cy=‘40’ r=‘3’/%3E%3C/g%3E%3C/g%3E%3C/svg%3E”);
+}
+
+.left-blob-1 {
+position: absolute;
+width: 400px; height: 400px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(168,197,172,0.15) 0%, transparent 70%);
+top: -100px; right: -100px;
+}
+
+.left-blob-2 {
+position: absolute;
+width: 300px; height: 300px;
+border-radius: 50%;
+background: radial-gradient(circle, rgba(193,123,58,0.1) 0%, transparent 70%);
+bottom: -50px; left: -50px;
+}
+
+.left-logo {
+font-family: ‘Playfair Display’, serif;
+font-size: 2rem;
+font-weight: 900;
+color: white;
+text-decoration: none;
+position: relative; z-index: 1;
+}
+
+.left-logo span { color: var(–sage-light); }
+
+.left-middle {
+position: relative; z-index: 1;
+}
+
+.left-quote {
+font-family: ‘Playfair Display’, serif;
+font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+font-weight: 700;
+font-style: italic;
+color: white;
+line-height: 1.3;
+margin-bottom: 20px;
+}
+
+.left-quote-author {
+font-size: 0.85rem;
+color: rgba(255,255,255,0.55);
+font-weight: 700;
+text-transform: uppercase;
+letter-spacing: 0.08em;
+}
+
+/* Testimonial cards on left */
+.left-cards {
+display: flex;
+flex-direction: column;
+gap: 12px;
+position: relative; z-index: 1;
+}
+
+.left-card {
+background: rgba(255,255,255,0.08);
+border: 1px solid rgba(255,255,255,0.12);
+border-radius: 16px;
+padding: 16px 20px;
+backdrop-filter: blur(10px);
+display: flex;
+align-items: center;
+gap: 14px;
+animation: slideIn 0.5s ease both;
+}
+
+.left-card:nth-child(2) { animation-delay: 0.15s; }
+.left-card:nth-child(3) { animation-delay: 0.3s; }
+
+@keyframes slideIn {
+from { opacity: 0; transform: translateX(-20px); }
+to { opacity: 1; transform: translateX(0); }
+}
+
+.lc-avatar {
+width: 40px; height: 40px;
+border-radius: 50%;
+background: var(–sage-light);
+display: flex; align-items: center; justify-content: center;
+font-size: 1.1rem;
+flex-shrink: 0;
+}
+
+.lc-text { flex: 1; }
+.lc-name { font-size: 0.82rem; font-weight: 700; color: white; }
+.lc-sub { font-size: 0.75rem; color: rgba(255,255,255,0.5); margin-top: 2px; }
+
+.lc-badge {
+font-size: 0.72rem;
+font-weight: 700;
+padding: 4px 10px;
+border-radius: 12px;
+background: rgba(168,197,172,0.2);
+color: var(–sage-light);
+white-space: nowrap;
+}
+
+/* ─── RIGHT PANEL ─── */
+.right-panel {
+background: var(–warm-white);
+display: flex;
+align-items: center;
+justify-content: center;
+padding: 48px 32px;
+position: relative;
+}
+
+.mobile-logo {
+display: none;
+text-align: center;
+margin-bottom: 32px;
+}
+
+@media (max-width: 768px) {
+.mobile-logo { display: block; }
+.right-panel { padding: 40px 24px; align-items: flex-start; }
+}
+
+.mobile-logo a {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.8rem;
+font-weight: 900;
+color: var(–sage-dark);
+text-decoration: none;
+}
+
+.mobile-logo a span { color: var(–accent); }
+
+.auth-box {
+width: 100%;
+max-width: 440px;
+}
+
+/* ─── TABS ─── */
+.auth-tabs {
+display: flex;
+background: var(–sand);
+border-radius: 14px;
+padding: 4px;
+margin-bottom: 32px;
+}
+
+.auth-tab {
+flex: 1;
+padding: 10px;
+border: none;
+background: transparent;
+border-radius: 10px;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.9rem;
+font-weight: 700;
+cursor: pointer;
+color: var(–text-light);
+transition: all 0.25s;
+}
+
+.auth-tab.active {
+background: white;
+color: var(–sage-dark);
+box-shadow: 0 2px 10px rgba(0,0,0,0.08);
+}
+
+/* ─── FORM ─── */
+.auth-form { display: none; }
+.auth-form.active {
+display: block;
+animation: fadeIn 0.3s ease;
+}
+
+@keyframes fadeIn {
+from { opacity: 0; transform: translateY(8px); }
+to { opacity: 1; transform: translateY(0); }
+}
+
+.form-title {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.7rem;
+font-weight: 900;
+color: var(–text-dark);
+margin-bottom: 6px;
+}
+
+.form-title em { font-style: italic; color: var(–sage-dark); }
+
+.form-subtitle {
+font-size: 0.88rem;
+color: var(–text-light);
+margin-bottom: 28px;
+line-height: 1.5;
+font-weight: 300;
+}
+
+.field {
+margin-bottom: 16px;
+}
+
+.field label {
+display: block;
+font-size: 0.78rem;
+font-weight: 700;
+color: var(–text-mid);
+text-transform: uppercase;
+letter-spacing: 0.06em;
+margin-bottom: 7px;
+}
+
+.field-wrap {
+position: relative;
+}
+
+.field-icon {
+position: absolute;
+left: 14px; top: 50%;
+transform: translateY(-50%);
+font-size: 1rem;
+pointer-events: none;
+}
+
+.field input {
+width: 100%;
+padding: 13px 14px 13px 42px;
+border: 2px solid var(–sand);
+border-radius: 12px;
+background: white;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.92rem;
+color: var(–text-dark);
+transition: all 0.2s;
+outline: none;
+}
+
+.field input:focus {
+border-color: var(–sage);
+box-shadow: 0 0 0 4px rgba(122,158,126,0.12);
+}
+
+.field input.error {
+border-color: var(–error);
+box-shadow: 0 0 0 4px rgba(192,57,43,0.08);
+}
+
+.field input.success {
+border-color: var(–success);
+}
+
+.field-error {
+font-size: 0.76rem;
+color: var(–error);
+margin-top: 5px;
+display: none;
+font-weight: 700;
+}
+
+.field-error.show { display: block; }
+
+/* Password toggle */
+.pass-toggle {
+position: absolute;
+right: 14px; top: 50%;
+transform: translateY(-50%);
+background: none;
+border: none;
+cursor: pointer;
+font-size: 1rem;
+color: var(–text-light);
+padding: 0;
+line-height: 1;
+}
+
+/* Password strength */
+.pass-strength {
+margin-top: 8px;
+display: none;
+}
+
+.pass-strength.show { display: block; }
+
+.strength-bars {
+display: flex; gap: 4px; margin-bottom: 4px;
+}
+
+.strength-bar {
+flex: 1; height: 4px;
+border-radius: 2px;
+background: var(–sand);
+transition: background 0.3s;
+}
+
+.strength-bar.weak { background: var(–error); }
+.strength-bar.medium { background: var(–accent); }
+.strength-bar.strong { background: var(–success); }
+
+.strength-label {
+font-size: 0.72rem;
+font-weight: 700;
+color: var(–text-light);
+}
+
+/* Anonymous option */
+.anon-box {
+background: rgba(122,158,126,0.08);
+border: 1px solid rgba(122,158,126,0.2);
+border-radius: 12px;
+padding: 14px 16px;
+margin-bottom: 20px;
+display: flex;
+align-items: flex-start;
+gap: 12px;
+cursor: pointer;
+transition: all 0.2s;
+}
+
+.anon-box:hover {
+background: rgba(122,158,126,0.13);
+}
+
+.anon-check {
+width: 20px; height: 20px;
+border: 2px solid var(–sage-light);
+border-radius: 6px;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+margin-top: 1px;
+transition: all 0.2s;
+background: white;
+}
+
+.anon-check.checked {
+background: var(–sage);
+border-color: var(–sage);
+color: white;
+}
+
+.anon-text { flex: 1; }
+.anon-title { font-size: 0.85rem; font-weight: 700; color: var(–text-dark); }
+.anon-desc { font-size: 0.78rem; color: var(–text-light); margin-top: 2px; line-height: 1.4; }
+
+/* Checkbox row */
+.check-row {
+display: flex;
+align-items: flex-start;
+gap: 10px;
+margin-bottom: 20px;
+cursor: pointer;
+}
+
+.check-box {
+width: 18px; height: 18px;
+border: 2px solid var(–sand);
+border-radius: 5px;
+display: flex; align-items: center; justify-content: center;
+flex-shrink: 0;
+margin-top: 1px;
+transition: all 0.2s;
+background: white;
+font-size: 0.7rem;
+}
+
+.check-box.checked { background: var(–sage); border-color: var(–sage); color: white; }
+
+.check-label {
+font-size: 0.8rem;
+color: var(–text-light);
+line-height: 1.5;
+}
+
+.check-label a { color: var(–sage-dark); font-weight: 700; text-decoration: none; }
+.check-label a:hover { text-decoration: underline; }
+
+/* Submit btn */
+.submit-btn {
+width: 100%;
+padding: 15px;
+background: var(–sage);
+color: white;
+border: none;
+border-radius: 12px;
+font-family: ‘Lato’, sans-serif;
+font-size: 1rem;
+font-weight: 700;
+cursor: pointer;
+transition: all 0.25s;
+position: relative;
+overflow: hidden;
+margin-bottom: 16px;
+}
+
+.submit-btn:hover:not(:disabled) {
+background: var(–sage-dark);
+transform: translateY(-2px);
+box-shadow: 0 8px 24px rgba(122,158,126,0.4);
+}
+
+.submit-btn:disabled {
+opacity: 0.6;
+cursor: not-allowed;
+}
+
+.submit-btn.loading::after {
+content: ‘’;
+position: absolute;
+inset: 0;
+background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+animation: shimmer 1s infinite;
+}
+
+@keyframes shimmer {
+from { transform: translateX(-100%); }
+to { transform: translateX(100%); }
+}
+
+/* Divider */
+.divider {
+display: flex; align-items: center; gap: 12px;
+margin-bottom: 16px;
+}
+
+.divider-line {
+flex: 1; height: 1px;
+background: var(–sand);
+}
+
+.divider-text {
+font-size: 0.75rem;
+color: var(–text-light);
+font-weight: 700;
+white-space: nowrap;
+}
+
+/* Social login */
+.social-btn {
+width: 100%;
+padding: 12px;
+border: 2px solid var(–sand);
+border-radius: 12px;
+background: white;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.88rem;
+font-weight: 700;
+cursor: pointer;
+color: var(–text-mid);
+display: flex;
+align-items: center;
+justify-content: center;
+gap: 10px;
+transition: all 0.2s;
+margin-bottom: 10px;
+}
+
+.social-btn:hover {
+border-color: var(–sage-light);
+background: var(–cream);
+transform: translateY(-1px);
+}
+
+/* Forgot password */
+.forgot-link {
+display: block;
+text-align: right;
+font-size: 0.78rem;
+color: var(–sage-dark);
+text-decoration: none;
+font-weight: 700;
+margin-top: -8px;
+margin-bottom: 20px;
+}
+
+.forgot-link:hover { text-decoration: underline; }
+
+/* Alert */
+.alert {
+border-radius: 10px;
+padding: 12px 16px;
+margin-bottom: 16px;
+font-size: 0.83rem;
+font-weight: 700;
+display: none;
+align-items: center;
+gap: 8px;
+}
+
+.alert.show { display: flex; }
+.alert-error { background: var(–error-bg); color: var(–error); border: 1px solid rgba(192,57,43,0.2); }
+.alert-success { background: var(–success-bg); color: var(–success); border: 1px solid rgba(39,174,96,0.2); }
+
+/* Bottom link */
+.switch-link {
+text-align: center;
+font-size: 0.83rem;
+color: var(–text-light);
+margin-top: 4px;
+}
+
+.switch-link button {
+background: none;
+border: none;
+color: var(–sage-dark);
+font-weight: 700;
+cursor: pointer;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.83rem;
+text-decoration: underline;
+}
+
+/* Crisis strip */
+.crisis-strip {
+background: #C0392B;
+color: white;
+text-align: center;
+padding: 9px 24px;
+font-size: 0.8rem;
+font-weight: 700;
+}
+
+.crisis-strip a { color: white; }
+
+/* Step indicator (register) */
+.steps {
+display: flex;
+align-items: center;
+gap: 0;
+margin-bottom: 28px;
+}
+
+.step {
+display: flex;
+align-items: center;
+gap: 8px;
+}
+
+.step-circle {
+width: 28px; height: 28px;
+border-radius: 50%;
+background: var(–sand);
+color: var(–text-light);
+display: flex; align-items: center; justify-content: center;
+font-size: 0.75rem;
+font-weight: 700;
+transition: all 0.3s;
+flex-shrink: 0;
+}
+
+.step-circle.active { background: var(–sage); color: white; }
+.step-circle.done { background: var(–sage-dark); color: white; }
+
+.step-label {
+font-size: 0.72rem;
+font-weight: 700;
+color: var(–text-light);
+text-transform: uppercase;
+letter-spacing: 0.05em;
+}
+
+.step-label.active { color: var(–sage-dark); }
+
+.step-line {
+flex: 1;
+height: 2px;
+background: var(–sand);
+margin: 0 10px;
+transition: background 0.3s;
+}
+
+.step-line.done { background: var(–sage-dark); }
+
+/* Forgot form */
+.forgot-form {
+display: none;
+animation: fadeIn 0.3s ease;
+}
+
+.forgot-form.active { display: block; }
+
+.back-btn {
+background: none;
+border: none;
+color: var(–sage-dark);
+font-weight: 700;
+cursor: pointer;
+font-family: ‘Lato’, sans-serif;
+font-size: 0.83rem;
+display: flex;
+align-items: center;
+gap: 6px;
+margin-bottom: 20px;
+padding: 0;
+}
+
+.back-btn:hover { text-decoration: underline; }
+
+/* ─── UNIFIED SIDEBAR NAV ─── */
+.sidenav {
+position: fixed; left: 0; top: 0; bottom: 0;
+width: 220px; background: #2C4430; z-index: 200;
+display: flex; flex-direction: column;
+transform: translateX(-100%);
+transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+}
+.sidenav.open { transform: translateX(0); }
+
+.sidenav-logo {
+padding: 20px 18px 16px;
+border-bottom: 1px solid rgba(255,255,255,0.08);
+display: flex; align-items: center; justify-content: space-between;
+}
+
+.sidenav-logo-text {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.3rem; font-weight: 900; color: white;
+text-decoration: none;
+}
+.sidenav-logo-text span { color: #A8C5AC; }
+
+.sidenav-close {
+width: 28px; height: 28px; border-radius: 8px;
+background: rgba(255,255,255,0.08); border: none;
+color: rgba(255,255,255,0.6); font-size: 0.9rem;
+cursor: pointer; display: flex; align-items: center; justify-content: center;
+transition: all 0.2s;
+}
+.sidenav-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+.sidenav-streak {
+margin: 14px 16px;
+background: rgba(255,255,255,0.06);
+border-radius: 12px; padding: 10px 14px;
+display: flex; align-items: center; gap: 8px;
+}
+.sidenav-streak-num {
+font-family: ‘Playfair Display’, serif;
+font-size: 1.3rem; font-weight: 900; color: #A8C5AC;
+}
+.sidenav-streak-label {
+font-size: 0.72rem; color: rgba(255,255,255,0.5);
+font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+}
+
+.sidenav-links {
+flex: 1; padding: 8px 10px; overflow-y: auto;
+}
+
+.sidenav-section {
+font-size: 0.62rem; font-weight: 700;
+text-transform: uppercase; letter-spacing: 0.1em;
+color: rgba(255,255,255,0.3); padding: 12px 8px 6px;
+}
+
+.sidenav-link {
+display: flex; align-items: center; gap: 10px;
+padding: 10px 10px; border-radius: 10px;
+text-decoration: none; color: rgba(255,255,255,0.65);
+font-size: 0.88rem; font-weight: 700;
+transition: all 0.2s; margin-bottom: 2px;
+cursor: pointer; border: none; background: none;
+font-family: ‘Lato’, sans-serif; width: 100%; text-align: left;
+}
+
+.sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+.sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
+
+.sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+.sidenav-bottom {
+padding: 14px 10px;
+border-top: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidenav-crisis {
+display: flex; align-items: center; gap: 8px;
+padding: 10px 12px; border-radius: 10px;
+background: rgba(192,57,43,0.2); color: #E88080;
+text-decoration: none; font-size: 0.82rem; font-weight: 700;
+transition: all 0.2s; margin-bottom: 8px;
+}
+.sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
+
+.sidenav-logout {
+display: flex; align-items: center; gap: 8px;
+padding: 8px 12px; border-radius: 10px;
+color: rgba(255,255,255,0.35); font-size: 0.8rem; font-weight: 700;
+cursor: pointer; transition: all 0.2s; border: none; background: none;
+font-family: ‘Lato’, sans-serif; width: 100%;
+}
+.sidenav-logout:hover { color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.05); }
+
+/* Hamburger button */
+.hamburger {
+position: fixed; top: 14px; left: 14px; z-index: 199;
+width: 36px; height: 36px; border-radius: 10px;
+background: #5C7A60; border: none; cursor: pointer;
+display: flex; flex-direction: column; align-items: center;
+justify-content: center; gap: 4px; transition: all 0.2s;
+box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+.hamburger:hover { background: #3D5E40; }
+.hamburger span {
+display: block; width: 16px; height: 2px;
+background: white; border-radius: 2px; transition: all 0.3s;
+}
+
+/* Overlay */
+.nav-overlay {
+position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+z-index: 199; display: none;
+backdrop-filter: blur(2px);
+}
+.nav-overlay.open { display: block; }
+
+/* Push topbar right when nav open on desktop */
+@media (min-width: 900px) {
+.sidenav { transform: translateX(-100%); }
+.hamburger { display: flex; }
+}
+
+</style>
+</head>
+<body>
+
+  <!-- Sidebar Nav -->
+
+  <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+
+  <nav class="sidenav" id="sidenav">
+    <div class="sidenav-logo">
+      <a href="/wolnagra.html" class="sidenav-logo-text">Wolna<span>Gra</span></a>
+      <button class="sidenav-close" onclick="closeNav()">✕</button>
+    </div>
+    <div class="sidenav-streak">
+      <span class="sidenav-streak-num">47</span>
+      <div>
+        <div style="color:white;font-size:0.78rem;font-weight:700;">🔥 dni bez hazardu</div>
+        <div class="sidenav-streak-label">Twoja passa</div>
+      </div>
+    </div>
+    <div class="sidenav-links">
+      <div class="sidenav-section">Główne</div>
+      <a href="/wolnagra.html" class="sidenav-link "><span class="sidenav-link-icon">🏠</span> Strona główna</a>
+      <a href="/wolnagra-dziennik.html" class="sidenav-link "><span class="sidenav-link-icon">📓</span> Mój Dziennik</a>
+      <a href="/wolnagra-zadania.html" class="sidenav-link "><span class="sidenav-link-icon">✅</span> Zadania dnia</a>
+      <a href="/wolnagra-historie.html" class="sidenav-link "><span class="sidenav-link-icon">📚</span> Historie</a>
+      <div class="sidenav-section">Wsparcie</div>
+      <a href="/wolnagra-kryzys.html" class="sidenav-link "><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
+      <a href="/wolnagra-auth.html" class="sidenav-link active"><span class="sidenav-link-icon">👤</span> Mój profil</a>
+    </div>
+    <div class="sidenav-bottom">
+      <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
+      <button class="sidenav-logout" onclick="alert('Wylogowuję...')">← Wyloguj się</button>
+    </div>
+  </nav>
+
+  <button class="hamburger" id="hamburger" onclick="openNav()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+
+<div class="crisis-strip">
+  🆘 Potrzebujesz pomocy teraz? <a href="tel:116123">116 123</a> (Telefon Zaufania, bezpłatny)
+</div>
+
+<div class="page">
+
+  <!-- LEFT PANEL -->
+
+  <div class="left-panel">
+    <div class="left-blob-1"></div>
+    <div class="left-blob-2"></div>
+
+```
+<a href="/wolnagra.html" class="left-logo">Wolna<span>Gra</span></a>
+
+<div class="left-middle">
+  <div class="left-quote">
+    "Każdy dzień bez hazardu to <em>zwycięstwo</em>, które należy do Ciebie."
+  </div>
+  <div class="left-quote-author">— Społeczność WolnaGra</div>
+</div>
+
+<div class="left-cards">
+  <div class="left-card">
+    <div class="lc-avatar">🔥</div>
+    <div class="lc-text">
+      <div class="lc-name">Marek_W</div>
+      <div class="lc-sub">Dołączył 3 miesiące temu</div>
+    </div>
+    <div class="lc-badge">730 dni</div>
+  </div>
+  <div class="left-card">
+    <div class="lc-avatar">🌿</div>
+    <div class="lc-text">
+      <div class="lc-name">Ania_nowe_zycie</div>
+      <div class="lc-sub">Dołączyła 6 miesięcy temu</div>
+    </div>
+    <div class="lc-badge">412 dni</div>
+  </div>
+  <div class="left-card">
+    <div class="lc-avatar">⭐</div>
+    <div class="lc-text">
+      <div class="lc-name">Tomek52</div>
+      <div class="lc-sub">Dołączył rok temu</div>
+    </div>
+    <div class="lc-badge">243 dni</div>
+  </div>
+</div>
+```
+
+  </div>
+
+  <!-- RIGHT PANEL -->
+
+  <div class="right-panel">
+    <div class="auth-box">
+
+```
+  <div class="mobile-logo">
+    <a href="/wolnagra.html">Wolna<span style="color:var(--accent)">Gra</span></a>
+  </div>
+
+  <!-- TABS -->
+  <div class="auth-tabs">
+    <button class="auth-tab active" onclick="switchTab('login')">Zaloguj się</button>
+    <button class="auth-tab" onclick="switchTab('register')">Zarejestruj się</button>
+  </div>
+
+  <!-- ═══ LOGIN FORM ═══ -->
+  <div id="login-form" class="auth-form active">
+
+    <div id="login-main">
+      <div class="form-title">Witaj <em>z powrotem</em></div>
+      <div class="form-subtitle">Twoja droga trwa. Cieszymy się, że wróciłeś.</div>
+
+      <div class="alert alert-error" id="login-error">
+        <span>⚠️</span> <span id="login-error-text">Nieprawidłowy login lub hasło.</span>
+      </div>
+
+      <div class="field">
+        <label>Pseudonim lub e-mail</label>
+        <div class="field-wrap">
+          <span class="field-icon">👤</span>
+          <input type="text" id="login-user" placeholder="np. Marek_W lub email@mail.com" autocomplete="username">
+        </div>
+        <div class="field-error" id="login-user-err">Proszę wpisz pseudonim lub e-mail.</div>
+      </div>
+
+      <div class="field">
+        <label>Hasło</label>
+        <div class="field-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="login-pass" placeholder="Twoje hasło" autocomplete="current-password">
+          <button class="pass-toggle" onclick="togglePass('login-pass', this)" type="button">👁️</button>
+        </div>
+        <div class="field-error" id="login-pass-err">Proszę wpisz hasło.</div>
+      </div>
+
+      <a href="#" class="forgot-link" onclick="showForgot(event)">Zapomniałem hasła →</a>
+
+      <div class="check-row" onclick="toggleCheck(this)">
+        <div class="check-box">✓</div>
+        <div class="check-label">Zapamiętaj mnie na tym urządzeniu</div>
+      </div>
+
+      <button class="submit-btn" onclick="handleLogin(this)">
+        Zaloguj się 🌿
+      </button>
+
+      <div class="divider">
+        <div class="divider-line"></div>
+        <div class="divider-text">lub kontynuuj z</div>
+        <div class="divider-line"></div>
+      </div>
+
+      <button class="social-btn" onclick="socialLogin('Google')">
+        <svg width="18" height="18" viewBox="0 0 48 48"><path fill="#EA4335" d="M24 9.5c3.54 0 6.71 1.22 9.21 3.6l6.85-6.85C35.9 2.38 30.47 0 24 0 14.62 0 6.51 5.38 2.56 13.22l7.98 6.19C12.43 13.72 17.74 9.5 24 9.5z"/><path fill="#4285F4" d="M46.98 24.55c0-1.57-.15-3.09-.38-4.55H24v9.02h12.94c-.58 2.96-2.26 5.48-4.78 7.18l7.73 6c4.51-4.18 7.09-10.36 7.09-17.65z"/><path fill="#FBBC05" d="M10.53 28.59c-.48-1.45-.76-2.99-.76-4.59s.27-3.14.76-4.59l-7.98-6.19C.92 16.46 0 20.12 0 24c0 3.88.92 7.54 2.56 10.78l7.97-6.19z"/><path fill="#34A853" d="M24 48c6.48 0 11.93-2.13 15.89-5.81l-7.73-6c-2.18 1.48-4.97 2.31-8.16 2.31-6.26 0-11.57-4.22-13.47-9.91l-7.98 6.19C6.51 42.62 14.62 48 24 48z"/></svg>
+        Kontynuuj przez Google
+      </button>
+
+      <div class="switch-link">
+        Nie masz konta? <button onclick="switchTab('register')">Zarejestruj się bezpłatnie</button>
+      </div>
+    </div>
+
+    <!-- FORGOT PASSWORD -->
+    <div class="forgot-form" id="forgot-form">
+      <button class="back-btn" onclick="hideForgot()">← Wróć do logowania</button>
+      <div class="form-title">Resetuj <em>hasło</em></div>
+      <div class="form-subtitle">Wyślemy Ci link do zresetowania hasła na Twój adres e-mail.</div>
+
+      <div class="alert alert-success" id="forgot-success" style="display:none;">
+        <span>✅</span> Link wysłany! Sprawdź swoją skrzynkę e-mail.
+      </div>
+
+      <div class="field">
+        <label>Adres e-mail</label>
+        <div class="field-wrap">
+          <span class="field-icon">📧</span>
+          <input type="email" id="forgot-email" placeholder="twoj@email.com">
+        </div>
+      </div>
+
+      <button class="submit-btn" onclick="handleForgot(this)">
+        Wyślij link resetujący
+      </button>
+    </div>
+  </div>
+
+  <!-- ═══ REGISTER FORM ═══ -->
+  <div id="register-form" class="auth-form">
+
+    <!-- Step indicator -->
+    <div class="steps" id="reg-steps">
+      <div class="step">
+        <div class="step-circle active" id="step-1-circle">1</div>
+        <div class="step-label active" id="step-1-label">Konto</div>
+      </div>
+      <div class="step-line" id="step-line-1"></div>
+      <div class="step">
+        <div class="step-circle" id="step-2-circle">2</div>
+        <div class="step-label" id="step-2-label">O Tobie</div>
+      </div>
+      <div class="step-line" id="step-line-2"></div>
+      <div class="step">
+        <div class="step-circle" id="step-3-circle">3</div>
+        <div class="step-label" id="step-3-label">Gotowe</div>
+      </div>
+    </div>
+
+    <!-- STEP 1 -->
+    <div id="reg-step-1">
+      <div class="form-title">Stwórz <em>konto</em></div>
+      <div class="form-subtitle">Rejestracja jest anonimowa — nie musisz podawać prawdziwego imienia.</div>
+
+      <div class="alert alert-error" id="reg-error">
+        <span>⚠️</span> <span id="reg-error-text">Uzupełnij wszystkie pola.</span>
+      </div>
+
+      <!-- Anonymous toggle -->
+      <div class="anon-box" onclick="toggleAnon()" id="anon-box">
+        <div class="anon-check" id="anon-check">✓</div>
+        <div class="anon-text">
+          <div class="anon-title">🛡️ Chcę być anonimowy/a</div>
+          <div class="anon-desc">Możesz używać pseudonimu zamiast prawdziwego imienia. Nikt nie zobaczy Twoich danych osobowych.</div>
+        </div>
+      </div>
+
+      <div class="field">
+        <label id="username-label">Pseudonim (widoczny na forum)</label>
+        <div class="field-wrap">
+          <span class="field-icon">👤</span>
+          <input type="text" id="reg-username" placeholder="np. Marek_W, Anonim123" autocomplete="username">
+        </div>
+        <div class="field-error" id="reg-username-err">Pseudonim musi mieć min. 3 znaki.</div>
+      </div>
+
+      <div class="field">
+        <label>Adres e-mail <span style="font-weight:300;text-transform:none;letter-spacing:0;">(opcjonalny — do odzyskania hasła)</span></label>
+        <div class="field-wrap">
+          <span class="field-icon">📧</span>
+          <input type="email" id="reg-email" placeholder="twoj@email.com (możesz pominąć)">
+        </div>
+        <div class="field-error" id="reg-email-err">Podaj poprawny adres e-mail.</div>
+      </div>
+
+      <div class="field">
+        <label>Hasło</label>
+        <div class="field-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="reg-pass" placeholder="Min. 8 znaków" oninput="checkStrength()" autocomplete="new-password">
+          <button class="pass-toggle" onclick="togglePass('reg-pass', this)" type="button">👁️</button>
+        </div>
+        <div class="pass-strength" id="pass-strength">
+          <div class="strength-bars">
+            <div class="strength-bar" id="sb1"></div>
+            <div class="strength-bar" id="sb2"></div>
+            <div class="strength-bar" id="sb3"></div>
+            <div class="strength-bar" id="sb4"></div>
+          </div>
+          <div class="strength-label" id="strength-label">Wpisz hasło</div>
+        </div>
+        <div class="field-error" id="reg-pass-err">Hasło musi mieć min. 8 znaków.</div>
+      </div>
+
+      <div class="field">
+        <label>Powtórz hasło</label>
+        <div class="field-wrap">
+          <span class="field-icon">🔒</span>
+          <input type="password" id="reg-pass2" placeholder="Powtórz hasło" autocomplete="new-password">
+        </div>
+        <div class="field-error" id="reg-pass2-err">Hasła nie są identyczne.</div>
+      </div>
+
+      <div class="check-row" onclick="toggleCheck(this)" id="terms-check">
+        <div class="check-box">✓</div>
+        <div class="check-label">Akceptuję <a href="#">Regulamin</a> i <a href="#">Politykę Prywatności</a> serwisu WolnaGra.</div>
+      </div>
+
+      <button class="submit-btn" onclick="regStep1(this)">
+        Dalej → Krok 2 z 3
+      </button>
+
+      <div class="switch-link">
+        Masz już konto? <button onclick="switchTab('login')">Zaloguj się</button>
+      </div>
+    </div>
+
+    <!-- STEP 2 -->
+    <div id="reg-step-2" style="display:none;">
+      <div class="form-title">Trochę <em>o Tobie</em></div>
+      <div class="form-subtitle">Te informacje pomagają nam lepiej dopasować treści. Możesz je zmienić później.</div>
+
+      <div class="field">
+        <label>Jak długo zmagasz się z hazardem?</label>
+        <div class="field-wrap">
+          <span class="field-icon">📅</span>
+          <input type="text" id="reg-duration" placeholder="np. 2 lata, kilka miesięcy...">
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Co najbardziej Cię tutaj przyciągnęło?</label>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:4px;">
+          <button class="tag-select" onclick="toggleTagSelect(this)">📓 Dziennik</button>
+          <button class="tag-select" onclick="toggleTagSelect(this)">💬 Forum</button>
+          <button class="tag-select" onclick="toggleTagSelect(this)">📚 Historie</button>
+          <button class="tag-select" onclick="toggleTagSelect(this)">✅ Zadania</button>
+          <button class="tag-select" onclick="toggleTagSelect(this)">🛡️ Plan kryzysowy</button>
+          <button class="tag-select" onclick="toggleTagSelect(this)">👥 Społeczność</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Czy chcesz powiadomienia motywacyjne?</label>
+        <div style="display:flex;gap:10px;margin-top:4px;">
+          <button class="tag-select selected" onclick="selectOne(this, 'notif')">✅ Tak, codziennie</button>
+          <button class="tag-select" onclick="selectOne(this, 'notif')">🔕 Nie, dziękuję</button>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;margin-top:8px;">
+        <button class="submit-btn" style="background:var(--sand);color:var(--text-mid);flex:1;" onclick="regBack()">← Wróć</button>
+        <button class="submit-btn" style="flex:2;" onclick="regStep2(this)">Dalej → Krok 3 z 3</button>
+      </div>
+    </div>
+
+    <!-- STEP 3 — Success -->
+    <div id="reg-step-3" style="display:none;text-align:center;">
+      <div style="font-size:3.5rem;margin-bottom:16px;animation:bounceIn 0.5s ease;">🌿</div>
+      <div class="form-title" style="text-align:center;">Witaj w <em>WolnaGra</em>!</div>
+      <div class="form-subtitle" style="text-align:center;margin:0 auto 28px;">Twoje konto jest gotowe. Zaczyna się Twoja droga do wolności.</div>
+
+      <div style="background:var(--success-bg);border:1px solid rgba(39,174,96,0.2);border-radius:14px;padding:20px;margin-bottom:24px;text-align:left;">
+        <div style="font-size:0.8rem;font-weight:700;color:var(--success);text-transform:uppercase;letter-spacing:0.06em;margin-bottom:12px;">Co teraz?</div>
+        <div style="display:flex;flex-direction:column;gap:10px;">
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-mid);">
+            <span>📓</span> Zacznij od pierwszego wpisu w dzienniku
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-mid);">
+            <span>✅</span> Wykonaj dzisiejsze zadanie dnia
+          </div>
+          <div style="display:flex;align-items:center;gap:10px;font-size:0.85rem;color:var(--text-mid);">
+            <span>💬</span> Przywitaj się na forum społeczności
+          </div>
+        </div>
+      </div>
+
+      <button class="submit-btn" style="font-size:1.05rem;padding:16px;" onclick="goToDashboard()">
+        🌿 Przejdź do swojego panelu
+      </button>
+    </div>
+
+  </div>
+  <!-- end register-form -->
+
+</div>
+```
+
+  </div>
+</div>
+
+<style>
+  .tag-select {
+    padding: 8px 14px;
+    border: 2px solid var(--sand);
+    border-radius: 20px;
+    background: white;
+    font-family: 'Lato', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 700;
+    cursor: pointer;
+    color: var(--text-light);
+    transition: all 0.2s;
+  }
+
+  .tag-select:hover, .tag-select.selected {
+    border-color: var(--sage);
+    background: rgba(122,158,126,0.1);
+    color: var(--sage-dark);
+  }
+
+  @keyframes bounceIn {
+    0% { transform: scale(0.3); opacity: 0; }
+    50% { transform: scale(1.1); }
+    70% { transform: scale(0.9); }
+    100% { transform: scale(1); opacity: 1; }
+  }
+</style>
+
+<script>
+  let anonMode = true;
+
+  // Switch login/register tab
+  function switchTab(tab) {
+    document.querySelectorAll('.auth-tab').forEach((t, i) => {
+      t.classList.toggle('active', (tab === 'login' && i === 0) || (tab === 'register' && i === 1));
+    });
+    document.getElementById('login-form').classList.toggle('active', tab === 'login');
+    document.getElementById('register-form').classList.toggle('active', tab === 'register');
+  }
+
+  // Password visibility
+  function togglePass(id, btn) {
+    const input = document.getElementById(id);
+    if (input.type === 'password') { input.type = 'text'; btn.textContent = '🙈'; }
+    else { input.type = 'password'; btn.textContent = '👁️'; }
+  }
+
+  // Checkbox toggle
+  function toggleCheck(row) {
+    const box = row.querySelector('.check-box');
+    box.classList.toggle('checked');
+  }
+
+  // Anonymous toggle
+  function toggleAnon() {
+    anonMode = !anonMode;
+    const check = document.getElementById('anon-check');
+    const box = document.getElementById('anon-box');
+    const label = document.getElementById('username-label');
+    check.classList.toggle('checked', anonMode);
+    label.textContent = anonMode ? 'Pseudonim (widoczny na forum)' : 'Imię lub pseudonim';
+  }
+
+  // Init anon as checked
+  document.getElementById('anon-check').classList.add('checked');
+
+  // Password strength
+  function checkStrength() {
+    const pass = document.getElementById('reg-pass').value;
+    const strength = document.getElementById('pass-strength');
+    const bars = [document.getElementById('sb1'), document.getElementById('sb2'), document.getElementById('sb3'), document.getElementById('sb4')];
+    const label = document.getElementById('strength-label');
+
+    strength.classList.add('show');
+
+    bars.forEach(b => { b.className = 'strength-bar'; });
+
+    let score = 0;
+    if (pass.length >= 8) score++;
+    if (/[A-Z]/.test(pass)) score++;
+    if (/[0-9]/.test(pass)) score++;
+    if (/[^A-Za-z0-9]/.test(pass)) score++;
+
+    const cls = score <= 1 ? 'weak' : score <= 2 ? 'medium' : 'strong';
+    const labels = ['', 'Słabe', 'Słabe', 'Średnie', 'Silne'];
+    const colors = { weak: '#C0392B', medium: '#C17B3A', strong: '#27AE60' };
+
+    for (let i = 0; i < score; i++) bars[i].classList.add(cls);
+    label.textContent = pass ? labels[score] || 'Silne' : 'Wpisz hasło';
+    label.style.color = pass ? colors[cls] : '';
+  }
+
+  // Tag multi-select
+  function toggleTagSelect(btn) { btn.classList.toggle('selected'); }
+
+  function selectOne(btn, group) {
+    btn.closest('.field, div').querySelectorAll('.tag-select').forEach(b => b.classList.remove('selected'));
+    btn.classList.add('selected');
+  }
+
+  // LOGIN
+  function handleLogin(btn) {
+    const user = document.getElementById('login-user').value.trim();
+    const pass = document.getElementById('login-pass').value;
+    let valid = true;
+
+    document.getElementById('login-user-err').classList.remove('show');
+    document.getElementById('login-pass-err').classList.remove('show');
+    document.getElementById('login-error').classList.remove('show');
+
+    if (!user) { document.getElementById('login-user-err').classList.add('show'); valid = false; }
+    if (!pass) { document.getElementById('login-pass-err').classList.add('show'); valid = false; }
+    if (!valid) return;
+
+    btn.disabled = true; btn.textContent = 'Loguję...'; btn.classList.add('loading');
+
+    setTimeout(() => {
+      btn.disabled = false; btn.textContent = 'Zaloguj się 🌿'; btn.classList.remove('loading');
+      // Simulate wrong pass for demo
+      document.getElementById('login-error-text').textContent = 'To jest wersja demonstracyjna. W prawdziwej aplikacji nastąpi logowanie!';
+      document.getElementById('login-error').classList.add('show');
+      document.getElementById('login-error').className = 'alert alert-success show';
+    }, 1500);
+  }
+
+  // FORGOT
+  function showForgot(e) {
+    e.preventDefault();
+    document.getElementById('login-main').style.display = 'none';
+    document.getElementById('forgot-form').classList.add('active');
+  }
+
+  function hideForgot() {
+    document.getElementById('login-main').style.display = 'block';
+    document.getElementById('forgot-form').classList.remove('active');
+  }
+
+  function handleForgot(btn) {
+    const email = document.getElementById('forgot-email').value;
+    if (!email) return;
+    btn.disabled = true; btn.textContent = 'Wysyłam...';
+    setTimeout(() => {
+      btn.disabled = false; btn.textContent = 'Wyślij link resetujący';
+      document.getElementById('forgot-success').style.display = 'flex';
+    }, 1200);
+  }
+
+  // REGISTER STEP 1
+  function regStep1(btn) {
+    const username = document.getElementById('reg-username').value.trim();
+    const pass = document.getElementById('reg-pass').value;
+    const pass2 = document.getElementById('reg-pass2').value;
+    const termsChecked = document.getElementById('terms-check').querySelector('.check-box').classList.contains('checked');
+    let valid = true;
+
+    ['reg-username-err','reg-pass-err','reg-pass2-err','reg-error'].forEach(id => {
+      document.getElementById(id).classList.remove('show');
+    });
+
+    if (username.length < 3) { document.getElementById('reg-username-err').classList.add('show'); valid = false; }
+    if (pass.length < 8) { document.getElementById('reg-pass-err').classList.add('show'); valid = false; }
+    if (pass !== pass2) { document.getElementById('reg-pass2-err').classList.add('show'); valid = false; }
+    if (!termsChecked) {
+      document.getElementById('reg-error-text').textContent = 'Musisz zaakceptować regulamin.';
+      document.getElementById('reg-error').classList.add('show');
+      valid = false;
+    }
+    if (!valid) return;
+
+    btn.disabled = true; btn.textContent = 'Sprawdzam...'; btn.classList.add('loading');
+    setTimeout(() => {
+      btn.disabled = false; btn.textContent = 'Dalej → Krok 2 z 3'; btn.classList.remove('loading');
+      goToRegStep(2);
+    }, 800);
+  }
+
+  function regStep2(btn) {
+    btn.disabled = true; btn.textContent = 'Tworzę konto...'; btn.classList.add('loading');
+    setTimeout(() => {
+      goToRegStep(3);
+    }, 1200);
+  }
+
+  function regBack() { goToRegStep(1); }
+
+  function goToRegStep(step) {
+    document.getElementById('reg-step-1').style.display = step === 1 ? 'block' : 'none';
+    document.getElementById('reg-step-2').style.display = step === 2 ? 'block' : 'none';
+    document.getElementById('reg-step-3').style.display = step === 3 ? 'block' : 'none';
+
+    for (let i = 1; i <= 3; i++) {
+      const circle = document.getElementById(`step-${i}-circle`);
+      const label = document.getElementById(`step-${i}-label`);
+      circle.className = 'step-circle' + (i < step ? ' done' : i === step ? ' active' : '');
+      label.className = 'step-label' + (i === step ? ' active' : '');
+      if (i < step) circle.textContent = '✓';
+      else circle.textContent = i;
+    }
+
+    if (step > 1) document.getElementById('step-line-1').classList.toggle('done', step >= 2);
+    if (step > 2) document.getElementById('step-line-2').classList.toggle('done', step >= 3);
+  }
+
+  function goToDashboard() {
+    alert('🌿 Panel użytkownika — kolejna funkcja do zbudowania!');
+  }
+
+  function socialLogin(provider) {
+    alert(`Logowanie przez ${provider} — zostanie podłączone do backendu.`);
+  }
+
+  function openNav() {
+    document.getElementById('sidenav').classList.add('open');
+    document.getElementById('nav-overlay').classList.add('open');
+  }
+  function closeNav() {
+    document.getElementById('sidenav').classList.remove('open');
+    document.getElementById('nav-overlay').classList.remove('open');
+  }
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeNav();
+  });
+
+</script>
+
+</body>
+</html>
