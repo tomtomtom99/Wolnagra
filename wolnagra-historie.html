@@ -654,16 +654,16 @@
   <button class="hero-write-btn" onclick="scrollToWrite()">✍️ Napisz swoją historię</button>
   <div class="hero-stats">
     <div class="hero-stat">
-      <span class="hero-stat-num">38</span>
+      <span class="hero-stat-num" id="stories-count">3</span>
       <span class="hero-stat-label">Opublikowanych historii</span>
     </div>
     <div class="hero-stat">
-      <span class="hero-stat-num">4 200+</span>
-      <span class="hero-stat-label">Przeczytań w tym miesiącu</span>
+      <span class="hero-stat-num">🌱</span>
+      <span class="hero-stat-label">Dopiero zaczynamy</span>
     </div>
     <div class="hero-stat">
-      <span class="hero-stat-num">96%</span>
-      <span class="hero-stat-label">Czuje nadzieję po lekturze</span>
+      <span class="hero-stat-num">💪</span>
+      <span class="hero-stat-label">Bądź pierwszy/a!</span>
     </div>
   </div>
 </div>
@@ -684,7 +684,7 @@
   <div class="featured-story" onclick="openModal('featured')">
     <div class="fs-left">
       <div>
-        <div class="fs-badge">⭐ Historia miesiąca</div>
+        <div class="fs-badge">📖 Historia inspirująca</div>
         <div class="fs-quote">"Poczułem się tam jak w rodzinie, która chce żebym na nowo poczuł się człowiekiem."</div>
       </div>
       <div class="fs-author">
@@ -986,9 +986,16 @@
       .order('created_at', { ascending: false })
       .limit(20);
 
-    if (error || !stories || stories.length === 0) return;
-
     const grid = document.getElementById('user-stories-container');
+
+    if (error || !stories || stories.length === 0) {
+      grid.innerHTML = `<div style="text-align:center;padding:32px;color:var(--text-light);font-style:italic;">Bądź pierwszy/a! Napisz swoją historię poniżej. 🌿</div>`;
+      document.getElementById('stories-count').textContent = 3;
+      return;
+    }
+
+    document.getElementById('stories-count').textContent = 3 + stories.length;
+
     const userStoriesHtml = `<div class="stories-grid">` + stories.map(story => {
       const date = new Date(story.created_at);
       const dateStr = date.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
