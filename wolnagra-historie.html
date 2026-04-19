@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WolnaGra — Historie Zdrowienia</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Lato:wght@300;400;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <style>
   :root {
     --cream: #F5F0E8;
@@ -732,7 +733,7 @@
         </div>
       </div>
       <div class="sc-footer">
-        <div class="sc-source">Społeczność WolnaGra</div>
+        <div class="sc-source">Społeczność WolnaGra · 2026</div>
         <button class="sc-read" onclick="event.stopPropagation(); openModal('s1')">Czytaj →</button>
       </div>
     </div>
@@ -756,7 +757,7 @@
         </div>
       </div>
       <div class="sc-footer">
-        <div class="sc-source">Społeczność WolnaGra</div>
+        <div class="sc-source">Społeczność WolnaGra · 2026</div>
         <button class="sc-read" onclick="event.stopPropagation(); openModal('s2')">Czytaj →</button>
       </div>
     </div>
@@ -781,7 +782,7 @@
         </div>
       </div>
       <div class="sc-footer">
-        <div class="sc-source">Społeczność WolnaGra</div>
+        <div class="sc-source">Społeczność WolnaGra · 2026</div>
         <button class="sc-read" onclick="event.stopPropagation(); openModal('s3')">Czytaj →</button>
       </div>
     </div>
@@ -830,7 +831,7 @@
         </div>
       </div>
       <div class="sc-footer">
-        <div class="sc-source">Społeczność WolnaGra</div>
+        <div class="sc-source">Społeczność WolnaGra · 2026</div>
         <button class="sc-read" onclick="event.stopPropagation(); openModal('s5')">Czytaj →</button>
       </div>
     </div>
@@ -1033,10 +1034,57 @@
     document.getElementById('story-char-count').textContent = len + ' znaków';
   }
 
-  function submitStory() {
+  // Supabase
+  const SUPABASE_URL = 'https://mbmpvbiqcuwiqetoobel.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_tGtede4fQckZ7WIbtQT_5Q_41KXqX4a';
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  // Load user stories from Supabase and display them
+  async function loadUserStories() {
+    const { data: stories, error } = await sb
+      .from('stories')
+      .select('*')
+      .eq('is_public', true)
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    if (error || !stories || stories.length === 0) return;
+
+    const grid = document.getElementById('stories-grid');
+    const userStoriesHtml = stories.map(story => {
+      const date = new Date(story.created_at);
+      const dateStr = date.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+      return `
+        <div class="story-card user-story-card">
+          <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
+            <div class="sc-avatar">✍️</div>
+            <div class="sc-info">
+              <div class="sc-name">${story.title || 'Historia użytkownika'}</div>
+              <div class="sc-meta">${story.addiction_type || 'Hazard'} · Dodano: ${dateStr}</div>
+            </div>
+            <div class="sc-days">🔥 ${story.days_free || 0} dni</div>
+          </div>
+          <div class="sc-body">
+            <div class="sc-excerpt">${(story.content || '').substring(0, 200)}${story.content && story.content.length > 200 ? '...' : ''}</div>
+          </div>
+          <div class="sc-footer">
+            <div class="sc-source">✍️ Historia użytkownika · ${dateStr}</div>
+          </div>
+        </div>`;
+    }).join('');
+
+    grid.insertAdjacentHTML('beforeend', userStoriesHtml);
+  }
+
+  loadUserStories();
+
+  async function submitStory() {
     const author = document.getElementById('story-author').value.trim();
     const title = document.getElementById('story-title').value.trim();
     const text = document.getElementById('story-text').value.trim();
+    const days = parseInt(document.getElementById('story-days').value) || 0;
+    const tags = Array.from(document.querySelectorAll('.tag-opt.selected')).map(t => t.textContent.trim());
 
     if (!author) { showToast('✏️ Wpisz swój pseudonim'); return; }
     if (!title) { showToast('✏️ Wpisz tytuł historii'); return; }
@@ -1045,22 +1093,41 @@
     const btn = document.querySelector('.submit-btn');
     btn.textContent = 'Wysyłam...'; btn.disabled = true;
 
-    setTimeout(() => {
+    // Check if user is logged in
+    const { data: { session } } = await sb.auth.getSession();
+
+    if (session) {
+      const { error } = await sb.from('stories').insert({
+        user_id: session.user.id,
+        title,
+        content: text,
+        is_public: true,
+        days_free: days,
+        addiction_type: tags.join(', ') || 'Hazard'
+      });
+
       btn.textContent = '🌿 Opublikuj historię'; btn.disabled = false;
-      showToast(shareOn
-        ? '🌿 Historia wysłana do moderacji! Pojawi się wkrótce.'
-        : '💾 Historia zapisana w Twoim profilu!');
-      document.getElementById('story-author').value = '';
-      document.getElementById('story-title').value = '';
-      document.getElementById('story-text').value = '';
-      document.getElementById('story-char-count').textContent = '0 znaków';
-    }, 1500);
+
+      if (error) {
+        showToast('❌ Błąd zapisu. Spróbuj ponownie.');
+      } else {
+        showToast('🌿 Historia opublikowana! Dziękujemy za odwagę.');
+        document.getElementById('story-author').value = '';
+        document.getElementById('story-title').value = '';
+        document.getElementById('story-text').value = '';
+        document.getElementById('story-char-count').textContent = '0 znaków';
+        loadUserStories();
+      }
+    } else {
+      btn.textContent = '🌿 Opublikuj historię'; btn.disabled = false;
+      showToast('⚠️ Zaloguj się żeby opublikować historię.');
+    }
   }
 
   function saveDraft() {
     const text = document.getElementById('story-text').value.trim();
     if (!text) { showToast('✏️ Napisz coś zanim zapiszesz szkic'); return; }
-    showToast('💾 Szkic zapisany! Możesz wrócić do niego później.');
+    showToast('💾 Szkic zapisany!');
   }
 
   function scrollToWrite() {
