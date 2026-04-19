@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
@@ -23,562 +22,561 @@
     --white: #FFFFFF;
   }
 
-- { margin: 0; padding: 0; box-sizing: border-box; }
-  body { font-family: ‘Lato’, sans-serif; background: var(–cream); color: var(–text-dark); min-height: 100vh; }
-
-/* ─── TOPBAR ─── */
-.topbar { padding-left: 56px !important;
-position: sticky; top: 0; z-index: 100;
-background: rgba(245,240,232,0.97); backdrop-filter: blur(12px);
-border-bottom: 1px solid var(–sand); height: 60px;
-display: flex; align-items: center; padding: 0 20px; gap: 12px;
-}
-.topbar-logo { font-family: ‘Playfair Display’, serif; font-size: 1.25rem; font-weight: 900; color: var(–sage-dark); text-decoration: none; }
-.topbar-logo span { color: var(–accent); }
-.topbar-sep { color: var(–sand-dark); }
-.topbar-title { font-family: ‘Playfair Display’, serif; font-size: 1rem; font-weight: 700; color: var(–text-mid); }
-.topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-.streak-pill { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(–sage), var(–sage-dark)); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
-.avatar { width: 34px; height: 34px; border-radius: 50%; background: var(–sand); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border: 2px solid var(–sage-light); }
-
-/* ─── HERO ─── */
-.hero {
-background: linear-gradient(145deg, var(–sage-dark) 0%, #3D5E40 55%, #2C4430 100%);
-padding: 56px 24px 60px;
-text-align: center;
-position: relative; overflow: hidden;
-}
-
-.hero::before {
-content: ‘’;
-position: absolute; inset: 0;
-background-image: url(“data:image/svg+xml,%3Csvg width=‘60’ height=‘60’ viewBox=‘0 0 60 60’ xmlns=‘http://www.w3.org/2000/svg’%3E%3Cg fill=‘none’%3E%3Cg fill=’%23A8C5AC’ fill-opacity=‘0.06’%3E%3Ccircle cx=‘30’ cy=‘30’ r=‘2’/%3E%3C/g%3E%3C/g%3E%3C/svg%3E”);
-}
-
-.hero-badge {
-display: inline-flex; align-items: center; gap: 6px;
-background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);
-padding: 5px 16px; border-radius: 20px;
-font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
-margin-bottom: 18px; position: relative;
-}
-
-.hero h1 {
-font-family: ‘Playfair Display’, serif;
-font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
-color: white; line-height: 1.15; margin-bottom: 16px; position: relative;
-}
-
-.hero h1 em { font-style: italic; color: var(–sage-light); }
-
-.hero-sub {
-font-size: 1rem; color: rgba(255,255,255,0.7);
-line-height: 1.7; max-width: 540px; margin: 0 auto 32px;
-font-weight: 300; position: relative;
-}
-
-.hero-write-btn {
-display: inline-flex; align-items: center; gap: 10px;
-background: white; color: var(–sage-dark);
-padding: 14px 32px; border-radius: 40px;
-font-family: ‘Lato’, sans-serif; font-size: 1rem; font-weight: 700;
-text-decoration: none; cursor: pointer; border: none;
-transition: all 0.25s; position: relative;
-box-shadow: 0 4px 20px rgba(0,0,0,0.2);
-}
-
-.hero-write-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
-
-.hero-stats {
-display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
-margin-top: 40px; padding-top: 32px;
-border-top: 1px solid rgba(255,255,255,0.12);
-position: relative;
-}
-
-.hero-stat { text-align: center; }
-.hero-stat-num { font-family: ‘Playfair Display’, serif; font-size: 1.8rem; font-weight: 900; color: white; display: block; }
-.hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
-
-/* ─── LAYOUT ─── */
-.layout { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
-
-/* ─── FILTERS ─── */
-.filters {
-display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
-align-items: center;
-}
-
-.filter-label { font-size: 0.75rem; font-weight: 700; color: var(–text-light); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
-
-.filter-btn {
-padding: 7px 16px; border-radius: 20px;
-border: 2px solid var(–sand); background: white;
-font-family: ‘Lato’, sans-serif; font-size: 0.8rem; font-weight: 700;
-cursor: pointer; color: var(–text-light); transition: all 0.2s;
-}
-
-.filter-btn:hover { border-color: var(–sage-light); color: var(–text-dark); }
-.filter-btn.active { background: var(–sage-dark); border-color: var(–sage-dark); color: white; }
-
-/* ─── FEATURED STORY ─── */
-.featured-story {
-background: white; border-radius: 24px;
-border: 1px solid var(–sand);
-overflow: hidden; margin-bottom: 28px;
-box-shadow: 0 8px 32px rgba(0,0,0,0.06);
-display: grid; grid-template-columns: 1fr 1fr;
-cursor: pointer; transition: all 0.3s;
-}
-
-.featured-story:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.1); }
-
-@media (max-width: 680px) { .featured-story { grid-template-columns: 1fr; } }
-
-.fs-left {
-background: linear-gradient(145deg, var(–sage-dark), #2C4430);
-padding: 36px 32px;
-display: flex; flex-direction: column; justify-content: space-between;
-position: relative; overflow: hidden;
-}
-
-.fs-left::before {
-content: ‘”’;
-position: absolute; top: -20px; left: 16px;
-font-family: ‘Playfair Display’, serif;
-font-size: 10rem; color: rgba(255,255,255,0.05); line-height: 1;
-}
-
-.fs-badge {
-display: inline-flex; align-items: center; gap: 6px;
-background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8);
-padding: 4px 12px; border-radius: 12px;
-font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-width: fit-content; margin-bottom: 20px;
-}
-
-.fs-quote {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.25rem; font-weight: 700; font-style: italic;
-color: white; line-height: 1.5; margin-bottom: 20px;
-position: relative; z-index: 1;
-}
-
-.fs-author { display: flex; align-items: center; gap: 12px; }
-.fs-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(–sage-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
-.fs-name { font-weight: 700; color: white; font-size: 0.9rem; }
-.fs-meta { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
-
-.fs-right { padding: 32px; display: flex; flex-direction: column; justify-content: space-between; }
-
-.fs-days {
-display: inline-flex; align-items: center; gap: 8px;
-background: rgba(122,158,126,0.1); color: var(–sage-dark);
-padding: 6px 14px; border-radius: 12px;
-font-size: 0.78rem; font-weight: 700; width: fit-content; margin-bottom: 16px;
-}
-
-.fs-title { font-family: ‘Playfair Display’, serif; font-size: 1.4rem; font-weight: 900; color: var(–text-dark); margin-bottom: 12px; line-height: 1.3; }
-
-.fs-excerpt { font-size: 0.88rem; color: var(–text-mid); line-height: 1.75; margin-bottom: 20px; }
-
-.fs-source {
-font-size: 0.72rem; color: var(–text-light); font-weight: 700;
-display: flex; align-items: center; gap: 6px;
-}
-
-.read-more-btn {
-display: inline-flex; align-items: center; gap: 8px;
-padding: 10px 22px; background: var(–sage); color: white;
-border: none; border-radius: 12px; font-family: ‘Lato’, sans-serif;
-font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
-text-decoration: none;
-}
-
-.read-more-btn:hover { background: var(–sage-dark); transform: translateX(2px); }
-
-/* ─── STORY GRID ─── */
-.section-header {
-display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
-}
-.section-title { font-family: ‘Playfair Display’, serif; font-size: 1.15rem; font-weight: 900; color: var(–text-dark); white-space: nowrap; }
-.section-header::after { content: ‘’; flex: 1; height: 1px; background: var(–sand); }
-
-.stories-grid {
-display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-gap: 18px; margin-bottom: 32px;
-}
-
-.story-card {
-background: white; border-radius: 20px; border: 1px solid var(–sand);
-overflow: hidden; transition: all 0.3s; cursor: pointer;
-}
-
-.story-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.08); }
-
-.sc-top {
-background: linear-gradient(135deg, var(–sage-dark) 0%, #3D5E40 100%);
-padding: 20px; display: flex; align-items: center; gap: 14px;
-}
-
-.sc-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(–sage-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
-.sc-info { flex: 1; }
-.sc-name { font-weight: 700; color: white; font-size: 0.92rem; margin-bottom: 2px; }
-.sc-meta { font-size: 0.72rem; color: rgba(255,255,255,0.55); }
-.sc-days { font-size: 0.75rem; font-weight: 700; color: var(–sage-light); background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
-
-.sc-body { padding: 18px 20px; }
-
-.sc-title { font-family: ‘Playfair Display’, serif; font-size: 1rem; font-weight: 900; color: var(–text-dark); margin-bottom: 8px; line-height: 1.3; }
-
-.sc-excerpt { font-size: 0.83rem; color: var(–text-mid); line-height: 1.7; margin-bottom: 14px; }
-
-.sc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
-
-.sc-tag { font-size: 0.67rem; padding: 3px 9px; border-radius: 10px; background: var(–cream); color: var(–text-light); font-weight: 700; border: 1px solid var(–sand); }
-
-.sc-footer { padding: 12px 20px; background: var(–cream); display: flex; align-items: center; justify-content: space-between; }
-
-.sc-source { font-size: 0.68rem; color: var(–text-light); font-weight: 700; }
-
-.sc-read { font-size: 0.75rem; font-weight: 700; color: var(–sage-dark); cursor: pointer; background: none; border: none; font-family: ‘Lato’, sans-serif; }
-.sc-read:hover { text-decoration: underline; }
-
-/* ─── USER STORIES ─── */
-.user-story-card {
-background: white; border-radius: 20px; border: 2px solid rgba(122,158,126,0.25);
-overflow: hidden; transition: all 0.3s; cursor: pointer;
-position: relative;
-}
-
-.user-story-card::before {
-content: ‘👥’;
-position: absolute; top: 12px; right: 14px;
-font-size: 0.9rem; opacity: 0.5;
-}
-
-.user-story-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(122,158,126,0.12); border-color: var(–sage-light); }
-
-/* ─── WRITE YOUR STORY ─── */
-.write-section {
-background: white; border-radius: 24px;
-border: 2px solid var(–sand);
-overflow: hidden; margin-top: 40px;
-}
-
-.write-header {
-background: linear-gradient(135deg, var(–accent) 0%, #A0612A 100%);
-padding: 28px 32px;
-display: flex; align-items: center; gap: 16px;
-}
-
-.write-header-icon { font-size: 2rem; }
-
-.write-header-text {}
-.write-header-title { font-family: ‘Playfair Display’, serif; font-size: 1.3rem; font-weight: 900; color: white; margin-bottom: 4px; }
-.write-header-sub { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
-
-.write-form { padding: 28px 32px; }
-
-@media (max-width: 600px) { .write-form { padding: 20px; } .write-header { padding: 22px 20px; } }
-
-.form-row { margin-bottom: 20px; }
-
-.form-row label {
-display: block; font-size: 0.75rem; font-weight: 700;
-text-transform: uppercase; letter-spacing: 0.06em;
-color: var(–text-mid); margin-bottom: 7px;
-}
-
-.form-input {
-width: 100%; padding: 12px 14px;
-border: 2px solid var(–sand); border-radius: 12px;
-background: var(–warm-white); font-family: ‘Lato’, sans-serif;
-font-size: 0.92rem; color: var(–text-dark); outline: none;
-transition: all 0.2s;
-}
-
-.form-input:focus { border-color: var(–sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
-
-.form-textarea {
-width: 100%; padding: 14px;
-border: 2px solid var(–sand); border-radius: 12px;
-background: var(–warm-white); font-family: ‘Caveat’, cursive;
-font-size: 1.1rem; color: var(–text-mid); outline: none;
-resize: none; min-height: 200px; line-height: 1.7;
-transition: all 0.2s;
-}
-
-.form-textarea:focus { border-color: var(–sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
-.form-textarea::placeholder { color: var(–sand-dark); }
-
-.form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 500px) { .form-row-2 { grid-template-columns: 1fr; } }
-
-.tags-select { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
-
-.tag-opt {
-padding: 6px 14px; border-radius: 16px;
-border: 2px solid var(–sand); background: white;
-font-family: ‘Lato’, sans-serif; font-size: 0.78rem; font-weight: 700;
-cursor: pointer; color: var(–text-light); transition: all 0.2s;
-}
-
-.tag-opt:hover, .tag-opt.selected { border-color: var(–sage); background: rgba(122,158,126,0.08); color: var(–sage-dark); }
-
-/* Share toggle */
-.share-toggle {
-background: rgba(122,158,126,0.06); border: 1px solid rgba(122,158,126,0.2);
-border-radius: 14px; padding: 16px 18px; margin-bottom: 20px;
-display: flex; align-items: flex-start; gap: 14px; cursor: pointer;
-transition: all 0.2s;
-}
-
-.share-toggle:hover { background: rgba(122,158,126,0.1); }
-
-.toggle-switch {
-width: 44px; height: 24px; border-radius: 12px;
-background: var(–sand); position: relative;
-flex-shrink: 0; margin-top: 1px; transition: background 0.3s;
-cursor: pointer;
-}
-
-.toggle-switch::after {
-content: ‘’; position: absolute;
-width: 18px; height: 18px; border-radius: 50%;
-background: white; top: 3px; left: 3px;
-transition: left 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
-}
-
-.toggle-switch.on { background: var(–sage); }
-.toggle-switch.on::after { left: 23px; }
-
-.share-text { flex: 1; }
-.share-title { font-size: 0.88rem; font-weight: 700; color: var(–text-dark); margin-bottom: 3px; }
-.share-desc { font-size: 0.78rem; color: var(–text-light); line-height: 1.5; }
-
-/* Privacy note */
-.privacy-note {
-background: var(–cream); border-radius: 12px;
-padding: 12px 16px; margin-bottom: 20px;
-font-size: 0.78rem; color: var(–text-light); line-height: 1.6;
-display: flex; gap: 8px; align-items: flex-start;
-}
-
-.submit-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
-
-.submit-btn {
-padding: 13px 32px; background: var(–accent); color: white;
-border: none; border-radius: 12px; font-family: ‘Lato’, sans-serif;
-font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s;
-}
-
-.submit-btn:hover { background: #A0612A; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(193,123,58,0.4); }
-
-.save-draft-btn {
-padding: 13px 24px; background: transparent; color: var(–text-light);
-border: 2px solid var(–sand); border-radius: 12px;
-font-family: ‘Lato’, sans-serif; font-size: 0.88rem; font-weight: 700;
-cursor: pointer; transition: all 0.2s;
-}
-
-.save-draft-btn:hover { background: var(–sand); color: var(–text-dark); }
-
-.char-remaining { font-size: 0.75rem; color: var(–text-light); margin-left: auto; font-weight: 700; }
-
-/* Full story modal */
-.modal-overlay {
-position: fixed; inset: 0; background: rgba(44,36,22,0.85);
-z-index: 200; display: none; align-items: center; justify-content: center;
-padding: 20px;
-}
-
-.modal-overlay.open { display: flex; }
-
-.modal {
-background: white; border-radius: 24px;
-max-width: 640px; width: 100%; max-height: 85vh;
-overflow-y: auto; animation: slideUp 0.35s ease;
-}
-
-@keyframes slideUp {
-from { opacity: 0; transform: translateY(20px); }
-to { opacity: 1; transform: translateY(0); }
-}
-
-.modal-hero {
-background: linear-gradient(135deg, var(–sage-dark), #2C4430);
-padding: 28px 28px 24px;
-position: relative;
-}
-
-.modal-close {
-position: absolute; top: 16px; right: 16px;
-width: 32px; height: 32px; border-radius: 50%;
-background: rgba(255,255,255,0.1); border: none;
-color: white; font-size: 1rem; cursor: pointer;
-display: flex; align-items: center; justify-content: center;
-transition: all 0.2s;
-}
-
-.modal-close:hover { background: rgba(255,255,255,0.2); }
-
-.modal-body { padding: 24px 28px 28px; }
-
-.modal-text {
-font-family: ‘Caveat’, cursive; font-size: 1.1rem;
-color: var(–text-mid); line-height: 1.8; margin-bottom: 20px;
-}
-
-.modal-source {
-font-size: 0.75rem; color: var(–text-light); font-weight: 700;
-padding: 10px 14px; background: var(–cream); border-radius: 10px;
-display: flex; align-items: center; gap: 6px;
-}
-
-/* Toast */
-.toast {
-position: fixed; bottom: 24px; left: 50%;
-transform: translateX(-50%) translateY(80px);
-background: var(–sage-dark); color: white;
-padding: 12px 24px; border-radius: 40px;
-font-size: 0.88rem; font-weight: 700;
-box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998;
-transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
-}
-.toast.show { transform: translateX(-50%) translateY(0); }
-
-/* ─── UNIFIED SIDEBAR NAV ─── */
-.sidenav {
-position: fixed; left: 0; top: 0; bottom: 0;
-width: 220px; background: #2C4430; z-index: 200;
-display: flex; flex-direction: column;
-transform: translateX(-100%);
-transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
-box-shadow: 4px 0 24px rgba(0,0,0,0.2);
-}
-.sidenav.open { transform: translateX(0); }
-
-.sidenav-logo {
-padding: 20px 18px 16px;
-border-bottom: 1px solid rgba(255,255,255,0.08);
-display: flex; align-items: center; justify-content: space-between;
-}
-
-.sidenav-logo-text {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.3rem; font-weight: 900; color: white;
-text-decoration: none;
-}
-.sidenav-logo-text span { color: #A8C5AC; }
-
-.sidenav-close {
-width: 28px; height: 28px; border-radius: 8px;
-background: rgba(255,255,255,0.08); border: none;
-color: rgba(255,255,255,0.6); font-size: 0.9rem;
-cursor: pointer; display: flex; align-items: center; justify-content: center;
-transition: all 0.2s;
-}
-.sidenav-close:hover { background: rgba(255,255,255,0.15); color: white; }
-
-.sidenav-streak {
-margin: 14px 16px;
-background: rgba(255,255,255,0.06);
-border-radius: 12px; padding: 10px 14px;
-display: flex; align-items: center; gap: 8px;
-}
-.sidenav-streak-num {
-font-family: ‘Playfair Display’, serif;
-font-size: 1.3rem; font-weight: 900; color: #A8C5AC;
-}
-.sidenav-streak-label {
-font-size: 0.72rem; color: rgba(255,255,255,0.5);
-font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
-}
-
-.sidenav-links {
-flex: 1; padding: 8px 10px; overflow-y: auto;
-}
-
-.sidenav-section {
-font-size: 0.62rem; font-weight: 700;
-text-transform: uppercase; letter-spacing: 0.1em;
-color: rgba(255,255,255,0.3); padding: 12px 8px 6px;
-}
-
-.sidenav-link {
-display: flex; align-items: center; gap: 10px;
-padding: 10px 10px; border-radius: 10px;
-text-decoration: none; color: rgba(255,255,255,0.65);
-font-size: 0.88rem; font-weight: 700;
-transition: all 0.2s; margin-bottom: 2px;
-cursor: pointer; border: none; background: none;
-font-family: ‘Lato’, sans-serif; width: 100%; text-align: left;
-}
-
-.sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
-.sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
-
-.sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
-
-.sidenav-bottom {
-padding: 14px 10px;
-border-top: 1px solid rgba(255,255,255,0.08);
-}
-
-.sidenav-crisis {
-display: flex; align-items: center; gap: 8px;
-padding: 10px 12px; border-radius: 10px;
-background: rgba(192,57,43,0.2); color: #E88080;
-text-decoration: none; font-size: 0.82rem; font-weight: 700;
-transition: all 0.2s; margin-bottom: 8px;
-}
-.sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
-
-.sidenav-logout {
-display: flex; align-items: center; gap: 8px;
-padding: 8px 12px; border-radius: 10px;
-color: rgba(255,255,255,0.35); font-size: 0.8rem; font-weight: 700;
-cursor: pointer; transition: all 0.2s; border: none; background: none;
-font-family: ‘Lato’, sans-serif; width: 100%;
-}
-.sidenav-logout:hover { color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.05); }
-
-/* Hamburger button */
-.hamburger {
-position: fixed; top: 14px; left: 14px; z-index: 199;
-width: 36px; height: 36px; border-radius: 10px;
-background: #5C7A60; border: none; cursor: pointer;
-display: flex; flex-direction: column; align-items: center;
-justify-content: center; gap: 4px; transition: all 0.2s;
-box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-.hamburger:hover { background: #3D5E40; }
-.hamburger span {
-display: block; width: 16px; height: 2px;
-background: white; border-radius: 2px; transition: all 0.3s;
-}
-
-/* Overlay */
-.nav-overlay {
-position: fixed; inset: 0; background: rgba(0,0,0,0.5);
-z-index: 199; display: none;
-backdrop-filter: blur(2px);
-}
-.nav-overlay.open { display: block; }
-
-/* Push topbar right when nav open on desktop */
-@media (min-width: 900px) {
-.sidenav { transform: translateX(-100%); }
-.hamburger { display: flex; }
-}
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+
+  /* ─── TOPBAR ─── */
+  .topbar { padding-left: 56px !important;
+    position: sticky; top: 0; z-index: 100;
+    background: rgba(245,240,232,0.97); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--sand); height: 60px;
+    display: flex; align-items: center; padding: 0 20px; gap: 12px;
+  }
+  .topbar-logo { font-family: 'Playfair Display', serif; font-size: 1.25rem; font-weight: 900; color: var(--sage-dark); text-decoration: none; }
+  .topbar-logo span { color: var(--accent); }
+  .topbar-sep { color: var(--sand-dark); }
+  .topbar-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 700; color: var(--text-mid); }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .streak-pill { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: white; padding: 6px 14px; border-radius: 20px; font-size: 0.82rem; font-weight: 700; }
+  .avatar { width: 34px; height: 34px; border-radius: 50%; background: var(--sand); display: flex; align-items: center; justify-content: center; font-size: 1rem; cursor: pointer; border: 2px solid var(--sage-light); }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(145deg, var(--sage-dark) 0%, #3D5E40 55%, #2C4430 100%);
+    padding: 56px 24px 60px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none'%3E%3Cg fill='%23A8C5AC' fill-opacity='0.06'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+  }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.8);
+    padding: 5px 16px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em;
+    margin-bottom: 18px; position: relative;
+  }
+
+  .hero h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(2rem, 5vw, 3rem); font-weight: 900;
+    color: white; line-height: 1.15; margin-bottom: 16px; position: relative;
+  }
+
+  .hero h1 em { font-style: italic; color: var(--sage-light); }
+
+  .hero-sub {
+    font-size: 1rem; color: rgba(255,255,255,0.7);
+    line-height: 1.7; max-width: 540px; margin: 0 auto 32px;
+    font-weight: 300; position: relative;
+  }
+
+  .hero-write-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: white; color: var(--sage-dark);
+    padding: 14px 32px; border-radius: 40px;
+    font-family: 'Lato', sans-serif; font-size: 1rem; font-weight: 700;
+    text-decoration: none; cursor: pointer; border: none;
+    transition: all 0.25s; position: relative;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+  }
+
+  .hero-write-btn:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,0,0,0.25); }
+
+  .hero-stats {
+    display: flex; justify-content: center; gap: 40px; flex-wrap: wrap;
+    margin-top: 40px; padding-top: 32px;
+    border-top: 1px solid rgba(255,255,255,0.12);
+    position: relative;
+  }
+
+  .hero-stat { text-align: center; }
+  .hero-stat-num { font-family: 'Playfair Display', serif; font-size: 1.8rem; font-weight: 900; color: white; display: block; }
+  .hero-stat-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* ─── LAYOUT ─── */
+  .layout { max-width: 1000px; margin: 0 auto; padding: 40px 20px 60px; }
+
+  /* ─── FILTERS ─── */
+  .filters {
+    display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+    align-items: center;
+  }
+
+  .filter-label { font-size: 0.75rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.08em; margin-right: 4px; }
+
+  .filter-btn {
+    padding: 7px 16px; border-radius: 20px;
+    border: 2px solid var(--sand); background: white;
+    font-family: 'Lato', sans-serif; font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; color: var(--text-light); transition: all 0.2s;
+  }
+
+  .filter-btn:hover { border-color: var(--sage-light); color: var(--text-dark); }
+  .filter-btn.active { background: var(--sage-dark); border-color: var(--sage-dark); color: white; }
+
+  /* ─── FEATURED STORY ─── */
+  .featured-story {
+    background: white; border-radius: 24px;
+    border: 1px solid var(--sand);
+    overflow: hidden; margin-bottom: 28px;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.06);
+    display: grid; grid-template-columns: 1fr 1fr;
+    cursor: pointer; transition: all 0.3s;
+  }
+
+  .featured-story:hover { transform: translateY(-3px); box-shadow: 0 14px 40px rgba(0,0,0,0.1); }
+
+  @media (max-width: 680px) { .featured-story { grid-template-columns: 1fr; } }
+
+  .fs-left {
+    background: linear-gradient(145deg, var(--sage-dark), #2C4430);
+    padding: 36px 32px;
+    display: flex; flex-direction: column; justify-content: space-between;
+    position: relative; overflow: hidden;
+  }
+
+  .fs-left::before {
+    content: '"';
+    position: absolute; top: -20px; left: 16px;
+    font-family: 'Playfair Display', serif;
+    font-size: 10rem; color: rgba(255,255,255,0.05); line-height: 1;
+  }
+
+  .fs-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.8);
+    padding: 4px 12px; border-radius: 12px;
+    font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
+    width: fit-content; margin-bottom: 20px;
+  }
+
+  .fs-quote {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.25rem; font-weight: 700; font-style: italic;
+    color: white; line-height: 1.5; margin-bottom: 20px;
+    position: relative; z-index: 1;
+  }
+
+  .fs-author { display: flex; align-items: center; gap: 12px; }
+  .fs-avatar { width: 44px; height: 44px; border-radius: 50%; background: var(--sage-light); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; }
+  .fs-name { font-weight: 700; color: white; font-size: 0.9rem; }
+  .fs-meta { font-size: 0.72rem; color: rgba(255,255,255,0.55); margin-top: 2px; }
+
+  .fs-right { padding: 32px; display: flex; flex-direction: column; justify-content: space-between; }
+
+  .fs-days {
+    display: inline-flex; align-items: center; gap: 8px;
+    background: rgba(122,158,126,0.1); color: var(--sage-dark);
+    padding: 6px 14px; border-radius: 12px;
+    font-size: 0.78rem; font-weight: 700; width: fit-content; margin-bottom: 16px;
+  }
+
+  .fs-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin-bottom: 12px; line-height: 1.3; }
+
+  .fs-excerpt { font-size: 0.88rem; color: var(--text-mid); line-height: 1.75; margin-bottom: 20px; }
+
+  .fs-source {
+    font-size: 0.72rem; color: var(--text-light); font-weight: 700;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  .read-more-btn {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 10px 22px; background: var(--sage); color: white;
+    border: none; border-radius: 12px; font-family: 'Lato', sans-serif;
+    font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s;
+    text-decoration: none;
+  }
+
+  .read-more-btn:hover { background: var(--sage-dark); transform: translateX(2px); }
+
+  /* ─── STORY GRID ─── */
+  .section-header {
+    display: flex; align-items: center; gap: 10px; margin-bottom: 20px;
+  }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.15rem; font-weight: 900; color: var(--text-dark); white-space: nowrap; }
+  .section-header::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
+
+  .stories-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 18px; margin-bottom: 32px;
+  }
+
+  .story-card {
+    background: white; border-radius: 20px; border: 1px solid var(--sand);
+    overflow: hidden; transition: all 0.3s; cursor: pointer;
+  }
+
+  .story-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(0,0,0,0.08); }
+
+  .sc-top {
+    background: linear-gradient(135deg, var(--sage-dark) 0%, #3D5E40 100%);
+    padding: 20px; display: flex; align-items: center; gap: 14px;
+  }
+
+  .sc-avatar { width: 48px; height: 48px; border-radius: 50%; background: var(--sage-light); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; flex-shrink: 0; }
+  .sc-info { flex: 1; }
+  .sc-name { font-weight: 700; color: white; font-size: 0.92rem; margin-bottom: 2px; }
+  .sc-meta { font-size: 0.72rem; color: rgba(255,255,255,0.55); }
+  .sc-days { font-size: 0.75rem; font-weight: 700; color: var(--sage-light); background: rgba(255,255,255,0.1); padding: 4px 10px; border-radius: 10px; white-space: nowrap; flex-shrink: 0; }
+
+  .sc-body { padding: 18px 20px; }
+
+  .sc-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; line-height: 1.3; }
+
+  .sc-excerpt { font-size: 0.83rem; color: var(--text-mid); line-height: 1.7; margin-bottom: 14px; }
+
+  .sc-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+
+  .sc-tag { font-size: 0.67rem; padding: 3px 9px; border-radius: 10px; background: var(--cream); color: var(--text-light); font-weight: 700; border: 1px solid var(--sand); }
+
+  .sc-footer { padding: 12px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; }
+
+  .sc-source { font-size: 0.68rem; color: var(--text-light); font-weight: 700; }
+
+  .sc-read { font-size: 0.75rem; font-weight: 700; color: var(--sage-dark); cursor: pointer; background: none; border: none; font-family: 'Lato', sans-serif; }
+  .sc-read:hover { text-decoration: underline; }
+
+  /* ─── USER STORIES ─── */
+  .user-story-card {
+    background: white; border-radius: 20px; border: 2px solid rgba(122,158,126,0.25);
+    overflow: hidden; transition: all 0.3s; cursor: pointer;
+    position: relative;
+  }
+
+  .user-story-card::before {
+    content: '👥';
+    position: absolute; top: 12px; right: 14px;
+    font-size: 0.9rem; opacity: 0.5;
+  }
+
+  .user-story-card:hover { transform: translateY(-4px); box-shadow: 0 10px 32px rgba(122,158,126,0.12); border-color: var(--sage-light); }
+
+  /* ─── WRITE YOUR STORY ─── */
+  .write-section {
+    background: white; border-radius: 24px;
+    border: 2px solid var(--sand);
+    overflow: hidden; margin-top: 40px;
+  }
+
+  .write-header {
+    background: linear-gradient(135deg, var(--accent) 0%, #A0612A 100%);
+    padding: 28px 32px;
+    display: flex; align-items: center; gap: 16px;
+  }
+
+  .write-header-icon { font-size: 2rem; }
+
+  .write-header-text {}
+  .write-header-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: white; margin-bottom: 4px; }
+  .write-header-sub { font-size: 0.85rem; color: rgba(255,255,255,0.75); line-height: 1.5; }
+
+  .write-form { padding: 28px 32px; }
+
+  @media (max-width: 600px) { .write-form { padding: 20px; } .write-header { padding: 22px 20px; } }
+
+  .form-row { margin-bottom: 20px; }
+
+  .form-row label {
+    display: block; font-size: 0.75rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.06em;
+    color: var(--text-mid); margin-bottom: 7px;
+  }
+
+  .form-input {
+    width: 100%; padding: 12px 14px;
+    border: 2px solid var(--sand); border-radius: 12px;
+    background: var(--warm-white); font-family: 'Lato', sans-serif;
+    font-size: 0.92rem; color: var(--text-dark); outline: none;
+    transition: all 0.2s;
+  }
+
+  .form-input:focus { border-color: var(--sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
+
+  .form-textarea {
+    width: 100%; padding: 14px;
+    border: 2px solid var(--sand); border-radius: 12px;
+    background: var(--warm-white); font-family: 'Caveat', cursive;
+    font-size: 1.1rem; color: var(--text-mid); outline: none;
+    resize: none; min-height: 200px; line-height: 1.7;
+    transition: all 0.2s;
+  }
+
+  .form-textarea:focus { border-color: var(--sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
+  .form-textarea::placeholder { color: var(--sand-dark); }
+
+  .form-row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 500px) { .form-row-2 { grid-template-columns: 1fr; } }
+
+  .tags-select { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 4px; }
+
+  .tag-opt {
+    padding: 6px 14px; border-radius: 16px;
+    border: 2px solid var(--sand); background: white;
+    font-family: 'Lato', sans-serif; font-size: 0.78rem; font-weight: 700;
+    cursor: pointer; color: var(--text-light); transition: all 0.2s;
+  }
+
+  .tag-opt:hover, .tag-opt.selected { border-color: var(--sage); background: rgba(122,158,126,0.08); color: var(--sage-dark); }
+
+  /* Share toggle */
+  .share-toggle {
+    background: rgba(122,158,126,0.06); border: 1px solid rgba(122,158,126,0.2);
+    border-radius: 14px; padding: 16px 18px; margin-bottom: 20px;
+    display: flex; align-items: flex-start; gap: 14px; cursor: pointer;
+    transition: all 0.2s;
+  }
+
+  .share-toggle:hover { background: rgba(122,158,126,0.1); }
+
+  .toggle-switch {
+    width: 44px; height: 24px; border-radius: 12px;
+    background: var(--sand); position: relative;
+    flex-shrink: 0; margin-top: 1px; transition: background 0.3s;
+    cursor: pointer;
+  }
+
+  .toggle-switch::after {
+    content: ''; position: absolute;
+    width: 18px; height: 18px; border-radius: 50%;
+    background: white; top: 3px; left: 3px;
+    transition: left 0.3s; box-shadow: 0 1px 4px rgba(0,0,0,0.2);
+  }
+
+  .toggle-switch.on { background: var(--sage); }
+  .toggle-switch.on::after { left: 23px; }
+
+  .share-text { flex: 1; }
+  .share-title { font-size: 0.88rem; font-weight: 700; color: var(--text-dark); margin-bottom: 3px; }
+  .share-desc { font-size: 0.78rem; color: var(--text-light); line-height: 1.5; }
+
+  /* Privacy note */
+  .privacy-note {
+    background: var(--cream); border-radius: 12px;
+    padding: 12px 16px; margin-bottom: 20px;
+    font-size: 0.78rem; color: var(--text-light); line-height: 1.6;
+    display: flex; gap: 8px; align-items: flex-start;
+  }
+
+  .submit-row { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; }
+
+  .submit-btn {
+    padding: 13px 32px; background: var(--accent); color: white;
+    border: none; border-radius: 12px; font-family: 'Lato', sans-serif;
+    font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s;
+  }
+
+  .submit-btn:hover { background: #A0612A; transform: translateY(-2px); box-shadow: 0 6px 20px rgba(193,123,58,0.4); }
+
+  .save-draft-btn {
+    padding: 13px 24px; background: transparent; color: var(--text-light);
+    border: 2px solid var(--sand); border-radius: 12px;
+    font-family: 'Lato', sans-serif; font-size: 0.88rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s;
+  }
+
+  .save-draft-btn:hover { background: var(--sand); color: var(--text-dark); }
+
+  .char-remaining { font-size: 0.75rem; color: var(--text-light); margin-left: auto; font-weight: 700; }
+
+  /* Full story modal */
+  .modal-overlay {
+    position: fixed; inset: 0; background: rgba(44,36,22,0.85);
+    z-index: 200; display: none; align-items: center; justify-content: center;
+    padding: 20px;
+  }
+
+  .modal-overlay.open { display: flex; }
+
+  .modal {
+    background: white; border-radius: 24px;
+    max-width: 640px; width: 100%; max-height: 85vh;
+    overflow-y: auto; animation: slideUp 0.35s ease;
+  }
+
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .modal-hero {
+    background: linear-gradient(135deg, var(--sage-dark), #2C4430);
+    padding: 28px 28px 24px;
+    position: relative;
+  }
+
+  .modal-close {
+    position: absolute; top: 16px; right: 16px;
+    width: 32px; height: 32px; border-radius: 50%;
+    background: rgba(255,255,255,0.1); border: none;
+    color: white; font-size: 1rem; cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+
+  .modal-close:hover { background: rgba(255,255,255,0.2); }
+
+  .modal-body { padding: 24px 28px 28px; }
+
+  .modal-text {
+    font-family: 'Caveat', cursive; font-size: 1.1rem;
+    color: var(--text-mid); line-height: 1.8; margin-bottom: 20px;
+  }
+
+  .modal-source {
+    font-size: 0.75rem; color: var(--text-light); font-weight: 700;
+    padding: 10px 14px; background: var(--cream); border-radius: 10px;
+    display: flex; align-items: center; gap: 6px;
+  }
+
+  /* Toast */
+  .toast {
+    position: fixed; bottom: 24px; left: 50%;
+    transform: translateX(-50%) translateY(80px);
+    background: var(--sage-dark); color: white;
+    padding: 12px 24px; border-radius: 40px;
+    font-size: 0.88rem; font-weight: 700;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998;
+    transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap;
+  }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* ─── UNIFIED SIDEBAR NAV ─── */
+  .sidenav {
+    position: fixed; left: 0; top: 0; bottom: 0;
+    width: 220px; background: #2C4430; z-index: 200;
+    display: flex; flex-direction: column;
+    transform: translateX(-100%);
+    transition: transform 0.3s cubic-bezier(0.4,0,0.2,1);
+    box-shadow: 4px 0 24px rgba(0,0,0,0.2);
+  }
+  .sidenav.open { transform: translateX(0); }
+
+  .sidenav-logo {
+    padding: 20px 18px 16px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+  }
+
+  .sidenav-logo-text {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 900; color: white;
+    text-decoration: none;
+  }
+  .sidenav-logo-text span { color: #A8C5AC; }
+
+  .sidenav-close {
+    width: 28px; height: 28px; border-radius: 8px;
+    background: rgba(255,255,255,0.08); border: none;
+    color: rgba(255,255,255,0.6); font-size: 0.9rem;
+    cursor: pointer; display: flex; align-items: center; justify-content: center;
+    transition: all 0.2s;
+  }
+  .sidenav-close:hover { background: rgba(255,255,255,0.15); color: white; }
+
+  .sidenav-streak {
+    margin: 14px 16px;
+    background: rgba(255,255,255,0.06);
+    border-radius: 12px; padding: 10px 14px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .sidenav-streak-num {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem; font-weight: 900; color: #A8C5AC;
+  }
+  .sidenav-streak-label {
+    font-size: 0.72rem; color: rgba(255,255,255,0.5);
+    font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+
+  .sidenav-links {
+    flex: 1; padding: 8px 10px; overflow-y: auto;
+  }
+
+  .sidenav-section {
+    font-size: 0.62rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.1em;
+    color: rgba(255,255,255,0.3); padding: 12px 8px 6px;
+  }
+
+  .sidenav-link {
+    display: flex; align-items: center; gap: 10px;
+    padding: 10px 10px; border-radius: 10px;
+    text-decoration: none; color: rgba(255,255,255,0.65);
+    font-size: 0.88rem; font-weight: 700;
+    transition: all 0.2s; margin-bottom: 2px;
+    cursor: pointer; border: none; background: none;
+    font-family: 'Lato', sans-serif; width: 100%; text-align: left;
+  }
+
+  .sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+  .sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
+
+  .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+
+  .sidenav-bottom {
+    padding: 14px 10px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .sidenav-crisis {
+    display: flex; align-items: center; gap: 8px;
+    padding: 10px 12px; border-radius: 10px;
+    background: rgba(192,57,43,0.2); color: #E88080;
+    text-decoration: none; font-size: 0.82rem; font-weight: 700;
+    transition: all 0.2s; margin-bottom: 8px;
+  }
+  .sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
+
+  .sidenav-logout {
+    display: flex; align-items: center; gap: 8px;
+    padding: 8px 12px; border-radius: 10px;
+    color: rgba(255,255,255,0.35); font-size: 0.8rem; font-weight: 700;
+    cursor: pointer; transition: all 0.2s; border: none; background: none;
+    font-family: 'Lato', sans-serif; width: 100%;
+  }
+  .sidenav-logout:hover { color: rgba(255,255,255,0.65); background: rgba(255,255,255,0.05); }
+
+  /* Hamburger button */
+  .hamburger {
+    position: fixed; top: 14px; left: 14px; z-index: 199;
+    width: 36px; height: 36px; border-radius: 10px;
+    background: #5C7A60; border: none; cursor: pointer;
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 4px; transition: all 0.2s;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+  }
+  .hamburger:hover { background: #3D5E40; }
+  .hamburger span {
+    display: block; width: 16px; height: 2px;
+    background: white; border-radius: 2px; transition: all 0.3s;
+  }
+
+  /* Overlay */
+  .nav-overlay {
+    position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+    z-index: 199; display: none;
+    backdrop-filter: blur(2px);
+  }
+  .nav-overlay.open { display: block; }
+
+  /* Push topbar right when nav open on desktop */
+  @media (min-width: 900px) {
+    .sidenav { transform: translateX(-100%); }
+    .hamburger { display: flex; }
+  }
 
 </style>
 </head>
 <body>
 
   <!-- Sidebar Nav -->
-
   <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 
   <nav class="sidenav" id="sidenav">
@@ -613,8 +611,8 @@ backdrop-filter: blur(2px);
     <span></span><span></span><span></span>
   </button>
 
-<!-- Story modal -->
 
+<!-- Story modal -->
 <div class="modal-overlay" id="modal" onclick="closeModal(event)">
   <div class="modal" id="modal-box">
     <div class="modal-hero">
@@ -637,7 +635,6 @@ backdrop-filter: blur(2px);
 </div>
 
 <!-- Topbar -->
-
 <div class="topbar">
   <a href="/wolnagra.html" class="topbar-logo">Wolna<span>Gra</span></a>
   <div class="topbar-sep">/</div>
@@ -649,7 +646,6 @@ backdrop-filter: blur(2px);
 </div>
 
 <!-- Hero -->
-
 <div class="hero">
   <div class="hero-badge">📚 Prawdziwe świadectwa</div>
   <h1>Oni to zrobili.<br><em>Ty też możesz.</em></h1>
@@ -674,7 +670,6 @@ backdrop-filter: blur(2px);
 <div class="layout">
 
   <!-- Filters -->
-
   <div class="filters">
     <span class="filter-label">Filtruj:</span>
     <button class="filter-btn active" onclick="filterStories('all', this)">🌿 Wszystkie</button>
@@ -685,7 +680,6 @@ backdrop-filter: blur(2px);
   </div>
 
   <!-- Featured story -->
-
   <div class="featured-story" onclick="openModal('featured')">
     <div class="fs-left">
       <div>
@@ -712,167 +706,163 @@ backdrop-filter: blur(2px);
   </div>
 
   <!-- Other stories -->
-
   <div class="section-header">
     <div class="section-title">📖 Historie społeczności</div>
   </div>
 
   <div class="stories-grid" id="stories-grid">
 
-```
-<!-- Story 1 -->
-<div class="story-card" data-tags="kasyno rodzina" onclick="openModal('s1')">
-  <div class="sc-top">
-    <div class="sc-avatar">👩</div>
-    <div class="sc-info">
-      <div class="sc-name">Marta, 34 lata</div>
-      <div class="sc-meta">Kasyno online · 4 lata uzależnienia</div>
+    <!-- Story 1 -->
+    <div class="story-card" data-tags="kasyno rodzina" onclick="openModal('s1')">
+      <div class="sc-top">
+        <div class="sc-avatar">👩</div>
+        <div class="sc-info">
+          <div class="sc-name">Marta, 34 lata</div>
+          <div class="sc-meta">Kasyno online · 4 lata uzależnienia</div>
+        </div>
+        <div class="sc-days">🔥 412 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"Grałam po nocach, żeby mąż nie wiedział"</div>
+        <div class="sc-excerpt">Długi urosły do 40 tysięcy. Mąż dowiedział się przez przypadek — znalazł wyciąg bankowy. Myślałam że to koniec małżeństwa. Zamiast tego stał się moim największym wsparciem. Poproszenie o pomoc było najtrudniejszą i najlepszą decyzją mojego życia.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">👥 Rodzina</span>
+          <span class="sc-tag">🎰 Kasyno</span>
+          <span class="sc-tag">💪 Wyszłam z długów</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">Społeczność WolnaGra</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s1')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 412 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"Grałam po nocach, żeby mąż nie wiedział"</div>
-    <div class="sc-excerpt">Długi urosły do 40 tysięcy. Mąż dowiedział się przez przypadek — znalazł wyciąg bankowy. Myślałam że to koniec małżeństwa. Zamiast tego stał się moim największym wsparciem. Poproszenie o pomoc było najtrudniejszą i najlepszą decyzją mojego życia.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">👥 Rodzina</span>
-      <span class="sc-tag">🎰 Kasyno</span>
-      <span class="sc-tag">💪 Wyszłam z długów</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">Społeczność WolnaGra</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s1')">Czytaj →</button>
-  </div>
-</div>
 
-<!-- Story 2 -->
-<div class="story-card" data-tags="automaty" onclick="openModal('s2')">
-  <div class="sc-top">
-    <div class="sc-avatar">👨‍🦳</div>
-    <div class="sc-info">
-      <div class="sc-name">Tomasz, 52 lata</div>
-      <div class="sc-meta">Automaty · 15 lat uzależnienia</div>
+    <!-- Story 2 -->
+    <div class="story-card" data-tags="automaty" onclick="openModal('s2')">
+      <div class="sc-top">
+        <div class="sc-avatar">👨‍🦳</div>
+        <div class="sc-info">
+          <div class="sc-name">Tomasz, 52 lata</div>
+          <div class="sc-meta">Automaty · 15 lat uzależnienia</div>
+        </div>
+        <div class="sc-days">🔥 243 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"Myślałem że w moim wieku to już niemożliwe"</div>
+        <div class="sc-excerpt">Piętnaście lat przy automatach. Myślałem że jestem za stary żeby zacząć od nowa. Że zbyt wiele stracone. Ale 243 dni temu coś we mnie pękło. Tu znalazłem ludzi którzy nie oceniają — po prostu rozumieją. Każdy dzień jest wyzwaniem. I każdy dzień jest zwycięstwem.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">🎯 Automaty</span>
+          <span class="sc-tag">🕐 Późny start</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">Społeczność WolnaGra</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s2')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 243 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"Myślałem że w moim wieku to już niemożliwe"</div>
-    <div class="sc-excerpt">Piętnaście lat przy automatach. Myślałem że jestem za stary żeby zacząć od nowa. Że zbyt wiele stracone. Ale 243 dni temu coś we mnie pękło. Tu znalazłem ludzi którzy nie oceniają — po prostu rozumieją. Każdy dzień jest wyzwaniem. I każdy dzień jest zwycięstwem.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">🎯 Automaty</span>
-      <span class="sc-tag">🕐 Późny start</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">Społeczność WolnaGra</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s2')">Czytaj →</button>
-  </div>
-</div>
 
-<!-- Story 3 -->
-<div class="story-card" data-tags="zakłady rodzina" onclick="openModal('s3')">
-  <div class="sc-top">
-    <div class="sc-avatar">👨</div>
-    <div class="sc-info">
-      <div class="sc-name">Paweł, 29 lat</div>
-      <div class="sc-meta">Zakłady sportowe · 5 lat uzależnienia</div>
+    <!-- Story 3 -->
+    <div class="story-card" data-tags="zakłady rodzina" onclick="openModal('s3')">
+      <div class="sc-top">
+        <div class="sc-avatar">👨</div>
+        <div class="sc-info">
+          <div class="sc-name">Paweł, 29 lat</div>
+          <div class="sc-meta">Zakłady sportowe · 5 lat uzależnienia</div>
+        </div>
+        <div class="sc-days">🔥 730 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"Miałem 24 lata i 60 tys. długu"</div>
+        <div class="sc-excerpt">Zacząłem w college'u — pięć złotych tu, dziesięć tam. W wieku 24 lat miałem 60 tysięcy złotych długu i nie wiedziałem jak powiedzieć rodzicom. Dziś mam 730 dni trzeźwości hazardowej i po raz pierwszy w życiu poczucie że przyszłość do mnie należy.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">🎲 Zakłady</span>
+          <span class="sc-tag">🎓 Młody wiek</span>
+          <span class="sc-tag">💰 Dług</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">Społeczność WolnaGra</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s3')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 730 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"Miałem 24 lata i 60 tys. długu"</div>
-    <div class="sc-excerpt">Zacząłem w college'u — pięć złotych tu, dziesięć tam. W wieku 24 lat miałem 60 tysięcy złotych długu i nie wiedziałem jak powiedzieć rodzicom. Dziś mam 730 dni trzeźwości hazardowej i po raz pierwszy w życiu poczucie że przyszłość do mnie należy.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">🎲 Zakłady</span>
-      <span class="sc-tag">🎓 Młody wiek</span>
-      <span class="sc-tag">💰 Dług</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">Społeczność WolnaGra</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s3')">Czytaj →</button>
-  </div>
-</div>
 
-<!-- Story 4 — user submitted -->
-<div class="story-card user-story-card" data-tags="kasyno" onclick="openModal('s4')">
-  <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
-    <div class="sc-avatar">👩‍🦱</div>
-    <div class="sc-info">
-      <div class="sc-name">Anonimowa_K</div>
-      <div class="sc-meta">Kasyno online · Historia użytkownika</div>
+    <!-- Story 4 — user submitted -->
+    <div class="story-card user-story-card" data-tags="kasyno" onclick="openModal('s4')">
+      <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
+        <div class="sc-avatar">👩‍🦱</div>
+        <div class="sc-info">
+          <div class="sc-name">Anonimowa_K</div>
+          <div class="sc-meta">Kasyno online · Historia użytkownika</div>
+        </div>
+        <div class="sc-days">🔥 89 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"89 dni — to moje pierwsze 'nigdy więcej'"</div>
+        <div class="sc-excerpt">Nie jestem w stanie opisać jak bardzo 89 dni różni się od zera. Każdy poranek bez sprawdzania bilansu konta to mały cud. Piszę tu bo kiedyś czytałam inne takie historie i dawały mi siłę. Teraz chcę być tą siłą dla kogoś innego.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">✍️ Historia użytkownika</span>
+          <span class="sc-tag">🌱 Pierwsze kroki</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">✍️ Napisana przez użytkownika</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s4')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 89 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"89 dni — to moje pierwsze 'nigdy więcej'"</div>
-    <div class="sc-excerpt">Nie jestem w stanie opisać jak bardzo 89 dni różni się od zera. Każdy poranek bez sprawdzania bilansu konta to mały cud. Piszę tu bo kiedyś czytałam inne takie historie i dawały mi siłę. Teraz chcę być tą siłą dla kogoś innego.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">✍️ Historia użytkownika</span>
-      <span class="sc-tag">🌱 Pierwsze kroki</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">✍️ Napisana przez użytkownika</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s4')">Czytaj →</button>
-  </div>
-</div>
 
-<!-- Story 5 -->
-<div class="story-card" data-tags="zakłady rodzina" onclick="openModal('s5')">
-  <div class="sc-top">
-    <div class="sc-avatar">👨‍👧</div>
-    <div class="sc-info">
-      <div class="sc-name">Rafał, 41 lat</div>
-      <div class="sc-meta">Zakłady sportowe · 8 lat uzależnienia</div>
+    <!-- Story 5 -->
+    <div class="story-card" data-tags="zakłady rodzina" onclick="openModal('s5')">
+      <div class="sc-top">
+        <div class="sc-avatar">👨‍👧</div>
+        <div class="sc-info">
+          <div class="sc-name">Rafał, 41 lat</div>
+          <div class="sc-meta">Zakłady sportowe · 8 lat uzależnienia</div>
+        </div>
+        <div class="sc-days">🔥 1 095 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"Córka zapytała mnie 'Tato, gdzie byłeś?'"</div>
+        <div class="sc-excerpt">Trzy lata temu córka zapytała mnie gdzie byłem przez ostatnie lata. Miała na myśli — gdzie byłem naprawdę. Bo byłem, ale nie byłem. Dziś jestem. Trzy lata i mam plan na jutro, pojutrze i za rok. To uczucie jest nie do opisania.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">👨‍👩‍👧 Rodzina</span>
+          <span class="sc-tag">🎲 Zakłady</span>
+          <span class="sc-tag">🏆 3 lata</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">Społeczność WolnaGra</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s5')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 1 095 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"Córka zapytała mnie 'Tato, gdzie byłeś?'"</div>
-    <div class="sc-excerpt">Trzy lata temu córka zapytała mnie gdzie byłem przez ostatnie lata. Miała na myśli — gdzie byłem naprawdę. Bo byłem, ale nie byłem. Dziś jestem. Trzy lata i mam plan na jutro, pojutrze i za rok. To uczucie jest nie do opisania.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">👨‍👩‍👧 Rodzina</span>
-      <span class="sc-tag">🎲 Zakłady</span>
-      <span class="sc-tag">🏆 3 lata</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">Społeczność WolnaGra</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s5')">Czytaj →</button>
-  </div>
-</div>
 
-<!-- Story 6 — user submitted -->
-<div class="story-card user-story-card" data-tags="automaty" onclick="openModal('s6')">
-  <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
-    <div class="sc-avatar">🧔</div>
-    <div class="sc-info">
-      <div class="sc-name">Marek_Wolny</div>
-      <div class="sc-meta">Automaty · Historia użytkownika</div>
+    <!-- Story 6 — user submitted -->
+    <div class="story-card user-story-card" data-tags="automaty" onclick="openModal('s6')">
+      <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
+        <div class="sc-avatar">🧔</div>
+        <div class="sc-info">
+          <div class="sc-name">Marek_Wolny</div>
+          <div class="sc-meta">Automaty · Historia użytkownika</div>
+        </div>
+        <div class="sc-days">🔥 365 dni</div>
+      </div>
+      <div class="sc-body">
+        <div class="sc-title">"Rok. Jeden cały rok."</div>
+        <div class="sc-excerpt">Rok temu nie wierzyłem że to możliwe. Tydzień był wyzwaniem, miesiąc — marzeniem. Rok? Nie do pomyślenia. A jednak. Ta strona, dziennik, zadania — to nie magia. To praca. Codzienna, cicha, nieefektowna robota. Ale działa.</div>
+        <div class="sc-tags">
+          <span class="sc-tag">✍️ Historia użytkownika</span>
+          <span class="sc-tag">🎯 Automaty</span>
+          <span class="sc-tag">🏆 365 dni</span>
+        </div>
+      </div>
+      <div class="sc-footer">
+        <div class="sc-source">✍️ Napisana przez użytkownika</div>
+        <button class="sc-read" onclick="event.stopPropagation(); openModal('s6')">Czytaj →</button>
+      </div>
     </div>
-    <div class="sc-days">🔥 365 dni</div>
-  </div>
-  <div class="sc-body">
-    <div class="sc-title">"Rok. Jeden cały rok."</div>
-    <div class="sc-excerpt">Rok temu nie wierzyłem że to możliwe. Tydzień był wyzwaniem, miesiąc — marzeniem. Rok? Nie do pomyślenia. A jednak. Ta strona, dziennik, zadania — to nie magia. To praca. Codzienna, cicha, nieefektowna robota. Ale działa.</div>
-    <div class="sc-tags">
-      <span class="sc-tag">✍️ Historia użytkownika</span>
-      <span class="sc-tag">🎯 Automaty</span>
-      <span class="sc-tag">🏆 365 dni</span>
-    </div>
-  </div>
-  <div class="sc-footer">
-    <div class="sc-source">✍️ Napisana przez użytkownika</div>
-    <button class="sc-read" onclick="event.stopPropagation(); openModal('s6')">Czytaj →</button>
-  </div>
-</div>
-```
 
   </div>
 
   <!-- WRITE YOUR STORY -->
-
   <div class="write-section" id="write-section">
     <div class="write-header">
       <div class="write-header-icon">✍️</div>
@@ -882,65 +872,62 @@ backdrop-filter: blur(2px);
       </div>
     </div>
 
-```
-<div class="write-form">
+    <div class="write-form">
 
-  <div class="form-row-2">
-    <div class="form-row" style="margin-bottom:0;">
-      <label>Twój pseudonim (lub "Anonimowy/a")</label>
-      <input class="form-input" type="text" placeholder="np. Marek_W, Anonimowy_K..." id="story-author">
+      <div class="form-row-2">
+        <div class="form-row" style="margin-bottom:0;">
+          <label>Twój pseudonim (lub "Anonimowy/a")</label>
+          <input class="form-input" type="text" placeholder="np. Marek_W, Anonimowy_K..." id="story-author">
+        </div>
+        <div class="form-row" style="margin-bottom:0;">
+          <label>Ile masz teraz dni wolności?</label>
+          <input class="form-input" type="number" placeholder="np. 47" id="story-days" min="1">
+        </div>
+      </div>
+
+      <div class="form-row" style="margin-top:16px;">
+        <label>Tytuł Twojej historii</label>
+        <input class="form-input" type="text" placeholder='np. "Rok bez automatu" albo "Moje 100 dni"' id="story-title">
+      </div>
+
+      <div class="form-row">
+        <label>Rodzaj uzależnienia</label>
+        <div class="tags-select">
+          <button class="tag-opt" onclick="toggleTag(this)">🎲 Zakłady sportowe</button>
+          <button class="tag-opt" onclick="toggleTag(this)">🎰 Kasyno online</button>
+          <button class="tag-opt" onclick="toggleTag(this)">🎯 Automaty</button>
+          <button class="tag-opt" onclick="toggleTag(this)">🃏 Poker</button>
+          <button class="tag-opt" onclick="toggleTag(this)">📱 Aplikacje mobilne</button>
+          <button class="tag-opt" onclick="toggleTag(this)">❓ Inne</button>
+        </div>
+      </div>
+
+      <div class="form-row">
+        <label>Twoja historia <span style="font-weight:300;text-transform:none;letter-spacing:0;">(pisz ile chcesz — tu nie ma limitów)</span></label>
+        <textarea class="form-textarea" id="story-text" placeholder="Skąd zaczęło się uzależnienie? Jak wyglądało życie w jego środku? Co sprawiło że postanowiłeś/aś zmienić? Co pomogło? Jak wygląda teraz Twoje życie?&#10;&#10;Pisz jak chcesz i ile chcesz. Szczerość jest tu najważniejsza." oninput="updateStoryCount()"></textarea>
+        <div style="text-align:right;margin-top:6px;" id="story-char-count" class="char-remaining">0 znaków</div>
+      </div>
+
+      <!-- Share toggle -->
+      <div class="share-toggle" onclick="toggleShare()" id="share-toggle">
+        <div class="toggle-switch" id="share-switch"></div>
+        <div class="share-text">
+          <div class="share-title">🌿 Udostępnij historię społeczności WolnaGra</div>
+          <div class="share-desc">Twoja historia pojawi się na tej stronie i może pomóc innym. Zawsze możesz ją usunąć. Jeśli wyłączysz — historia zostanie zapisana tylko w Twoim profilu.</div>
+        </div>
+      </div>
+
+      <div class="privacy-note">
+        🔒 <span>Twoja historia nigdy nie zawiera Twoich danych osobowych. Moderujemy treści — usuwamy wszystko co mogłoby komuś zaszkodzić. Decyzja o udostępnieniu należy wyłącznie do Ciebie i możesz ją zmienić w dowolnym momencie.</span>
+      </div>
+
+      <div class="submit-row">
+        <button class="submit-btn" onclick="submitStory()">🌿 Opublikuj historię</button>
+        <button class="save-draft-btn" onclick="saveDraft()">💾 Zapisz szkic</button>
+        <span class="char-remaining" id="story-char-right"></span>
+      </div>
+
     </div>
-    <div class="form-row" style="margin-bottom:0;">
-      <label>Ile masz teraz dni wolności?</label>
-      <input class="form-input" type="number" placeholder="np. 47" id="story-days" min="1">
-    </div>
-  </div>
-
-  <div class="form-row" style="margin-top:16px;">
-    <label>Tytuł Twojej historii</label>
-    <input class="form-input" type="text" placeholder='np. "Rok bez automatu" albo "Moje 100 dni"' id="story-title">
-  </div>
-
-  <div class="form-row">
-    <label>Rodzaj uzależnienia</label>
-    <div class="tags-select">
-      <button class="tag-opt" onclick="toggleTag(this)">🎲 Zakłady sportowe</button>
-      <button class="tag-opt" onclick="toggleTag(this)">🎰 Kasyno online</button>
-      <button class="tag-opt" onclick="toggleTag(this)">🎯 Automaty</button>
-      <button class="tag-opt" onclick="toggleTag(this)">🃏 Poker</button>
-      <button class="tag-opt" onclick="toggleTag(this)">📱 Aplikacje mobilne</button>
-      <button class="tag-opt" onclick="toggleTag(this)">❓ Inne</button>
-    </div>
-  </div>
-
-  <div class="form-row">
-    <label>Twoja historia <span style="font-weight:300;text-transform:none;letter-spacing:0;">(pisz ile chcesz — tu nie ma limitów)</span></label>
-    <textarea class="form-textarea" id="story-text" placeholder="Skąd zaczęło się uzależnienie? Jak wyglądało życie w jego środku? Co sprawiło że postanowiłeś/aś zmienić? Co pomogło? Jak wygląda teraz Twoje życie?&#10;&#10;Pisz jak chcesz i ile chcesz. Szczerość jest tu najważniejsza." oninput="updateStoryCount()"></textarea>
-    <div style="text-align:right;margin-top:6px;" id="story-char-count" class="char-remaining">0 znaków</div>
-  </div>
-
-  <!-- Share toggle -->
-  <div class="share-toggle" onclick="toggleShare()" id="share-toggle">
-    <div class="toggle-switch" id="share-switch"></div>
-    <div class="share-text">
-      <div class="share-title">🌿 Udostępnij historię społeczności WolnaGra</div>
-      <div class="share-desc">Twoja historia pojawi się na tej stronie i może pomóc innym. Zawsze możesz ją usunąć. Jeśli wyłączysz — historia zostanie zapisana tylko w Twoim profilu.</div>
-    </div>
-  </div>
-
-  <div class="privacy-note">
-    🔒 <span>Twoja historia nigdy nie zawiera Twoich danych osobowych. Moderujemy treści — usuwamy wszystko co mogłoby komuś zaszkodzić. Decyzja o udostępnieniu należy wyłącznie do Ciebie i możesz ją zmienić w dowolnym momencie.</span>
-  </div>
-
-  <div class="submit-row">
-    <button class="submit-btn" onclick="submitStory()">🌿 Opublikuj historię</button>
-    <button class="save-draft-btn" onclick="saveDraft()">💾 Zapisz szkic</button>
-    <span class="char-remaining" id="story-char-right"></span>
-  </div>
-
-</div>
-```
-
   </div>
 
 </div>
@@ -1103,6 +1090,5 @@ backdrop-filter: blur(2px);
   });
 
 </script>
-
 </body>
 </html>
