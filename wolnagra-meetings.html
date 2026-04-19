@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WolnaGra — Spotkania Anonimowych Hazardzistów</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF4;
+    --sand: #E8DCC8;
+    --sage: #7A9E7E;
+    --sage-dark: #5C7A60;
+    --sage-light: #A8C5AC;
+    --accent: #C17B3A;
+    --text-dark: #2C2416;
+    --text-mid: #5C4A32;
+    --text-light: #8B7355;
+    --danger: #C0392B;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+
+  /* TOPBAR */
+  .topbar { position: sticky; top: 0; z-index: 100; background: rgba(245,240,232,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--sand); height: 60px; display: flex; align-items: center; padding: 0 16px; gap: 10px; }
+  .topbar-logo { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--sage-dark); text-decoration: none; margin-left: 44px; }
+  .topbar-logo span { color: var(--accent); }
+  .topbar-sep { color: var(--sand); }
+  .topbar-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--text-mid); }
+
+  /* LAYOUT */
+  .layout { max-width: 800px; margin: 0 auto; padding: 32px 16px 60px; }
+
+  /* HERO BANNER */
+  .hero-banner {
+    background: linear-gradient(135deg, var(--sage-dark) 0%, #3D5E40 100%);
+    border-radius: 24px; padding: 36px 32px;
+    text-align: center; margin-bottom: 32px;
+    position: relative; overflow: hidden;
+  }
+  .hero-banner::before {
+    content: '🤝';
+    position: absolute; right: 20px; top: 50%;
+    transform: translateY(-50%);
+    font-size: 8rem; opacity: 0.07;
+  }
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(255,255,255,0.12); color: rgba(255,255,255,0.85);
+    padding: 5px 16px; border-radius: 20px;
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.08em;
+    margin-bottom: 16px;
+  }
+  .hero-banner h1 {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(1.6rem, 4vw, 2.2rem);
+    font-weight: 900; color: white;
+    line-height: 1.2; margin-bottom: 12px;
+  }
+  .hero-banner h1 em { font-style: italic; color: var(--sage-light); }
+  .hero-banner p {
+    font-size: 0.95rem; color: rgba(255,255,255,0.75);
+    line-height: 1.7; max-width: 520px;
+    margin: 0 auto; font-weight: 300;
+  }
+
+  /* BIG CTA */
+  .big-cta {
+    background: white;
+    border: 3px solid var(--sage);
+    border-radius: 24px;
+    padding: 32px;
+    text-align: center;
+    margin-bottom: 32px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 32px rgba(122,158,126,0.2);
+  }
+
+  .big-cta::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 5px;
+    background: linear-gradient(90deg, var(--sage-light), var(--sage-dark), var(--sage-light));
+  }
+
+  .cta-icon { font-size: 3rem; margin-bottom: 12px; }
+
+  .cta-label {
+    font-size: 0.72rem; font-weight: 700;
+    text-transform: uppercase; letter-spacing: 0.12em;
+    color: var(--sage-dark); margin-bottom: 8px;
+  }
+
+  .big-cta h2 {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.6rem; font-weight: 900;
+    color: var(--text-dark); margin-bottom: 10px;
+    line-height: 1.2;
+  }
+
+  .big-cta p {
+    font-size: 0.92rem; color: var(--text-mid);
+    line-height: 1.7; margin-bottom: 24px;
+    max-width: 500px; margin-left: auto; margin-right: auto;
+  }
+
+  .cta-btn {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--sage); color: white;
+    padding: 16px 36px; border-radius: 40px;
+    font-family: 'Lato', sans-serif;
+    font-size: 1.05rem; font-weight: 700;
+    text-decoration: none; transition: all 0.25s;
+    box-shadow: 0 6px 20px rgba(122,158,126,0.4);
+    margin-bottom: 12px;
+  }
+  .cta-btn:hover { background: var(--sage-dark); transform: translateY(-3px); box-shadow: 0 10px 28px rgba(122,158,126,0.5); }
+
+  .cta-note {
+    font-size: 0.78rem; color: var(--text-light);
+    font-style: italic;
+  }
+
+  /* SECTION */
+  .section { margin-bottom: 32px; }
+  .section-label { font-size: 0.68rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: var(--accent); margin-bottom: 6px; }
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--text-dark); margin-bottom: 6px; line-height: 1.2; }
+  .section-title em { font-style: italic; color: var(--sage-dark); }
+  .section-sub { font-size: 0.88rem; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; font-weight: 300; }
+
+  /* GUIDE STEPS */
+  .guide-step {
+    background: white;
+    border-radius: 18px;
+    border: 1px solid var(--sand);
+    padding: 22px 24px;
+    margin-bottom: 12px;
+    display: flex; gap: 18px; align-items: flex-start;
+    transition: all 0.2s;
+  }
+  .guide-step:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateX(4px); }
+
+  .step-num {
+    width: 44px; height: 44px; border-radius: 50%;
+    background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+    color: white; display: flex; align-items: center; justify-content: center;
+    font-family: 'Playfair Display', serif;
+    font-size: 1.1rem; font-weight: 900;
+    flex-shrink: 0;
+  }
+
+  .step-body { flex: 1; }
+  .step-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 5px; }
+  .step-desc { font-size: 0.85rem; color: var(--text-mid); line-height: 1.65; }
+  .step-tip { margin-top: 8px; padding: 8px 12px; background: rgba(122,158,126,0.08); border-radius: 8px; font-size: 0.78rem; color: var(--sage-dark); font-weight: 700; border-left: 3px solid var(--sage-light); }
+
+  /* FAQ */
+  .faq-item {
+    background: white; border-radius: 16px;
+    border: 1px solid var(--sand); overflow: hidden;
+    margin-bottom: 8px;
+  }
+  .faq-question {
+    padding: 16px 20px; cursor: pointer;
+    display: flex; align-items: center; justify-content: space-between;
+    font-weight: 700; font-size: 0.92rem; color: var(--text-dark);
+    transition: background 0.2s;
+  }
+  .faq-question:hover { background: var(--cream); }
+  .faq-arrow { transition: transform 0.3s; font-size: 0.8rem; color: var(--text-light); }
+  .faq-item.open .faq-arrow { transform: rotate(180deg); }
+  .faq-answer { display: none; padding: 0 20px 16px; font-size: 0.85rem; color: var(--text-mid); line-height: 1.7; border-top: 1px solid var(--cream); padding-top: 14px; }
+  .faq-item.open .faq-answer { display: block; }
+
+  /* QUOTE */
+  .quote-card {
+    background: linear-gradient(135deg, var(--accent) 0%, #A0612A 100%);
+    border-radius: 18px; padding: 24px 28px;
+    margin-bottom: 32px; position: relative; overflow: hidden;
+  }
+  .quote-card::before { content: '"'; position: absolute; top: -20px; left: 12px; font-family: 'Playfair Display', serif; font-size: 8rem; color: rgba(255,255,255,0.08); line-height: 1; }
+  .quote-text { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; font-style: italic; color: white; line-height: 1.5; margin-bottom: 10px; position: relative; }
+  .quote-author { font-size: 0.78rem; color: rgba(255,255,255,0.6); font-weight: 700; text-transform: uppercase; letter-spacing: 0.06em; }
+
+  /* PHONE CARD */
+  .phone-card {
+    background: var(--danger);
+    border-radius: 18px; padding: 20px 24px;
+    display: flex; align-items: center; gap: 16px;
+    margin-bottom: 32px; text-decoration: none;
+    transition: all 0.2s;
+  }
+  .phone-card:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(192,57,43,0.3); }
+  .phone-icon { font-size: 2rem; flex-shrink: 0; }
+  .phone-body { flex: 1; }
+  .phone-label { font-size: 0.72rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(255,255,255,0.6); margin-bottom: 4px; }
+  .phone-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: white; }
+  .phone-sub { font-size: 0.8rem; color: rgba(255,255,255,0.7); margin-top: 2px; }
+  .phone-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: white; }
+
+  /* SIDEBAR */
+  .sidenav { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #2C4430; z-index: 200; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
+  .sidenav.open { transform: translateX(0); }
+  .sidenav-logo { padding: 18px 16px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+  .sidenav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: white; text-decoration: none; }
+  .sidenav-logo-text span { color: #A8C5AC; }
+  .sidenav-close { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .sidenav-links { flex: 1; padding: 8px 10px; overflow-y: auto; }
+  .sidenav-section { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); padding: 12px 8px 6px; }
+  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; border: none; background: none; font-family: 'Lato', sans-serif; width: 100%; text-align: left; }
+  .sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+  .sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
+  .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+  .sidenav-bottom { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .sidenav-crisis { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(192,57,43,0.2); color: #E88080; text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; margin-bottom: 8px; }
+  .sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
+  .hamburger { position: fixed; top: 12px; left: 12px; z-index: 199; width: 36px; height: 36px; border-radius: 10px; background: #5C7A60; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+  .hamburger span { display: block; width: 16px; height: 2px; background: white; border-radius: 2px; }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
+  .nav-overlay.open { display: block; }
+  @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(800px + 220px); padding-left: 236px; } }
+</style>
+</head>
+<body>
+
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav class="sidenav" id="sidenav">
+  <div class="sidenav-logo">
+    <a href="/Wolnagra/wolnagra.html" class="sidenav-logo-text">Wolna<span>Gra</span></a>
+    <button class="sidenav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="sidenav-links">
+    <div class="sidenav-section">Główne</div>
+    <a href="/Wolnagra/wolnagra.html" class="sidenav-link"><span class="sidenav-link-icon">🏠</span> Strona główna</a>
+    <a href="/Wolnagra/wolnagra-dziennik.html" class="sidenav-link"><span class="sidenav-link-icon">📓</span> Mój Dziennik</a>
+    <a href="/Wolnagra/wolnagra-zadania.html" class="sidenav-link"><span class="sidenav-link-icon">✅</span> Zadania dnia</a>
+    <a href="/Wolnagra/wolnagra-historie.html" class="sidenav-link"><span class="sidenav-link-icon">📚</span> Historie</a>
+    <div class="sidenav-section">Wsparcie</div>
+    <a href="/Wolnagra/wolnagra-meetings.html" class="sidenav-link active"><span class="sidenav-link-icon">🤝</span> Spotkania AH</a>
+    <a href="/Wolnagra/wolnagra-kryzys.html" class="sidenav-link"><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
+  </div>
+  <div class="sidenav-bottom">
+    <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
+  </div>
+</nav>
+
+<button class="hamburger" onclick="openNav()"><span></span><span></span><span></span></button>
+
+<div class="topbar">
+  <a href="/Wolnagra/wolnagra.html" class="topbar-logo">Wolna<span>Gra</span></a>
+  <div class="topbar-sep">/</div>
+  <div class="topbar-title">🤝 Spotkania AH</div>
+</div>
+
+<div class="layout">
+
+  <!-- Hero -->
+  <div class="hero-banner">
+    <div class="hero-badge">🤝 Anonimowi Hazardziści</div>
+    <h1>Nie musisz przez to<br>przechodzić <em>sam/a</em>.</h1>
+    <p>Spotkania Anonimowych Hazardzistów to bezpieczne miejsce gdzie ludzie z tym samym problemem pomagają sobie nawzajem. Bez oceniania, bez opłat, w pełni anonimowo.</p>
+  </div>
+
+  <!-- BIG CTA -->
+  <div class="big-cta">
+    <div class="cta-icon">🗺️</div>
+    <div class="cta-label">Oficjalna lista spotkań w Polsce</div>
+    <h2>Znajdź spotkanie<br>w swoim mieście</h2>
+    <p>Na oficjalnej stronie Anonimowych Hazardzistów znajdziesz aktualną listę wszystkich spotkań w Polsce — z adresami, godzinami i numerami kontaktowymi. Lista jest na bieżąco aktualizowana.</p>
+    <br>
+    <a href="https://anonimowi-hazardzisci.pl" target="_blank" class="cta-btn">
+      🌐 Przejdź na anonimowi-hazardzisci.pl
+    </a>
+    <br>
+    <div class="cta-note">Otwiera oficjalną stronę Anonimowych Hazardzistów w Polsce</div>
+  </div>
+
+  <!-- Phone -->
+  <a href="tel:116123" class="phone-card">
+    <div class="phone-icon">📞</div>
+    <div class="phone-body">
+      <div class="phone-label">Telefon Zaufania — bezpłatny, 24/7</div>
+      <div class="phone-title">Zadzwoń teraz jeśli potrzebujesz pomocy</div>
+      <div class="phone-sub">Anonimowy, bezpłatny, czynny całą dobę</div>
+    </div>
+    <div class="phone-num">116 123</div>
+  </a>
+
+  <!-- Quote -->
+  <div class="quote-card">
+    <div class="quote-text">"Poczułem się tam jak w rodzinie, która chce żebym na nowo poczuł się człowiekiem. Brakowało mi takich rozmów, dzielenia się doświadczeniami, słuchania innych."</div>
+    <div class="quote-author">— Krzysztof, 44 lata · 2 lata bez hazardu</div>
+  </div>
+
+  <!-- Guide -->
+  <div class="section">
+    <div class="section-label">Przewodnik dla początkujących</div>
+    <div class="section-title">Idziesz <em>pierwszy raz?</em><br>To jest dla Ciebie.</div>
+    <p class="section-sub">Rozumiemy że pierwszy krok jest najtrudniejszy. Dlatego przygotowaliśmy dokładny przewodnik — żebyś wiedział/a czego się spodziewać i żebyś poczuł/a się bezpieczniej.</p>
+
+    <div class="guide-step">
+      <div class="step-num">1</div>
+      <div class="step-body">
+        <div class="step-title">Nie musisz nic mówić na pierwszym spotkaniu</div>
+        <div class="step-desc">Na pierwszym spotkaniu możesz po prostu siedzieć i słuchać. Nikt nie będzie Cię zmuszał do zabrania głosu. Możesz przedstawić się tylko imieniem — lub wcale. Mówisz tylko gdy sam/a chcesz.</div>
+        <div class="step-tip">💡 Wielu uczestników przez pierwsze tygodnie tylko słucha — i to jest w 100% okej.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">2</div>
+      <div class="step-body">
+        <div class="step-title">To jest całkowicie anonimowe</div>
+        <div class="step-desc">Nie podajesz nazwiska, adresu, numeru telefonu ani żadnych danych. Możesz używać pseudonimu. Wszystko co usłyszysz na spotkaniu zostaje w tej sali — to żelazna zasada AH.</div>
+        <div class="step-tip">💡 "Co się mówi na spotkaniu, zostaje na spotkaniu" — to fundamentalna zasada Anonimowych Hazardzistów.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">3</div>
+      <div class="step-body">
+        <div class="step-title">Jak wygląda typowe spotkanie?</div>
+        <div class="step-desc">Spotkanie trwa zazwyczaj 60-90 minut. Uczestnicy siedzą w kręgu lub przy stole. Ktoś czyta fragment literatury AH, potem kolejne osoby mogą podzielić się swoją historią lub przemyśleniami. Na końcu często jest herbata/kawa i swobodna rozmowa.</div>
+        <div class="step-tip">💡 Atmosfera jest ciepła i wspierająca — ludzie tam są po to żeby sobie pomagać, nie oceniać.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">4</div>
+      <div class="step-body">
+        <div class="step-title">To jest bezpłatne</div>
+        <div class="step-desc">Spotkania AH są całkowicie bezpłatne. Czasem zbiera się dobrowolną składkę na pokrycie kosztów sali — ale jest to naprawdę dobrowolne i nikt tego nie sprawdza. Możesz przyjść bez grosza.</div>
+        <div class="step-tip">💡 AH działa dzięki wzajemnej pomocy uczestników — nie ma żadnych opłat członkowskich.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">5</div>
+      <div class="step-body">
+        <div class="step-title">Co zabrać ze sobą?</div>
+        <div class="step-desc">Nic szczególnego! Wystarczy Ty i chęć zmiany. Możesz zabrać notatnik jeśli chcesz coś zapisać. Ubierz się tak jak zwykle — nie ma żadnego dress code'u.</div>
+        <div class="step-tip">💡 Przyjdź 5 minut wcześniej — łatwiej wejść gdy inni jeszcze się zbierają niż wchodzić gdy wszyscy już siedzą.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">6</div>
+      <div class="step-body">
+        <div class="step-title">Co jeśli poczujesz się niekomfortowo?</div>
+        <div class="step-desc">Możesz wyjść w dowolnym momencie. Nikt Cię nie zatrzyma. Ale wielu ludzi mówi że po pierwszych 10 minutach poczuli się zaskakująco dobrze — bo w końcu są wśród ludzi którzy naprawdę rozumieją.</div>
+        <div class="step-tip">💡 Daj sobie szansę na przynajmniej 3 spotkania zanim ocenisz czy to dla Ciebie. Pierwsze bywa najtrudniejsze.</div>
+      </div>
+    </div>
+
+    <div class="guide-step">
+      <div class="step-num">7</div>
+      <div class="step-body">
+        <div class="step-title">Nie musisz być "wystarczająco uzależniony/a"</div>
+        <div class="step-desc">Często ludzie myślą "inni mają gorzej niż ja" i przez to nie przychodzą. To błąd. Jeśli hazard powoduje problemy w Twoim życiu — finansowe, rodzinne, emocjonalne — to wystarczający powód żeby przyjść. Nie musisz "zasługiwać" na pomoc.</div>
+        <div class="step-tip">💡 Jedynym wymaganiem do uczestnictwa w AH jest chęć zaprzestania hazardu.</div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- FAQ -->
+  <div class="section">
+    <div class="section-label">Częste pytania</div>
+    <div class="section-title">Masz <em>wątpliwości?</em></div>
+    <p class="section-sub">To normalne. Tutaj odpowiadamy na najczęstsze obawy.</p>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        "Boję się że ktoś mnie pozna" <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Zasada anonimowości jest fundamentem AH. Nikt nie ma prawa powiedzieć komukolwiek że widział Cię na spotkaniu. Uczestnicy doskonale rozumieją tę potrzebę — sami przez to przeszli. Możesz też użyć innego imienia.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        "Czy to jest religijne?" <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Program AH odwołuje się do pojęcia "siły wyższej" ale nie jest to związane z żadną konkretną religią. Możesz interpretować to pojęcie jak chcesz — jako siłę wspólnoty, naturę, wszechświat lub cokolwiek co ma dla Ciebie sens. Wielu ateistów skutecznie korzysta z programu AH.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        "Co jeśli gram tylko od czasu do czasu?" <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Nie ma minimalnej "dawki" uzależnienia potrzebnej do uczestnictwa. Jeśli hazard sprawia Ci problemy — nawet sporadyczny — AH może pomóc. Wielu uczestników przyszło zanim "dotknęło dna" i to był dobry wybór.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        "Czy muszę się całkowicie zatrzymać?" <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Celem AH jest całkowite zaprzestanie hazardu. Doświadczenie pokazuje że "kontrolowane granie" rzadko działa u osób uzależnionych. Ale możesz przyjść na spotkanie nawet jeśli nie jesteś jeszcze gotowy/a na pełne zatrzymanie — ważne żebyś był/a tam.</div>
+    </div>
+
+    <div class="faq-item">
+      <div class="faq-question" onclick="toggleFaq(this)">
+        "Czy moje rodzina może przyjść?" <span class="faq-arrow">▾</span>
+      </div>
+      <div class="faq-answer">Spotkania AH są przeznaczone dla osób uzależnionych. Ale istnieje program Gam-Anon — specjalnie dla rodzin i bliskich osób uzależnionych od hazardu. Warto sprawdzić czy w Twoim mieście są takie spotkania.</div>
+    </div>
+
+  </div>
+
+  <!-- Bottom CTA -->
+  <div class="big-cta">
+    <div class="cta-icon">🌿</div>
+    <div class="cta-label">Zrób pierwszy krok</div>
+    <h2>Znajdź spotkanie<br>w swoim mieście</h2>
+    <p>Nie czekaj na "idealny moment". Nie ma idealnego momentu — jest tylko teraz.</p>
+    <br>
+    <a href="https://anonimowi-hazardzisci.pl" target="_blank" class="cta-btn">
+      🌐 anonimowi-hazardzisci.pl
+    </a>
+    <br>
+    <div class="cta-note">Lista wszystkich spotkań AH w Polsce · Zawsze aktualna</div>
+  </div>
+
+</div>
+
+<script>
+  function toggleFaq(el) {
+    const item = el.parentElement;
+    item.classList.toggle('open');
+  }
+
+  function openNav() { document.getElementById('sidenav').classList.add('open'); document.getElementById('nav-overlay').classList.add('open'); }
+  function closeNav() { document.getElementById('sidenav').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+</script>
+</body>
+</html>
