@@ -118,7 +118,7 @@
 <div class="page">
   <!-- LEFT -->
   <div class="left-panel">
-    <a href="/Wolnagra/wolnagra.html" class="left-logo">Wolna<span>Gra</span></a>
+    <a href="/wolnagra.html" class="left-logo">Wolna<span>Gra</span></a>
     <div>
       <div class="left-quote">"Każdy dzień bez hazardu to zwycięstwo, które należy do Ciebie."</div>
       <div class="left-quote-author">— Społeczność WolnaGra</div>
@@ -129,7 +129,7 @@
   <!-- RIGHT -->
   <div class="right-panel">
     <div class="auth-box">
-      <div class="mobile-logo"><a href="/Wolnagra/wolnagra.html">Wolna<span>Gra</span></a></div>
+      <div class="mobile-logo"><a href="/wolnagra.html">Wolna<span>Gra</span></a></div>
 
       <div class="auth-tabs">
         <button class="auth-tab active" onclick="switchTab('login')">Zaloguj się</button>
@@ -268,7 +268,7 @@
   // Check if already logged in
   sb.auth.getSession().then(({ data }) => {
     if (data.session) {
-      location.href = '/Wolnagra/wolnagra-dziennik.html';
+      location.href = '/wolnagra-dziennik.html';
     }
   });
 
@@ -318,7 +318,7 @@
       const successEl = document.getElementById('login-success');
       document.getElementById('login-success-text').textContent = 'Zalogowano! Przekierowanie...';
       successEl.classList.add('show');
-      setTimeout(() => location.href = '/Wolnagra/wolnagra-dziennik.html', 1000);
+      setTimeout(() => location.href = '/wolnagra-dziennik.html', 1000);
     }
   }
 
