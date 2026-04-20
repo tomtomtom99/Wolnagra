@@ -452,8 +452,7 @@
   function closeNav() { document.getElementById('sidenav').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 </script>
-
-  // Register Service Worker (PWA)
+<script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
       navigator.serviceWorker.register('/sw.js')
@@ -461,6 +460,6 @@
         .catch(err => console.log('SW error:', err));
     });
   }
-
+</script>
 </body>
 </html>
