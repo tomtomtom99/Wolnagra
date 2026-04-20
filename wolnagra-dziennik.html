@@ -70,9 +70,6 @@
   .write-textarea::placeholder { color: var(--sand); }
 
   /* TAGS */
-  .write-tags { padding: 0 20px 12px; display: flex; gap: 6px; flex-wrap: wrap; }
-  .wtag { padding: 4px 12px; border-radius: 12px; border: 1px solid var(--sand); background: white; font-size: 0.72rem; font-weight: 700; cursor: pointer; color: var(--text-light); transition: all 0.2s; font-family: 'Lato', sans-serif; }
-  .wtag:hover, .wtag.active { background: rgba(122,158,126,0.12); border-color: var(--sage-light); color: var(--sage-dark); }
 
   /* FOOTER */
   .write-footer { padding: 12px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
@@ -93,7 +90,6 @@
   .ec-meta { font-size: 0.7rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
   .ec-mood { font-size: 1.1rem; }
   .ec-body { padding: 0 18px 14px; font-family: 'Caveat', cursive; font-size: 1rem; color: var(--text-mid); line-height: 1.65; }
-  .ec-tags { padding: 8px 18px; background: var(--cream); display: flex; gap: 6px; flex-wrap: wrap; }
   .ec-tag { font-size: 0.68rem; padding: 2px 9px; border-radius: 10px; background: white; color: var(--text-light); font-weight: 700; border: 1px solid var(--sand); }
 
   /* EMPTY STATE */
@@ -209,10 +205,7 @@
     <div class="write-area">
       <textarea class="write-textarea" id="write-textarea" placeholder="Jak minął dziś dzień? Co czujesz?&#10;&#10;Pisz szczerze — to miejsce tylko dla Ciebie..." oninput="updateCount()"></textarea>
     </div>
-    <div class="write-tags">
-      <span style="font-size:0.72rem;color:var(--text-light);font-weight:700;margin-right:4px;">Tagi:</span>
-      <div class="wtag" onclick="toggleWTag(this)">😤 Pokusa</div>
-      <div class="wtag" onclick="toggleWTag(this)">💪 Sukces</div>
+<div class="wtag" onclick="toggleWTag(this)">💪 Sukces</div>
       <div class="wtag" onclick="toggleWTag(this)">😔 Trudny dzień</div>
       <div class="wtag" onclick="toggleWTag(this)">🙏 Wdzięczność</div>
       <div class="wtag" onclick="toggleWTag(this)">👨‍👩‍👧 Rodzina</div>
@@ -296,7 +289,6 @@
     container.innerHTML = entries.map(entry => {
       const date = new Date(entry.created_at);
       const dateStr = date.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
-      const tags = entry.tags || [];
       return `
         <div class="entry-card">
           <div class="ec-header">
@@ -307,7 +299,6 @@
             <div class="ec-mood">${entry.mood ? moodEmojis[entry.mood] : ''}</div>
           </div>
           <div class="ec-body">${entry.content}</div>
-          ${tags.length > 0 ? `<div class="ec-tags">${tags.map(t => `<span class="ec-tag">${t}</span>`).join('')}</div>` : ''}
         </div>`;
     }).join('');
   }
@@ -323,7 +314,6 @@
     document.getElementById('char-count').textContent = document.getElementById('write-textarea').value.length + ' znaków';
   }
 
-  function toggleWTag(el) { el.classList.toggle('active'); }
 
   async function saveEntry() {
     const text = document.getElementById('write-textarea').value.trim();
@@ -332,7 +322,6 @@
     const btn = document.getElementById('save-btn');
     btn.disabled = true; btn.textContent = 'Zapisuję...';
 
-    const tags = Array.from(document.querySelectorAll('.wtag.active')).map(t => t.textContent.trim());
 
     // Award points for diary entry
     const awardPoints = async () => {
@@ -343,7 +332,6 @@
       user_id: currentUser.id,
       content: text,
       mood: selectedMood,
-      tags
     });
 
     btn.disabled = false; btn.textContent = '💾 Zapisz wpis';
@@ -356,7 +344,6 @@
       document.getElementById('write-textarea').value = '';
       document.getElementById('char-count').textContent = '0 znaków';
       document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
-      document.querySelectorAll('.wtag').forEach(t => t.classList.remove('active'));
       document.getElementById('mood-name').textContent = 'Wybierz nastrój...';
       selectedMood = null;
       loadEntries();
