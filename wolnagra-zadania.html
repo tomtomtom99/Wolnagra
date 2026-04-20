@@ -151,6 +151,35 @@
   .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
   .nav-overlay.open { display: block; }
   @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(700px + 220px); padding-left: 236px; } }
+
+  /* LOGIN PROMPT OVERLAY */
+  .login-overlay {
+    position: fixed; inset: 0;
+    background: rgba(44,36,22,0.7);
+    backdrop-filter: blur(6px);
+    z-index: 500;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+  .login-overlay.show { display: flex; }
+  .login-box {
+    background: white;
+    border-radius: 24px;
+    padding: 32px 28px;
+    max-width: 380px;
+    width: 100%;
+    text-align: center;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  }
+  .login-box-icon { font-size: 2.5rem; margin-bottom: 12px; }
+  .login-box-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: #2C2416; margin-bottom: 8px; }
+  .login-box-desc { font-size: 0.88rem; color: #8B7355; line-height: 1.6; margin-bottom: 24px; }
+  .login-box-btn { display: block; width: 100%; padding: 13px; background: #7A9E7E; color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; text-decoration: none; margin-bottom: 10px; transition: all 0.2s; }
+  .login-box-btn:hover { background: #5C7A60; }
+  .login-box-skip { font-size: 0.82rem; color: #8B7355; cursor: pointer; background: none; border: none; font-family: 'Lato', sans-serif; text-decoration: underline; }
+
 </style>
 <!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VM69YWV5TY"></script>
@@ -162,6 +191,18 @@
 </script>
 </head>
 <body>
+
+<!-- Login prompt overlay -->
+<div class="login-overlay" id="login-overlay">
+  <div class="login-box">
+    <div class="login-box-icon">🌿</div>
+    <div class="login-box-title">Zaloguj się aby skorzystać</div>
+    <div class="login-box-desc">Ta funkcja jest dostępna dla zarejestrowanych użytkowników. Rejestracja jest bezpłatna i anonimowa — nie musisz podawać prawdziwego imienia.</div>
+    <a href="/wolnagra-auth.html" class="login-box-btn">🌿 Zaloguj się lub zarejestruj</a>
+    <button class="login-box-skip" onclick="hideLoginPrompt()">Przeglądaj bez logowania</button>
+  </div>
+</div>
+
 
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <nav class="sidenav" id="sidenav">
@@ -280,7 +321,10 @@
 
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
-    if (!session) { location.href = '/wolnagra-auth.html'; return; }
+    if (!session) {
+      showLoginPrompt();
+      return;
+    }
     currentUser = session.user;
 
     // Load profile
