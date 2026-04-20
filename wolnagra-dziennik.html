@@ -149,6 +149,7 @@
     <a href="/wolnagra.html" class="sidenav-link"><span class="sidenav-link-icon">🏠</span> Strona główna</a>
     <a href="/wolnagra-dziennik.html" class="sidenav-link active"><span class="sidenav-link-icon">📓</span> Mój Dziennik</a>
     <a href="/wolnagra-zadania.html" class="sidenav-link"><span class="sidenav-link-icon">✅</span> Zadania dnia</a>
+    <a href="/wolnagra-nagrody.html" class="sidenav-link"><span class="sidenav-link-icon">💪</span> Punkty Zdrowienia</a>
     <a href="/wolnagra-historie.html" class="sidenav-link"><span class="sidenav-link-icon">📚</span> Historie</a>
     <div class="sidenav-section">Wsparcie</div>
     <a href="/wolnagra-meetings.html" class="sidenav-link"><span class="sidenav-link-icon">🤝</span> Spotkania AH</a>
@@ -319,6 +320,11 @@
 
     const tags = Array.from(document.querySelectorAll('.wtag.active')).map(t => t.textContent.trim());
 
+    // Award points for diary entry
+    const awardPoints = async () => {
+      await sb.from('points').insert({ user_id: currentUser.id, amount: 20, reason: '📓 Wpis w dzienniku' });
+    };
+
     const { error } = await sb.from('diary_entries').insert({
       user_id: currentUser.id,
       content: text,
@@ -331,7 +337,8 @@
     if (error) {
       showToast('❌ Błąd zapisu. Spróbuj ponownie.');
     } else {
-      showToast('✅ Wpis zapisany! Świetna robota!');
+      showToast('✅ Wpis zapisany! +20 Punktów Zdrowienia 💪');
+      awardPoints();
       document.getElementById('write-textarea').value = '';
       document.getElementById('char-count').textContent = '0 znaków';
       document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));

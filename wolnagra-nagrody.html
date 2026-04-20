@@ -1,0 +1,418 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>WolnaGra — Punkty Zdrowienia</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<style>
+  :root {
+    --cream: #F5F0E8;
+    --warm-white: #FDFAF4;
+    --sand: #E8DCC8;
+    --sage: #7A9E7E;
+    --sage-dark: #5C7A60;
+    --sage-light: #A8C5AC;
+    --accent: #C17B3A;
+    --text-dark: #2C2416;
+    --text-mid: #5C4A32;
+    --text-light: #8B7355;
+    --gold: #D4A017;
+    --gold-light: #FFF3CD;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
+
+  /* TOPBAR */
+  .topbar { position: sticky; top: 0; z-index: 100; background: rgba(245,240,232,0.97); backdrop-filter: blur(12px); border-bottom: 1px solid var(--sand); height: 60px; display: flex; align-items: center; padding: 0 16px; gap: 10px; }
+  .topbar-logo { font-family: 'Playfair Display', serif; font-size: 1.2rem; font-weight: 900; color: var(--sage-dark); text-decoration: none; margin-left: 44px; }
+  .topbar-logo span { color: var(--accent); }
+  .topbar-sep { color: var(--sand); }
+  .topbar-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--text-mid); }
+  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
+  .points-pill { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(--gold), #B8860B); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
+  .logout-btn { padding: 6px 12px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; }
+
+  /* LAYOUT */
+  .layout { max-width: 700px; margin: 0 auto; padding: 24px 16px 60px; }
+
+  /* HERO */
+  .hero {
+    background: linear-gradient(135deg, #B8860B 0%, var(--gold) 50%, #DAA520 100%);
+    border-radius: 24px; padding: 28px;
+    margin-bottom: 24px; text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .hero::before { content: '💪'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 7rem; opacity: 0.08; }
+  .hero-label { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.6); margin-bottom: 8px; }
+  .hero-points { font-family: 'Playfair Display', serif; font-size: 3.5rem; font-weight: 900; color: white; line-height: 1; margin-bottom: 4px; }
+  .hero-points-label { font-size: 0.85rem; color: rgba(255,255,255,0.7); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 20px; }
+  .hero-bar { height: 10px; background: rgba(255,255,255,0.2); border-radius: 5px; overflow: hidden; margin-bottom: 8px; max-width: 400px; margin-left: auto; margin-right: auto; }
+  .hero-bar-fill { height: 100%; border-radius: 5px; background: white; transition: width 1s ease; }
+  .hero-bar-label { font-size: 0.75rem; color: rgba(255,255,255,0.6); font-weight: 700; }
+
+  /* HOW IT WORKS */
+  .how-card {
+    background: white; border-radius: 18px;
+    border: 1px solid var(--sand); padding: 20px 24px;
+    margin-bottom: 24px;
+  }
+  .how-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 14px; }
+  .how-row { display: flex; align-items: center; gap: 12px; padding: 8px 0; border-bottom: 1px solid var(--cream); }
+  .how-row:last-child { border-bottom: none; }
+  .how-icon { width: 36px; height: 36px; border-radius: 10px; background: var(--cream); display: flex; align-items: center; justify-content: center; font-size: 1rem; flex-shrink: 0; }
+  .how-text { flex: 1; font-size: 0.85rem; color: var(--text-mid); line-height: 1.4; }
+  .how-pts { font-size: 0.8rem; font-weight: 700; color: var(--gold); background: var(--gold-light); padding: 3px 10px; border-radius: 10px; white-space: nowrap; }
+
+  /* SECTION TITLE */
+  .section-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
+  .section-title::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
+
+  /* REWARD CARD */
+  .reward-card {
+    background: white; border-radius: 20px;
+    border: 2px solid var(--sand); padding: 24px;
+    margin-bottom: 16px; transition: all 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .reward-card::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px; background: linear-gradient(90deg, var(--gold), #DAA520); }
+  .reward-card:hover { box-shadow: 0 8px 24px rgba(212,160,23,0.15); }
+
+  .reward-top { display: flex; align-items: flex-start; gap: 16px; margin-bottom: 14px; }
+  .reward-icon { width: 52px; height: 52px; border-radius: 14px; background: var(--gold-light); display: flex; align-items: center; justify-content: center; font-size: 1.6rem; flex-shrink: 0; }
+  .reward-info { flex: 1; }
+  .reward-name { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 4px; }
+  .reward-desc { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; }
+  .reward-cost { display: flex; align-items: center; gap: 6px; font-size: 1rem; font-weight: 900; color: var(--gold); background: var(--gold-light); padding: 6px 14px; border-radius: 12px; flex-shrink: 0; white-space: nowrap; }
+
+  .reward-progress { margin-bottom: 14px; }
+  .rp-label { display: flex; justify-content: space-between; font-size: 0.72rem; font-weight: 700; color: var(--text-light); margin-bottom: 6px; }
+  .rp-bar { height: 8px; background: var(--cream); border-radius: 4px; overflow: hidden; }
+  .rp-fill { height: 100%; border-radius: 4px; background: linear-gradient(90deg, var(--gold), #DAA520); transition: width 0.8s ease; }
+
+  .claim-btn {
+    width: 100%; padding: 13px;
+    background: linear-gradient(135deg, var(--gold), #B8860B);
+    color: white; border: none; border-radius: 12px;
+    font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .claim-btn:hover:not(:disabled) { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(212,160,23,0.4); }
+  .claim-btn:disabled { opacity: 0.5; cursor: not-allowed; background: var(--sand); color: var(--text-light); }
+
+  /* HISTORY */
+  .history-item {
+    background: white; border-radius: 14px;
+    border: 1px solid var(--sand); padding: 14px 18px;
+    margin-bottom: 8px; display: flex;
+    align-items: center; gap: 12px;
+  }
+  .hi-icon { font-size: 1.1rem; }
+  .hi-text { flex: 1; font-size: 0.83rem; color: var(--text-mid); }
+  .hi-date { font-size: 0.7rem; color: var(--text-light); font-weight: 700; }
+  .hi-pts { font-size: 0.85rem; font-weight: 700; color: var(--sage-dark); }
+  .hi-pts.negative { color: var(--accent); }
+
+  /* CLAIMED BANNER */
+  .claimed-banner {
+    background: linear-gradient(135deg, var(--sage), var(--sage-dark));
+    border-radius: 16px; padding: 20px 24px;
+    text-align: center; margin-bottom: 16px;
+    display: none;
+  }
+  .claimed-banner.show { display: block; animation: fadeIn 0.4s ease; }
+  @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+  /* TOAST */
+  .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--sage-dark); color: white; padding: 12px 24px; border-radius: 40px; font-size: 0.88rem; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
+  .toast.show { transform: translateX(-50%) translateY(0); }
+
+  /* SIDEBAR */
+  .sidenav { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #2C4430; z-index: 200; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
+  .sidenav.open { transform: translateX(0); }
+  .sidenav-logo { padding: 18px 16px 14px; border-bottom: 1px solid rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: space-between; }
+  .sidenav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: white; text-decoration: none; }
+  .sidenav-logo-text span { color: #A8C5AC; }
+  .sidenav-close { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .sidenav-links { flex: 1; padding: 8px 10px; overflow-y: auto; }
+  .sidenav-section { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); padding: 12px 8px 6px; }
+  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; border: none; background: none; font-family: 'Lato', sans-serif; width: 100%; text-align: left; }
+  .sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
+  .sidenav-link.active { background: rgba(212,160,23,0.2); color: #F5D76E; }
+  .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+  .sidenav-bottom { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.08); }
+  .sidenav-crisis { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(192,57,43,0.2); color: #E88080; text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; margin-bottom: 8px; }
+  .hamburger { position: fixed; top: 12px; left: 12px; z-index: 199; width: 36px; height: 36px; border-radius: 10px; background: #5C7A60; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
+  .hamburger span { display: block; width: 16px; height: 2px; background: white; border-radius: 2px; }
+  .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
+  .nav-overlay.open { display: block; }
+  @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(700px + 220px); padding-left: 236px; } }
+</style>
+</head>
+<body>
+
+<div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
+<nav class="sidenav" id="sidenav">
+  <div class="sidenav-logo">
+    <a href="/wolnagra.html" class="sidenav-logo-text">Wolna<span>Gra</span></a>
+    <button class="sidenav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="sidenav-links">
+    <div class="sidenav-section">Główne</div>
+    <a href="/wolnagra.html" class="sidenav-link"><span class="sidenav-link-icon">🏠</span> Strona główna</a>
+    <a href="/wolnagra-dziennik.html" class="sidenav-link"><span class="sidenav-link-icon">📓</span> Mój Dziennik</a>
+    <a href="/wolnagra-zadania.html" class="sidenav-link"><span class="sidenav-link-icon">✅</span> Zadania dnia</a>
+    <a href="/wolnagra-nagrody.html" class="sidenav-link active"><span class="sidenav-link-icon">💪</span> Punkty Zdrowienia</a>
+    <a href="/wolnagra-historie.html" class="sidenav-link"><span class="sidenav-link-icon">📚</span> Historie</a>
+    <div class="sidenav-section">Wsparcie</div>
+    <a href="/wolnagra-meetings.html" class="sidenav-link"><span class="sidenav-link-icon">🤝</span> Spotkania AH</a>
+    <a href="/wolnagra-kryzys.html" class="sidenav-link"><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
+  </div>
+  <div class="sidenav-bottom">
+    <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
+  </div>
+</nav>
+
+<button class="hamburger" onclick="openNav()"><span></span><span></span><span></span></button>
+
+<div class="topbar">
+  <a href="/wolnagra.html" class="topbar-logo">Wolna<span>Gra</span></a>
+  <div class="topbar-sep">/</div>
+  <div class="topbar-title">💪 Punkty Zdrowienia</div>
+  <div class="topbar-right">
+    <div class="points-pill">💪 <span id="topbar-points">—</span> pkt</div>
+    <button class="logout-btn" onclick="handleLogout()">Wyloguj</button>
+  </div>
+</div>
+
+<div class="layout">
+
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-label">Twoje Punkty Zdrowienia</div>
+    <div class="hero-points" id="hero-points">0</div>
+    <div class="hero-points-label">💪 Punktów Zdrowienia</div>
+    <div class="hero-bar">
+      <div class="hero-bar-fill" id="hero-bar-fill" style="width:0%"></div>
+    </div>
+    <div class="hero-bar-label" id="hero-bar-label">Zbierasz punkty do pierwszej nagrody...</div>
+  </div>
+
+  <!-- How it works -->
+  <div class="how-card">
+    <div class="how-title">💡 Jak zdobywać Punkty Zdrowienia?</div>
+    <div class="how-row">
+      <div class="how-icon">✅</div>
+      <div class="how-text">Ukończenie zadania dnia</div>
+      <div class="how-pts">+40–70 pkt</div>
+    </div>
+    <div class="how-row">
+      <div class="how-icon">📓</div>
+      <div class="how-text">Wpis w dzienniku</div>
+      <div class="how-pts">+20 pkt</div>
+    </div>
+    <div class="how-row">
+      <div class="how-icon">📚</div>
+      <div class="how-text">Napisanie historii zdrowienia</div>
+      <div class="how-pts">+100 pkt</div>
+    </div>
+    <div class="how-row">
+      <div class="how-icon">🔥</div>
+      <div class="how-text">7 dni passy bez hazardu</div>
+      <div class="how-pts">+50 pkt</div>
+    </div>
+    <div class="how-row">
+      <div class="how-icon">🏆</div>
+      <div class="how-text">30 dni passy bez hazardu</div>
+      <div class="how-pts">+200 pkt</div>
+    </div>
+  </div>
+
+  <!-- Claimed banner -->
+  <div class="claimed-banner" id="claimed-banner">
+    <div style="font-size:2rem;margin-bottom:8px;">🎉</div>
+    <div style="font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:white;margin-bottom:6px;">Nagroda zamówiona!</div>
+    <div style="font-size:0.85rem;color:rgba(255,255,255,0.8);">Skontaktujemy się z Tobą w ciągu 48 godzin na podany adres email.</div>
+  </div>
+
+  <!-- Rewards -->
+  <div class="section-title">🎁 Dostępne nagrody</div>
+  <div id="rewards-container">
+    <div style="text-align:center;padding:20px;color:var(--text-light);font-style:italic;">Ładowanie nagród...</div>
+  </div>
+
+  <!-- Points history -->
+  <div class="section-title" style="margin-top:28px;">📋 Historia punktów</div>
+  <div id="history-container">
+    <div style="text-align:center;padding:20px;color:var(--text-light);font-style:italic;">Brak historii punktów.</div>
+  </div>
+
+</div>
+
+<div class="toast" id="toast"></div>
+
+<script>
+  const SUPABASE_URL = 'https://mbmpvbiqcuwiqetoobel.supabase.co';
+  const SUPABASE_KEY = 'sb_publishable_tGtede4fQckZ7WIbtQT_5Q_41KXqX4a';
+  const { createClient } = supabase;
+  const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
+
+  let currentUser = null;
+  let totalPoints = 0;
+
+  async function init() {
+    const { data: { session } } = await sb.auth.getSession();
+    if (!session) { location.href = '/wolnagra-auth.html'; return; }
+    currentUser = session.user;
+
+    await loadPoints();
+    await loadRewards();
+    await loadHistory();
+  }
+
+  async function loadPoints() {
+    const { data } = await sb
+      .from('points')
+      .select('amount')
+      .eq('user_id', currentUser.id);
+
+    totalPoints = data ? data.reduce((sum, r) => sum + r.amount, 0) : 0;
+
+    document.getElementById('hero-points').textContent = totalPoints;
+    document.getElementById('topbar-points').textContent = totalPoints;
+
+    // Update bar towards first reward (assume 1000 pts)
+    const pct = Math.min((totalPoints / 1000) * 100, 100);
+    document.getElementById('hero-bar-fill').style.width = pct + '%';
+    const remaining = Math.max(1000 - totalPoints, 0);
+    document.getElementById('hero-bar-label').textContent = remaining > 0
+      ? `Jeszcze ${remaining} pkt do wizyty u terapeuty`
+      : '🎉 Masz wystarczająco punktów! Odbierz nagrodę poniżej.';
+  }
+
+  async function loadRewards() {
+    const { data: rewards } = await sb
+      .from('rewards')
+      .select('*')
+      .eq('is_active', true);
+
+    if (!rewards || rewards.length === 0) {
+      document.getElementById('rewards-container').innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);">Brak dostępnych nagród.</div>';
+      return;
+    }
+
+    // Check already claimed
+    const { data: claims } = await sb
+      .from('reward_claims')
+      .select('reward_id, status')
+      .eq('user_id', currentUser.id);
+
+    const claimedIds = new Set((claims || []).filter(c => c.status !== 'rejected').map(c => c.reward_id));
+
+    document.getElementById('rewards-container').innerHTML = rewards.map(reward => {
+      const pct = Math.min((totalPoints / reward.points_required) * 100, 100);
+      const canClaim = totalPoints >= reward.points_required;
+      const alreadyClaimed = claimedIds.has(reward.id);
+
+      return `
+        <div class="reward-card">
+          <div class="reward-top">
+            <div class="reward-icon">🧠</div>
+            <div class="reward-info">
+              <div class="reward-name">${reward.name}</div>
+              <div class="reward-desc">${reward.description}</div>
+            </div>
+            <div class="reward-cost">💪 ${reward.points_required} pkt</div>
+          </div>
+          <div class="reward-progress">
+            <div class="rp-label">
+              <span>${canClaim ? '✅ Masz wystarczająco punktów!' : `${totalPoints} / ${reward.points_required} pkt`}</span>
+              <span>${Math.round(pct)}%</span>
+            </div>
+            <div class="rp-bar"><div class="rp-fill" style="width:${pct}%"></div></div>
+          </div>
+          ${alreadyClaimed
+            ? `<button class="claim-btn" disabled>✅ Już zamówione — czekaj na kontakt</button>`
+            : `<button class="claim-btn" ${!canClaim ? 'disabled' : ''} onclick="claimReward('${reward.id}', '${reward.name}', ${reward.points_required})">
+                ${canClaim ? '🎁 Odbierz nagrodę' : `Zbierz jeszcze ${reward.points_required - totalPoints} pkt`}
+              </button>`
+          }
+        </div>`;
+    }).join('');
+  }
+
+  async function claimReward(rewardId, rewardName, cost) {
+    if (totalPoints < cost) { showToast('❌ Za mało punktów!'); return; }
+
+    const { error } = await sb.from('reward_claims').insert({
+      user_id: currentUser.id,
+      reward_id: rewardId,
+      status: 'pending'
+    });
+
+    if (error) { showToast('❌ Błąd. Spróbuj ponownie.'); return; }
+
+    // Deduct points
+    await sb.from('points').insert({
+      user_id: currentUser.id,
+      amount: -cost,
+      reason: `Nagroda: ${rewardName}`
+    });
+
+    document.getElementById('claimed-banner').classList.add('show');
+    document.getElementById('claimed-banner').scrollIntoView({ behavior: 'smooth' });
+
+    await loadPoints();
+    await loadRewards();
+    await loadHistory();
+    showToast('🎉 Nagroda zamówiona! Skontaktujemy się wkrótce.');
+  }
+
+  async function loadHistory() {
+    const { data } = await sb
+      .from('points')
+      .select('*')
+      .eq('user_id', currentUser.id)
+      .order('created_at', { ascending: false })
+      .limit(20);
+
+    if (!data || data.length === 0) return;
+
+    document.getElementById('history-container').innerHTML = data.map(item => {
+      const date = new Date(item.created_at);
+      const dateStr = date.toLocaleDateString('pl-PL', { day: 'numeric', month: 'short' });
+      const positive = item.amount > 0;
+      return `
+        <div class="history-item">
+          <div class="hi-icon">${positive ? '💪' : '🎁'}</div>
+          <div>
+            <div class="hi-text">${item.reason || 'Punkty'}</div>
+            <div class="hi-date">${dateStr}</div>
+          </div>
+          <div class="hi-pts ${positive ? '' : 'negative'}">${positive ? '+' : ''}${item.amount} pkt</div>
+        </div>`;
+    }).join('');
+  }
+
+  async function handleLogout() {
+    await sb.auth.signOut();
+    location.href = '/wolnagra.html';
+  }
+
+  function showToast(msg) {
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 3000);
+  }
+
+  function openNav() { document.getElementById('sidenav').classList.add('open'); document.getElementById('nav-overlay').classList.add('open'); }
+  function closeNav() { document.getElementById('sidenav').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); }
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+
+  init();
+</script>
+</body>
+</html>
