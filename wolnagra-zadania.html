@@ -358,7 +358,7 @@
     const msgs = ['💪 Świetnie!', '🌿 Tak trzymaj!', '🔥 Niesamowite!', '✅ Brawo!'];
     showToast(msgs[Math.floor(Math.random() * msgs.length)] + ` + XP • + Punktów Zdrowienia 💪`);
     // Award healing points
-    sb.from('points').insert({ user_id: currentUser.id, amount: xp, reason: '✅ Zadanie dnia ukończone' });
+    sb.from('points').insert({ user_id: currentUser.id, amount: 8, reason: '✅ Zadanie dnia ukończone' });
 
     if (completedToday.size === TASKS.length) {
       setTimeout(() => showToast('🏆 Wszystkie zadania ukończone! Niesamowity dzień!'), 1000);

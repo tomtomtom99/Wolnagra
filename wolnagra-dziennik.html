@@ -322,7 +322,7 @@
 
     // Award points for diary entry
     const awardPoints = async () => {
-      await sb.from('points').insert({ user_id: currentUser.id, amount: 20, reason: '📓 Wpis w dzienniku' });
+      await sb.from('points').insert({ user_id: currentUser.id, amount: 5, reason: '📓 Wpis w dzienniku' });
     };
 
     const { error } = await sb.from('diary_entries').insert({
@@ -337,7 +337,7 @@
     if (error) {
       showToast('❌ Błąd zapisu. Spróbuj ponownie.');
     } else {
-      showToast('✅ Wpis zapisany! +20 Punktów Zdrowienia 💪');
+      showToast('✅ Wpis zapisany! +5 Punktów Zdrowienia 💪');
       awardPoints();
       document.getElementById('write-textarea').value = '';
       document.getElementById('char-count').textContent = '0 znaków';
