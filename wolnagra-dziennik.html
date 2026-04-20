@@ -246,11 +246,6 @@
     <div class="write-area">
       <textarea class="write-textarea" id="write-textarea" placeholder="Jak minął dziś dzień? Co czujesz?&#10;&#10;Pisz szczerze — to miejsce tylko dla Ciebie..." oninput="updateCount()"></textarea>
     </div>
-<div class="wtag" onclick="toggleWTag(this)">💪 Sukces</div>
-      <div class="wtag" onclick="toggleWTag(this)">😔 Trudny dzień</div>
-      <div class="wtag" onclick="toggleWTag(this)">🙏 Wdzięczność</div>
-      <div class="wtag" onclick="toggleWTag(this)">👨‍👩‍👧 Rodzina</div>
-      <div class="wtag" onclick="toggleWTag(this)">🏃 Aktywność</div>
     </div>
     <div class="write-footer">
       <div class="char-count" id="char-count">0 znaków</div>
@@ -283,10 +278,20 @@
   // Init
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
+
+    // Set date always
+    const now = new Date();
+    document.getElementById('today-date').textContent = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+
     if (!session) {
-      location.href = '/wolnagra-auth.html';
+      // Show demo content for non-logged users
+      document.getElementById('streak-num').textContent = '0';
+      document.getElementById('nav-days').textContent = '0';
+      document.getElementById('day-num').textContent = 'Dzień 1 🔥';
+      loadDemoEntries();
       return;
     }
+
     currentUser = session.user;
 
     // Load profile
@@ -300,12 +305,32 @@
       document.getElementById('user-badge').textContent = profile.username || '';
     }
 
-    // Set date
-    const now = new Date();
-    document.getElementById('today-date').textContent = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
-
-    // Load entries
     loadEntries();
+  }
+
+  function loadDemoEntries() {
+    const container = document.getElementById('entries-container');
+    container.innerHTML = `
+      <div style="background:rgba(122,158,126,0.08);border:1px solid rgba(122,158,126,0.2);border-radius:14px;padding:16px 20px;margin-bottom:16px;text-align:center;">
+        <div style="font-size:1.2rem;margin-bottom:8px;">🔒</div>
+        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--sage-dark);margin-bottom:6px;">Zaloguj się aby pisać i czytać wpisy</div>
+        <div style="font-size:0.83rem;color:var(--text-light);margin-bottom:14px;">Rejestracja jest bezpłatna i anonimowa.</div>
+        <a href="/wolnagra-auth.html" style="display:inline-block;padding:10px 24px;background:var(--sage);color:white;border-radius:12px;font-weight:700;text-decoration:none;font-size:0.88rem;">🌿 Zaloguj się lub zarejestruj</a>
+      </div>
+      <div class="entry-card" style="opacity:0.5;filter:blur(3px);pointer-events:none;">
+        <div class="ec-header">
+          <div><div class="ec-date">Przykładowy wpis</div><div class="ec-meta">Tak może wyglądać Twój dziennik</div></div>
+          <div class="ec-mood">🙂</div>
+        </div>
+        <div class="ec-body">Dziś miałem trudny moment ale sobie poradziłem. Zadzwoniłem do brata i poczułem się lepiej. To był dobry dzień...</div>
+      </div>
+      <div class="entry-card" style="opacity:0.3;filter:blur(4px);pointer-events:none;">
+        <div class="ec-header">
+          <div><div class="ec-date">Wczoraj</div><div class="ec-meta">Dzień 2</div></div>
+          <div class="ec-mood">😐</div>
+        </div>
+        <div class="ec-body">Pokusa była dziś spora ale skorzystałem z planu kryzysowego...</div>
+      </div>`;
   }
 
   async function loadEntries() {
@@ -357,6 +382,7 @@
 
 
   async function saveEntry() {
+    if (!currentUser) { showLoginPrompt(); return; }
     const text = document.getElementById('write-textarea').value.trim();
     if (!text) { showToast('✏️ Napisz coś przed zapisaniem!'); return; }
 
