@@ -1,0 +1,42 @@
+{
+  "name": "WolnaGra — Wolność zaczyna się tutaj",
+  "short_name": "WolnaGra",
+  "description": "Bezpieczna przestrzeń dla osób wychodzących z uzależnienia od hazardu",
+  "start_url": "/wolnagra.html",
+  "display": "standalone",
+  "background_color": "#F5F0E8",
+  "theme_color": "#5C7A60",
+  "orientation": "portrait",
+  "lang": "pl",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "shortcuts": [
+    {
+      "name": "Mój Dziennik",
+      "url": "/wolnagra-dziennik.html",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Zadania dnia",
+      "url": "/wolnagra-zadania.html",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    },
+    {
+      "name": "Plan kryzysowy",
+      "url": "/wolnagra-kryzys.html",
+      "icons": [{ "src": "/icon-192.png", "sizes": "192x192" }]
+    }
+  ]
+}
