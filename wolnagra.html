@@ -125,6 +125,47 @@
   .stat-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--sage-dark); display: block; }
   .stat-label { font-size: 0.62rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; display: block; margin-top: 2px; }
 
+  /* ─── ROTATING QUOTES ─── */
+  .quotes-section {
+    background: white;
+    border-bottom: 1px solid var(--sand);
+    padding: 28px 24px;
+    text-align: center;
+    position: relative;
+    min-height: 120px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+  }
+
+  .quote-icon { font-size: 1.4rem; margin-bottom: 4px; }
+
+  .quote-text {
+    font-family: 'Playfair Display', serif;
+    font-size: clamp(0.95rem, 2.5vw, 1.15rem);
+    font-style: italic; font-weight: 700;
+    color: var(--text-dark); line-height: 1.5;
+    max-width: 680px;
+    transition: opacity 0.6s ease;
+  }
+
+  .quote-author {
+    font-size: 0.75rem; font-weight: 700;
+    color: var(--text-light);
+    text-transform: uppercase; letter-spacing: 0.08em;
+    transition: opacity 0.6s ease;
+  }
+
+  .quote-dots {
+    display: flex; gap: 6px; margin-top: 8px;
+  }
+
+  .quote-dot {
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--sand); transition: background 0.3s;
+  }
+
+  .quote-dot.active { background: var(--sage); }
+
   /* ─── QUICK ACCESS ─── */
   .quick-access { padding: 24px 16px 8px; background: var(--warm-white); }
   .qa-title {
@@ -302,19 +343,12 @@
     <a href="/wolnagra-auth.html" class="hero-btn">🌿 <span data-pl="Zacznij swoją drogę" data-en="Start your journey">Zacznij swoją drogę</span></a>
   </div>
 
-  <div class="stats-row">
-    <div class="stat-item">
-      <span class="stat-num">1 247</span>
-      <span class="stat-label" data-pl="W społeczności" data-en="Members">W społeczności</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">84 tys.</span>
-      <span class="stat-label" data-pl="Wpisów" data-en="Entries">Wpisów</span>
-    </div>
-    <div class="stat-item">
-      <span class="stat-num">96%</span>
-      <span class="stat-label" data-pl="Czuje wsparcie" data-en="Feel supported">Czuje wsparcie</span>
-    </div>
+  <!-- Rotating quotes -->
+  <div class="quotes-section">
+    <div class="quote-icon">🌿</div>
+    <div class="quote-text" id="quote-text"></div>
+    <div class="quote-author" id="quote-author"></div>
+    <div class="quote-dots" id="quote-dots"></div>
   </div>
 
   <div class="quick-access">
@@ -415,6 +449,60 @@
       if (text) el.innerHTML = text;
     });
   }
+
+  // Rotating quotes
+  const quotes = [
+    { text: '"Jeden dzień bez hazardu to zwycięstwo. Jutro możesz wygrać kolejne."', author: '— Anonimowi Hazardziści' },
+    { text: '"Nie możesz wrócić i zmienić początku, ale możesz zacząć od dzisiaj i zmienić koniec."', author: '— C.S. Lewis' },
+    { text: '"Uzależnienie mówi Ci kłamstwa. Zdrowienie mówi Ci prawdę."', author: '— Społeczność WolnaGra' },
+    { text: '"Najodważniejszą rzeczą jaką możesz zrobić, jest poprosić o pomoc."', author: '— Anonimowi Hazardziści' },
+    { text: '"Każda pokusa którą przetrwasz, czyni Cię silniejszym na następną."', author: '— Społeczność WolnaGra' },
+    { text: '"Nie chodzi o to żeby nigdy nie upaść. Chodzi o to żeby zawsze wstawać."', author: '— przysłowie' },
+    { text: '"Wolność od hazardu to nie koniec czegoś. To początek wszystkiego."', author: '— Społeczność WolnaGra' },
+    { text: '"Mózg który grał, może się nauczyć nie grać. Neuroplastyczność jest po Twojej stronie."', author: '— badania naukowe' },
+    { text: '"Nie jesteś swoim uzależnieniem. Jesteś człowiekiem który zmaga się z uzależnieniem."', author: '— Społeczność WolnaGra' },
+    { text: '"Pierwsza myśl o grze nie jest Twoim wyborem. Druga — już tak."', author: '— Anonimowi Hazardziści' },
+  ];
+
+  let currentQuote = 0;
+
+  function showQuote(index) {
+    const textEl = document.getElementById('quote-text');
+    const authorEl = document.getElementById('quote-author');
+
+    textEl.style.opacity = '0';
+    authorEl.style.opacity = '0';
+
+    setTimeout(() => {
+      textEl.textContent = quotes[index].text;
+      authorEl.textContent = quotes[index].author;
+      textEl.style.opacity = '1';
+      authorEl.style.opacity = '1';
+
+      document.querySelectorAll('.quote-dot').forEach((d, i) => {
+        d.classList.toggle('active', i === index);
+      });
+    }, 600);
+  }
+
+  function initQuotes() {
+    const dots = document.getElementById('quote-dots');
+    quotes.forEach((_, i) => {
+      const dot = document.createElement('div');
+      dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+      dot.onclick = () => { currentQuote = i; showQuote(i); };
+      dots.appendChild(dot);
+    });
+
+    showQuote(0);
+
+    setInterval(() => {
+      currentQuote = (currentQuote + 1) % quotes.length;
+      showQuote(currentQuote);
+    }, 3 * 60 * 1000); // co 3 minuty
+  }
+
+  initQuotes();
 
   function openNav() {
     document.getElementById('sidenav').classList.add('open');
