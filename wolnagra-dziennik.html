@@ -2,16 +2,24 @@
 <html lang="pl">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <link rel="manifest" href="/manifest.json">
 <meta name="theme-color" content="#5C7A60">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="WolnaGra">
 <link rel="apple-touch-icon" href="/icon-192.png">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WolnaGra — Mój Dziennik</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-VM69YWV5TY"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-VM69YWV5TY');
+</script>
 <style>
   :root {
     --cream: #F5F0E8;
@@ -38,7 +46,7 @@
   .streak-pill { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
   .user-badge { font-size: 0.78rem; font-weight: 700; color: var(--text-light); }
   .logout-btn { padding: 6px 12px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; transition: all 0.2s; }
-  .logout-btn:hover { background: var(--cream); color: var(--text-dark); }
+  .logout-btn:hover { background: var(--cream); }
 
   /* LAYOUT */
   .layout { max-width: 700px; margin: 0 auto; padding: 24px 16px 60px; }
@@ -69,16 +77,14 @@
   .write-textarea { width: 100%; min-height: 140px; border: none; outline: none; resize: none; font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--text-mid); line-height: 1.7; background: transparent; }
   .write-textarea::placeholder { color: var(--sand); }
 
-  /* TAGS */
-
   /* FOOTER */
-  .write-footer { padding: 12px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; }
+  .write-footer { padding: 12px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
   .char-count { font-size: 0.72rem; color: var(--text-light); font-weight: 700; }
   .save-btn { padding: 8px 20px; background: var(--sage); color: white; border: none; border-radius: 10px; font-family: 'Lato', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
   .save-btn:hover { background: var(--sage-dark); transform: translateY(-1px); }
   .save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
-  /* SECTION */
+  /* SECTION TITLE */
   .section-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
 
@@ -90,19 +96,30 @@
   .ec-meta { font-size: 0.7rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
   .ec-mood { font-size: 1.1rem; }
   .ec-body { padding: 0 18px 14px; font-family: 'Caveat', cursive; font-size: 1rem; color: var(--text-mid); line-height: 1.65; }
-  .ec-tag { font-size: 0.68rem; padding: 2px 9px; border-radius: 10px; background: white; color: var(--text-light); font-weight: 700; border: 1px solid var(--sand); }
 
   /* EMPTY STATE */
   .empty-state { text-align: center; padding: 40px 20px; color: var(--text-light); }
   .empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; }
   .empty-state-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-mid); margin-bottom: 6px; }
 
+  /* LOGIN PROMPT */
+  .login-banner {
+    background: rgba(122,158,126,0.08);
+    border: 1px solid rgba(122,158,126,0.25);
+    border-radius: 16px; padding: 20px;
+    text-align: center; margin-bottom: 20px;
+  }
+  .login-banner-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--sage-dark); margin-bottom: 6px; }
+  .login-banner-desc { font-size: 0.83rem; color: var(--text-light); margin-bottom: 14px; line-height: 1.5; }
+  .login-banner-btn { display: inline-block; padding: 10px 24px; background: var(--sage); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.88rem; transition: all 0.2s; }
+  .login-banner-btn:hover { background: var(--sage-dark); }
+
+  /* DEMO ENTRIES */
+  .demo-entry { opacity: 0.4; pointer-events: none; filter: blur(2px); }
+
   /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--sage-dark); color: white; padding: 12px 24px; border-radius: 40px; font-size: 0.88rem; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* LOADING */
-  .loading-state { text-align: center; padding: 30px; color: var(--text-light); font-style: italic; }
 
   /* SIDEBAR */
   .sidenav { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #2C4430; z-index: 200; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
@@ -122,65 +139,14 @@
   .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
   .sidenav-bottom { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.08); }
   .sidenav-crisis { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(192,57,43,0.2); color: #E88080; text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; margin-bottom: 8px; }
-  .sidenav-crisis:hover { background: rgba(192,57,43,0.35); color: white; }
-  .hamburger { position: fixed; top: 12px; left: 12px; z-index: 199; width: 36px; height: 36px; border-radius: 10px; background: #5C7A60; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; transition: all 0.2s; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
-  .hamburger:hover { background: #3D5E40; }
+  .hamburger { position: fixed; top: 12px; left: 12px; z-index: 199; width: 36px; height: 36px; border-radius: 10px; background: #5C7A60; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .hamburger span { display: block; width: 16px; height: 2px; background: white; border-radius: 2px; }
   .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
   .nav-overlay.open { display: block; }
   @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(700px + 220px); padding-left: 236px; } }
-
-  /* LOGIN PROMPT OVERLAY */
-  .login-overlay {
-    position: fixed; inset: 0;
-    background: rgba(44,36,22,0.7);
-    backdrop-filter: blur(6px);
-    z-index: 500;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    padding: 24px;
-  }
-  .login-overlay.show { display: flex; }
-  .login-box {
-    background: white;
-    border-radius: 24px;
-    padding: 32px 28px;
-    max-width: 380px;
-    width: 100%;
-    text-align: center;
-    box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-  }
-  .login-box-icon { font-size: 2.5rem; margin-bottom: 12px; }
-  .login-box-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: #2C2416; margin-bottom: 8px; }
-  .login-box-desc { font-size: 0.88rem; color: #8B7355; line-height: 1.6; margin-bottom: 24px; }
-  .login-box-btn { display: block; width: 100%; padding: 13px; background: #7A9E7E; color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; text-decoration: none; margin-bottom: 10px; transition: all 0.2s; }
-  .login-box-btn:hover { background: #5C7A60; }
-  .login-box-skip { font-size: 0.82rem; color: #8B7355; cursor: pointer; background: none; border: none; font-family: 'Lato', sans-serif; text-decoration: underline; }
-
 </style>
-<!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-VM69YWV5TY"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-  gtag('config', 'G-VM69YWV5TY');
-</script>
 </head>
 <body>
-
-<!-- Login prompt overlay -->
-<div class="login-overlay" id="login-overlay">
-  <div class="login-box">
-    <div class="login-box-icon">🌿</div>
-    <div class="login-box-title">Zaloguj się aby skorzystać</div>
-    <div class="login-box-desc">Ta funkcja jest dostępna dla zarejestrowanych użytkowników. Rejestracja jest bezpłatna i anonimowa — nie musisz podawać prawdziwego imienia.</div>
-    <a href="/wolnagra-auth.html" class="login-box-btn">🌿 Zaloguj się lub zarejestruj</a>
-    <button class="login-box-skip" onclick="hideLoginPrompt()">Przeglądaj bez logowania</button>
-  </div>
-</div>
-
 
 <div class="nav-overlay" id="nav-overlay" onclick="closeNav()"></div>
 <nav class="sidenav" id="sidenav">
@@ -205,6 +171,7 @@
     <div class="sidenav-section">Wsparcie</div>
     <a href="/wolnagra-meetings.html" class="sidenav-link"><span class="sidenav-link-icon">🤝</span> Spotkania AH</a>
     <a href="/wolnagra-kryzys.html" class="sidenav-link"><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
+    <a href="/wolnagra-profil.html" class="sidenav-link"><span class="sidenav-link-icon">👤</span> Mój profil</a>
   </div>
   <div class="sidenav-bottom">
     <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
@@ -220,7 +187,7 @@
   <div class="topbar-right">
     <div class="streak-pill">🔥 <span id="streak-num">—</span> dni</div>
     <span class="user-badge" id="user-badge"></span>
-    <button class="logout-btn" onclick="handleLogout()">Wyloguj</button>
+    <button class="logout-btn" id="logout-btn" onclick="handleLogout()" style="display:none;">Wyloguj</button>
   </div>
 </div>
 
@@ -230,22 +197,23 @@
   <div class="write-card">
     <div class="write-header">
       <div class="write-date">Dziś, <span id="today-date"></span></div>
-      <div style="font-size:0.75rem;color:var(--text-light);font-weight:700;" id="day-num">Dzień —</div>
+      <div style="font-size:0.75rem;color:var(--text-light);font-weight:700;" id="day-num"></div>
     </div>
     <div class="mood-row">
       <div class="mood-label">Nastrój:</div>
       <div class="mood-options">
-        <button class="mood-btn" data-mood="1" onclick="selectMood(1)" title="Bardzo źle">😞</button>
-        <button class="mood-btn" data-mood="2" onclick="selectMood(2)" title="Źle">😟</button>
-        <button class="mood-btn" data-mood="3" onclick="selectMood(3)" title="Tak sobie">😐</button>
-        <button class="mood-btn" data-mood="4" onclick="selectMood(4)" title="Dobrze">🙂</button>
-        <button class="mood-btn" data-mood="5" onclick="selectMood(5)" title="Świetnie">😄</button>
+        <button class="mood-btn" data-mood="1" onclick="selectMood(1)">😞</button>
+        <button class="mood-btn" data-mood="2" onclick="selectMood(2)">😟</button>
+        <button class="mood-btn" data-mood="3" onclick="selectMood(3)">😐</button>
+        <button class="mood-btn" data-mood="4" onclick="selectMood(4)">🙂</button>
+        <button class="mood-btn" data-mood="5" onclick="selectMood(5)">😄</button>
       </div>
       <div class="mood-name" id="mood-name">Wybierz nastrój...</div>
     </div>
     <div class="write-area">
-      <textarea class="write-textarea" id="write-textarea" placeholder="Jak minął dziś dzień? Co czujesz?&#10;&#10;Pisz szczerze — to miejsce tylko dla Ciebie..." oninput="updateCount()"></textarea>
-    </div>
+      <textarea class="write-textarea" id="write-textarea"
+        placeholder="Jak minął dziś dzień? Co czujesz?&#10;&#10;Pisz szczerze — to miejsce tylko dla Ciebie..."
+        oninput="updateCount()"></textarea>
     </div>
     <div class="write-footer">
       <div class="char-count" id="char-count">0 znaków</div>
@@ -253,11 +221,9 @@
     </div>
   </div>
 
-  <!-- Past entries -->
+  <!-- Entries section -->
   <div class="section-title">Poprzednie wpisy</div>
-  <div id="entries-container">
-    <div class="loading-state">Ładowanie wpisów...</div>
-  </div>
+  <div id="entries-container"></div>
 
 </div>
 
@@ -273,74 +239,89 @@
   const moodNames = ['', 'Bardzo źle 😞', 'Źle 😟', 'Tak sobie 😐', 'Dobrze 🙂', 'Świetnie 😄'];
   let selectedMood = null;
   let currentUser = null;
-  let userProfile = null;
 
-  // Init
   async function init() {
-    const { data: { session } } = await sb.auth.getSession();
-
-    // Set date always
+    // Set date
     const now = new Date();
     document.getElementById('today-date').textContent = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
 
+    const { data: { session } } = await sb.auth.getSession();
+
     if (!session) {
-      // Show demo content for non-logged users
+      // Not logged in - show demo
       document.getElementById('streak-num').textContent = '0';
       document.getElementById('nav-days').textContent = '0';
-      document.getElementById('day-num').textContent = 'Dzień 1 🔥';
-      loadDemoEntries();
+      document.getElementById('day-num').textContent = 'Zaloguj się aby korzystać';
+      showDemoEntries();
       return;
     }
 
+    // Logged in
     currentUser = session.user;
+    document.getElementById('logout-btn').style.display = 'block';
 
-    // Load profile
+    // Load profile and update streak
     const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
-    userProfile = profile;
 
     if (profile) {
-      document.getElementById('streak-num').textContent = profile.streak || 0;
-      document.getElementById('nav-days').textContent = profile.streak || 0;
-      document.getElementById('day-num').textContent = `Dzień ${profile.streak || 0} 🔥`;
+      // Calculate streak based on streak_start_date
+      let streak = 0;
+      if (profile.streak_start_date) {
+        const startDate = new Date(profile.streak_start_date);
+        const today = new Date();
+        const diffTime = today - startDate;
+        streak = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      } else {
+        streak = profile.streak || 0;
+      }
+
+      document.getElementById('streak-num').textContent = streak;
+      document.getElementById('nav-days').textContent = streak;
+      document.getElementById('day-num').textContent = `Dzień ${streak} 🔥`;
       document.getElementById('user-badge').textContent = profile.username || '';
+
+      // Update streak in DB
+      await sb.from('profiles').update({ streak }).eq('id', currentUser.id);
     }
 
     loadEntries();
   }
 
-  function loadDemoEntries() {
+  function showDemoEntries() {
     const container = document.getElementById('entries-container');
     container.innerHTML = `
-      <div style="background:rgba(122,158,126,0.08);border:1px solid rgba(122,158,126,0.2);border-radius:14px;padding:16px 20px;margin-bottom:16px;text-align:center;">
-        <div style="font-size:1.2rem;margin-bottom:8px;">🔒</div>
-        <div style="font-family:'Playfair Display',serif;font-size:1rem;font-weight:900;color:var(--sage-dark);margin-bottom:6px;">Zaloguj się aby pisać i czytać wpisy</div>
-        <div style="font-size:0.83rem;color:var(--text-light);margin-bottom:14px;">Rejestracja jest bezpłatna i anonimowa.</div>
-        <a href="/wolnagra-auth.html" style="display:inline-block;padding:10px 24px;background:var(--sage);color:white;border-radius:12px;font-weight:700;text-decoration:none;font-size:0.88rem;">🌿 Zaloguj się lub zarejestruj</a>
+      <div class="login-banner">
+        <div style="font-size:1.5rem;margin-bottom:8px;">📓</div>
+        <div class="login-banner-title">Zaloguj się aby pisać i czytać wpisy</div>
+        <div class="login-banner-desc">Rejestracja jest bezpłatna i anonimowa — nie musisz podawać prawdziwego imienia.</div>
+        <a href="/wolnagra-auth.html" class="login-banner-btn">🌿 Zaloguj się lub zarejestruj</a>
       </div>
-      <div class="entry-card" style="opacity:0.5;filter:blur(3px);pointer-events:none;">
+      <div class="entry-card demo-entry">
         <div class="ec-header">
-          <div><div class="ec-date">Przykładowy wpis</div><div class="ec-meta">Tak może wyglądać Twój dziennik</div></div>
+          <div><div class="ec-date">Przykładowy wpis</div><div class="ec-meta">Dzień 7</div></div>
           <div class="ec-mood">🙂</div>
         </div>
-        <div class="ec-body">Dziś miałem trudny moment ale sobie poradziłem. Zadzwoniłem do brata i poczułem się lepiej. To był dobry dzień...</div>
+        <div class="ec-body">Dziś miałem trudny moment ale sobie poradziłem. Zadzwoniłem do brata i poczułem się lepiej...</div>
       </div>
-      <div class="entry-card" style="opacity:0.3;filter:blur(4px);pointer-events:none;">
+      <div class="entry-card demo-entry">
         <div class="ec-header">
-          <div><div class="ec-date">Wczoraj</div><div class="ec-meta">Dzień 2</div></div>
+          <div><div class="ec-date">Wczoraj</div><div class="ec-meta">Dzień 6</div></div>
           <div class="ec-mood">😐</div>
         </div>
-        <div class="ec-body">Pokusa była dziś spora ale skorzystałem z planu kryzysowego...</div>
+        <div class="ec-body">Pokusa była spora, ale skorzystałem z planu kryzysowego. Pomogło...</div>
       </div>`;
   }
 
   async function loadEntries() {
     const container = document.getElementById('entries-container');
+    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);">Ładowanie...</div>';
+
     const { data: entries, error } = await sb
       .from('diary_entries')
       .select('*')
       .eq('user_id', currentUser.id)
       .order('created_at', { ascending: false })
-      .limit(20);
+      .limit(30);
 
     if (error || !entries || entries.length === 0) {
       container.innerHTML = `
@@ -355,12 +336,13 @@
     container.innerHTML = entries.map(entry => {
       const date = new Date(entry.created_at);
       const dateStr = date.toLocaleDateString('pl-PL', { weekday: 'long', day: 'numeric', month: 'long' });
+      const timeStr = date.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' });
       return `
         <div class="entry-card">
           <div class="ec-header">
             <div>
               <div class="ec-date">${dateStr}</div>
-              <div class="ec-meta">${date.toLocaleTimeString('pl-PL', { hour: '2-digit', minute: '2-digit' })}</div>
+              <div class="ec-meta">${timeStr}</div>
             </div>
             <div class="ec-mood">${entry.mood ? moodEmojis[entry.mood] : ''}</div>
           </div>
@@ -380,25 +362,21 @@
     document.getElementById('char-count').textContent = document.getElementById('write-textarea').value.length + ' znaków';
   }
 
-
   async function saveEntry() {
-    if (!currentUser) { showLoginPrompt(); return; }
+    if (!currentUser) {
+      window.location.href = '/wolnagra-auth.html';
+      return;
+    }
     const text = document.getElementById('write-textarea').value.trim();
     if (!text) { showToast('✏️ Napisz coś przed zapisaniem!'); return; }
 
     const btn = document.getElementById('save-btn');
     btn.disabled = true; btn.textContent = 'Zapisuję...';
 
-
-    // Award points for diary entry
-    const awardPoints = async () => {
-      await sb.from('points').insert({ user_id: currentUser.id, amount: 5, reason: '📓 Wpis w dzienniku' });
-    };
-
     const { error } = await sb.from('diary_entries').insert({
       user_id: currentUser.id,
       content: text,
-      mood: selectedMood,
+      mood: selectedMood
     });
 
     btn.disabled = false; btn.textContent = '💾 Zapisz wpis';
@@ -406,8 +384,9 @@
     if (error) {
       showToast('❌ Błąd zapisu. Spróbuj ponownie.');
     } else {
+      // Award points
+      await sb.from('points').insert({ user_id: currentUser.id, amount: 5, reason: '📓 Wpis w dzienniku' });
       showToast('✅ Wpis zapisany! +5 Punktów Zdrowienia 💪');
-      awardPoints();
       document.getElementById('write-textarea').value = '';
       document.getElementById('char-count').textContent = '0 znaków';
       document.querySelectorAll('.mood-btn').forEach(b => b.classList.remove('selected'));
@@ -434,14 +413,6 @@
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
   init();
-
-  function showLoginPrompt() {
-    document.getElementById('login-overlay').classList.add('show');
-  }
-  function hideLoginPrompt() {
-    document.getElementById('login-overlay').classList.remove('show');
-  }
-
 </script>
 <script>
   if ('serviceWorker' in navigator) {
