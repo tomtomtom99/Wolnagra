@@ -238,7 +238,8 @@
   <div class="topbar-title">💪 Punkty Zdrowienia</div>
   <div class="topbar-right">
     <div class="points-pill">💪 <span id="topbar-points">—</span> pkt</div>
-    <button class="logout-btn" onclick="handleLogout()">Wyloguj</button>
+    <button class="logout-btn" id="logout-btn" onclick="handleLogout()" style="display:none;">Wyloguj</button>
+    <a href="/wolnagra-auth.html" id="login-btn" style="display:none;padding:6px 14px;background:var(--sage);color:white;border-radius:10px;font-size:0.75rem;font-weight:700;text-decoration:none;">Zaloguj się</a>
   </div>
 </div>
 
@@ -320,6 +321,8 @@
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
     if (!session) {
+      document.getElementById('logout-btn').style.display = 'none';
+      document.getElementById('login-btn').style.display = 'block';
       showLoginPrompt();
       return;
     }
