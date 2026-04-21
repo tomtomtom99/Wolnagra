@@ -12,7 +12,6 @@
 <title>WolnaGra — Mój Dziennik</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&family=Caveat:wght@400;600&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VM69YWV5TY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -33,6 +32,7 @@
     --text-mid: #5C4A32;
     --text-light: #8B7355;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
 
@@ -45,43 +45,39 @@
   .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
   .streak-pill { display: flex; align-items: center; gap: 6px; background: linear-gradient(135deg, var(--sage), var(--sage-dark)); color: white; padding: 6px 12px; border-radius: 20px; font-size: 0.8rem; font-weight: 700; }
   .user-badge { font-size: 0.78rem; font-weight: 700; color: var(--text-light); }
-  .logout-btn { padding: 6px 12px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; transition: all 0.2s; }
-  .logout-btn:hover { background: var(--cream); }
+  .logout-btn { display: none; padding: 6px 12px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; }
+  .login-btn { display: none; padding: 6px 14px; background: var(--sage); color: white; border: none; border-radius: 10px; font-size: 0.75rem; font-weight: 700; cursor: pointer; font-family: 'Lato', sans-serif; text-decoration: none; }
 
   /* LAYOUT */
   .layout { max-width: 700px; margin: 0 auto; padding: 24px 16px 60px; }
 
   /* WRITE CARD */
-  .write-card { background: white; border-radius: 20px; border: 1px solid var(--sand); overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); transition: box-shadow 0.3s; }
+  .write-card { background: white; border-radius: 20px; border: 1px solid var(--sand); overflow: hidden; margin-bottom: 24px; box-shadow: 0 4px 20px rgba(0,0,0,0.04); }
   .write-card:focus-within { box-shadow: 0 8px 32px rgba(122,158,126,0.15); border-color: var(--sage-light); }
   .write-header { padding: 16px 20px 0; display: flex; align-items: center; justify-content: space-between; }
   .write-date { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--text-dark); }
   .write-date span { color: var(--sage-dark); }
+  .write-day { font-size: 0.75rem; color: var(--text-light); font-weight: 700; }
 
   /* MOOD */
-  .mood-row { padding: 12px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid var(--cream); flex-wrap: wrap; }
-  .mood-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; }
-  .mood-options { display: flex; gap: 8px; }
-  .mood-btn { width: 32px; height: 32px; border-radius: 50%; border: 3px solid transparent; cursor: pointer; font-size: 1rem; display: flex; align-items: center; justify-content: center; transition: all 0.2s; background: var(--cream); }
+  .mood-row { padding: 12px 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid var(--cream); flex-wrap: wrap; }
+  .mood-label { font-size: 0.72rem; font-weight: 700; color: var(--text-light); text-transform: uppercase; letter-spacing: 0.06em; white-space: nowrap; }
+  .mood-options { display: flex; gap: 6px; }
+  .mood-btn { width: 30px; height: 30px; border-radius: 50%; border: 2px solid transparent; cursor: pointer; font-size: 0.95rem; background: var(--cream); display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
   .mood-btn:hover { transform: scale(1.15); }
-  .mood-btn.selected { border-color: currentColor; transform: scale(1.2); background: white; }
-  .mood-btn[data-mood="1"] { color: #E74C3C; }
-  .mood-btn[data-mood="2"] { color: #E67E22; }
-  .mood-btn[data-mood="3"] { color: #F1C40F; }
-  .mood-btn[data-mood="4"] { color: #2ECC71; }
-  .mood-btn[data-mood="5"] { color: #27AE60; }
-  .mood-name { font-size: 0.78rem; color: var(--text-light); font-style: italic; }
+  .mood-btn.selected { border-color: var(--sage); transform: scale(1.2); background: white; }
+  .mood-name { font-size: 0.76rem; color: var(--text-light); font-style: italic; }
 
   /* TEXTAREA */
   .write-area { padding: 16px 20px; }
-  .write-textarea { width: 100%; min-height: 140px; border: none; outline: none; resize: none; font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--text-mid); line-height: 1.7; background: transparent; }
-  .write-textarea::placeholder { color: var(--sand); }
+  .write-textarea { width: 100%; min-height: 130px; border: none; outline: none; resize: none; font-family: 'Caveat', cursive; font-size: 1.1rem; color: var(--text-mid); line-height: 1.7; background: transparent; }
+  .write-textarea::placeholder { color: #D4C4A8; }
 
   /* FOOTER */
-  .write-footer { padding: 12px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+  .write-footer { padding: 10px 20px; background: var(--cream); display: flex; align-items: center; justify-content: space-between; }
   .char-count { font-size: 0.72rem; color: var(--text-light); font-weight: 700; }
-  .save-btn { padding: 8px 20px; background: var(--sage); color: white; border: none; border-radius: 10px; font-family: 'Lato', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
-  .save-btn:hover { background: var(--sage-dark); transform: translateY(-1px); }
+  .save-btn { padding: 8px 20px; background: var(--sage); color: white; border: none; border-radius: 10px; font-family: 'Lato', sans-serif; font-size: 0.85rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .save-btn:hover { background: var(--sage-dark); }
   .save-btn:disabled { opacity: 0.6; cursor: not-allowed; }
 
   /* SECTION TITLE */
@@ -89,33 +85,27 @@
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
 
   /* ENTRY CARDS */
-  .entry-card { background: white; border-radius: 16px; border: 1px solid var(--sand); margin-bottom: 12px; overflow: hidden; transition: all 0.2s; }
-  .entry-card:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
-  .ec-header { padding: 14px 18px 10px; display: flex; align-items: flex-start; justify-content: space-between; gap: 10px; }
+  .entry-card { background: white; border-radius: 16px; border: 1px solid var(--sand); margin-bottom: 10px; overflow: hidden; }
+  .ec-header { padding: 14px 18px 8px; display: flex; align-items: flex-start; justify-content: space-between; }
   .ec-date { font-family: 'Playfair Display', serif; font-size: 0.88rem; font-weight: 700; color: var(--text-dark); }
-  .ec-meta { font-size: 0.7rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; margin-top: 2px; }
+  .ec-time { font-size: 0.7rem; color: var(--text-light); font-weight: 700; margin-top: 2px; }
   .ec-mood { font-size: 1.1rem; }
   .ec-body { padding: 0 18px 14px; font-family: 'Caveat', cursive; font-size: 1rem; color: var(--text-mid); line-height: 1.65; }
+
+  /* LOGIN BANNER */
+  .login-banner { background: linear-gradient(135deg, rgba(122,158,126,0.08), rgba(122,158,126,0.04)); border: 2px solid rgba(122,158,126,0.2); border-radius: 18px; padding: 24px 20px; text-align: center; margin-bottom: 20px; }
+  .login-banner-icon { font-size: 2rem; margin-bottom: 10px; }
+  .login-banner-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--sage-dark); margin-bottom: 6px; }
+  .login-banner-desc { font-size: 0.83rem; color: var(--text-light); margin-bottom: 16px; line-height: 1.6; }
+  .login-banner-btn { display: inline-block; padding: 11px 28px; background: var(--sage); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.9rem; }
+
+  /* DEMO BLUR */
+  .demo-entry { opacity: 0.35; pointer-events: none; filter: blur(2px); }
 
   /* EMPTY STATE */
   .empty-state { text-align: center; padding: 40px 20px; color: var(--text-light); }
   .empty-state-icon { font-size: 2.5rem; margin-bottom: 12px; }
   .empty-state-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 700; color: var(--text-mid); margin-bottom: 6px; }
-
-  /* LOGIN PROMPT */
-  .login-banner {
-    background: rgba(122,158,126,0.08);
-    border: 1px solid rgba(122,158,126,0.25);
-    border-radius: 16px; padding: 20px;
-    text-align: center; margin-bottom: 20px;
-  }
-  .login-banner-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--sage-dark); margin-bottom: 6px; }
-  .login-banner-desc { font-size: 0.83rem; color: var(--text-light); margin-bottom: 14px; line-height: 1.5; }
-  .login-banner-btn { display: inline-block; padding: 10px 24px; background: var(--sage); color: white; border-radius: 12px; font-weight: 700; text-decoration: none; font-size: 0.88rem; transition: all 0.2s; }
-  .login-banner-btn:hover { background: var(--sage-dark); }
-
-  /* DEMO ENTRIES */
-  .demo-entry { opacity: 0.4; pointer-events: none; filter: blur(2px); }
 
   /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--sage-dark); color: white; padding: 12px 24px; border-radius: 40px; font-size: 0.88rem; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
@@ -133,17 +123,24 @@
   .sidenav-streak-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
   .sidenav-links { flex: 1; padding: 8px 10px; overflow-y: auto; }
   .sidenav-section { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); padding: 12px 8px 6px; }
-  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; border: none; background: none; font-family: 'Lato', sans-serif; width: 100%; text-align: left; }
+  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; }
   .sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
   .sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
   .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
   .sidenav-bottom { padding: 14px 10px; border-top: 1px solid rgba(255,255,255,0.08); }
-  .sidenav-crisis { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(192,57,43,0.2); color: #E88080; text-decoration: none; font-size: 0.82rem; font-weight: 700; transition: all 0.2s; margin-bottom: 8px; }
+  .sidenav-crisis { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border-radius: 10px; background: rgba(192,57,43,0.2); color: #E88080; text-decoration: none; font-size: 0.82rem; font-weight: 700; }
   .hamburger { position: fixed; top: 12px; left: 12px; z-index: 199; width: 36px; height: 36px; border-radius: 10px; background: #5C7A60; border: none; cursor: pointer; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); }
   .hamburger span { display: block; width: 16px; height: 2px; background: white; border-radius: 2px; }
   .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
   .nav-overlay.open { display: block; }
-  @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(700px + 220px); padding-left: 236px; } }
+
+  @media (min-width: 900px) {
+    .sidenav { transform: translateX(0); }
+    .hamburger { display: none; }
+    .nav-overlay { display: none !important; }
+    .topbar { padding-left: 236px !important; }
+    .layout { margin-left: 220px; max-width: calc(700px + 220px); padding-left: 236px; }
+  }
 </style>
 </head>
 <body>
@@ -187,7 +184,10 @@
   <div class="topbar-right">
     <div class="streak-pill">🔥 <span id="streak-num">—</span> dni</div>
     <span class="user-badge" id="user-badge"></span>
-    <button class="logout-btn" id="logout-btn" onclick="handleLogout()" style="display:none;">Wyloguj</button>
+    <!-- Wyloguj - tylko dla zalogowanych -->
+    <button class="logout-btn" id="logout-btn" onclick="handleLogout()">Wyloguj</button>
+    <!-- Zaloguj - tylko dla niezalogowanych -->
+    <a class="login-btn" id="login-btn" href="/wolnagra-auth.html">Zaloguj się</a>
   </div>
 </div>
 
@@ -197,18 +197,18 @@
   <div class="write-card">
     <div class="write-header">
       <div class="write-date">Dziś, <span id="today-date"></span></div>
-      <div style="font-size:0.75rem;color:var(--text-light);font-weight:700;" id="day-num"></div>
+      <div class="write-day" id="day-num"></div>
     </div>
     <div class="mood-row">
-      <div class="mood-label">Nastrój:</div>
+      <span class="mood-label">Nastrój:</span>
       <div class="mood-options">
-        <button class="mood-btn" data-mood="1" onclick="selectMood(1)">😞</button>
-        <button class="mood-btn" data-mood="2" onclick="selectMood(2)">😟</button>
-        <button class="mood-btn" data-mood="3" onclick="selectMood(3)">😐</button>
-        <button class="mood-btn" data-mood="4" onclick="selectMood(4)">🙂</button>
-        <button class="mood-btn" data-mood="5" onclick="selectMood(5)">😄</button>
+        <button class="mood-btn" data-mood="1" onclick="selectMood(1)" title="Bardzo źle">😞</button>
+        <button class="mood-btn" data-mood="2" onclick="selectMood(2)" title="Źle">😟</button>
+        <button class="mood-btn" data-mood="3" onclick="selectMood(3)" title="Tak sobie">😐</button>
+        <button class="mood-btn" data-mood="4" onclick="selectMood(4)" title="Dobrze">🙂</button>
+        <button class="mood-btn" data-mood="5" onclick="selectMood(5)" title="Świetnie">😄</button>
       </div>
-      <div class="mood-name" id="mood-name">Wybierz nastrój...</div>
+      <span class="mood-name" id="mood-name">Wybierz nastrój...</span>
     </div>
     <div class="write-area">
       <textarea class="write-textarea" id="write-textarea"
@@ -221,9 +221,11 @@
     </div>
   </div>
 
-  <!-- Entries section -->
+  <!-- Entries -->
   <div class="section-title">Poprzednie wpisy</div>
-  <div id="entries-container"></div>
+  <div id="entries-container">
+    <div style="text-align:center;padding:20px;color:var(--text-light);">Ładowanie...</div>
+  </div>
 
 </div>
 
@@ -240,47 +242,58 @@
   let selectedMood = null;
   let currentUser = null;
 
+  // Oblicza liczbę dni między datą a dzisiaj (bez godzin/minut)
+  function calcDays(dateStr) {
+    const start = new Date(dateStr);
+    start.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Math.max(0, Math.floor((today - start) / 86400000));
+  }
+
   async function init() {
-    // Set date
+    // Data zawsze
     const now = new Date();
-    document.getElementById('today-date').textContent = now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+    document.getElementById('today-date').textContent =
+      now.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
 
     const { data: { session } } = await sb.auth.getSession();
 
     if (!session) {
-      // Not logged in - show demo
-      document.getElementById('streak-num').textContent = '0';
-      document.getElementById('nav-days').textContent = '0';
+      // Niezalogowany
+      document.getElementById('streak-num').textContent = '—';
+      document.getElementById('nav-days').textContent = '—';
       document.getElementById('day-num').textContent = 'Zaloguj się aby korzystać';
+      document.getElementById('login-btn').style.display = 'block';  // pokaż "Zaloguj się"
+      document.getElementById('logout-btn').style.display = 'none';  // ukryj "Wyloguj"
       showDemoEntries();
       return;
     }
 
-    // Logged in
+    // Zalogowany
     currentUser = session.user;
     document.getElementById('logout-btn').style.display = 'block';
+    document.getElementById('login-btn').style.display = 'none';
 
-    // Load profile and update streak
     const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
 
     if (profile) {
-      // Calculate streak based on streak_start_date
+      // Licznik trzeźwości — obliczamy na podstawie streak_start_date
       let streak = 0;
       if (profile.streak_start_date) {
-        const startDate = new Date(profile.streak_start_date);
-        const today = new Date();
-        const diffTime = today - startDate;
-        streak = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+        streak = calcDays(profile.streak_start_date);
       } else {
-        streak = profile.streak || 0;
+        // Brak daty startu — ustaw dziś
+        const today = new Date().toISOString().split('T')[0];
+        await sb.from('profiles').update({ streak_start_date: today, streak: 0 }).eq('id', currentUser.id);
       }
 
       document.getElementById('streak-num').textContent = streak;
       document.getElementById('nav-days').textContent = streak;
-      document.getElementById('day-num').textContent = `Dzień ${streak} 🔥`;
+      document.getElementById('day-num').textContent = streak > 0 ? `Dzień ${streak} 🔥` : 'Dzień 1 — zaczynasz! 🌿';
       document.getElementById('user-badge').textContent = profile.username || '';
 
-      // Update streak in DB
+      // Aktualizuj streak w bazie
       await sb.from('profiles').update({ streak }).eq('id', currentUser.id);
     }
 
@@ -288,34 +301,31 @@
   }
 
   function showDemoEntries() {
-    const container = document.getElementById('entries-container');
-    container.innerHTML = `
+    document.getElementById('entries-container').innerHTML = `
       <div class="login-banner">
-        <div style="font-size:1.5rem;margin-bottom:8px;">📓</div>
-        <div class="login-banner-title">Zaloguj się aby pisać i czytać wpisy</div>
-        <div class="login-banner-desc">Rejestracja jest bezpłatna i anonimowa — nie musisz podawać prawdziwego imienia.</div>
+        <div class="login-banner-icon">📓</div>
+        <div class="login-banner-title">Twoje wpisy czekają na Ciebie</div>
+        <div class="login-banner-desc">Zaloguj się lub zarejestruj bezpłatnie i anonimowo — zacznij pisać swój dziennik zdrowienia już dziś.</div>
         <a href="/wolnagra-auth.html" class="login-banner-btn">🌿 Zaloguj się lub zarejestruj</a>
       </div>
       <div class="entry-card demo-entry">
         <div class="ec-header">
-          <div><div class="ec-date">Przykładowy wpis</div><div class="ec-meta">Dzień 7</div></div>
+          <div><div class="ec-date">Poniedziałek, 14 kwietnia</div><div class="ec-time">08:32</div></div>
           <div class="ec-mood">🙂</div>
         </div>
-        <div class="ec-body">Dziś miałem trudny moment ale sobie poradziłem. Zadzwoniłem do brata i poczułem się lepiej...</div>
+        <div class="ec-body">Dziś miałem trudny moment po pracy, ale zamiast grać zadzwoniłem do brata. Poczułem się dużo lepiej...</div>
       </div>
       <div class="entry-card demo-entry">
         <div class="ec-header">
-          <div><div class="ec-date">Wczoraj</div><div class="ec-meta">Dzień 6</div></div>
+          <div><div class="ec-date">Niedziela, 13 kwietnia</div><div class="ec-time">21:15</div></div>
           <div class="ec-mood">😐</div>
         </div>
-        <div class="ec-body">Pokusa była spora, ale skorzystałem z planu kryzysowego. Pomogło...</div>
+        <div class="ec-body">Pokusa była dziś spora. Skorzystałem z planu kryzysowego i pomogło. Idę spać z czystym sumieniem...</div>
       </div>`;
   }
 
   async function loadEntries() {
     const container = document.getElementById('entries-container');
-    container.innerHTML = '<div style="text-align:center;padding:20px;color:var(--text-light);">Ładowanie...</div>';
-
     const { data: entries, error } = await sb
       .from('diary_entries')
       .select('*')
@@ -342,7 +352,7 @@
           <div class="ec-header">
             <div>
               <div class="ec-date">${dateStr}</div>
-              <div class="ec-meta">${timeStr}</div>
+              <div class="ec-time">${timeStr}</div>
             </div>
             <div class="ec-mood">${entry.mood ? moodEmojis[entry.mood] : ''}</div>
           </div>
@@ -359,19 +369,21 @@
   }
 
   function updateCount() {
-    document.getElementById('char-count').textContent = document.getElementById('write-textarea').value.length + ' znaków';
+    const len = document.getElementById('write-textarea').value.length;
+    document.getElementById('char-count').textContent = len + ' znaków';
   }
 
   async function saveEntry() {
     if (!currentUser) {
-      window.location.href = '/wolnagra-auth.html';
+      location.href = '/wolnagra-auth.html';
       return;
     }
     const text = document.getElementById('write-textarea').value.trim();
     if (!text) { showToast('✏️ Napisz coś przed zapisaniem!'); return; }
 
     const btn = document.getElementById('save-btn');
-    btn.disabled = true; btn.textContent = 'Zapisuję...';
+    btn.disabled = true;
+    btn.textContent = 'Zapisuję...';
 
     const { error } = await sb.from('diary_entries').insert({
       user_id: currentUser.id,
@@ -379,12 +391,12 @@
       mood: selectedMood
     });
 
-    btn.disabled = false; btn.textContent = '💾 Zapisz wpis';
+    btn.disabled = false;
+    btn.textContent = '💾 Zapisz wpis';
 
     if (error) {
       showToast('❌ Błąd zapisu. Spróbuj ponownie.');
     } else {
-      // Award points
       await sb.from('points').insert({ user_id: currentUser.id, amount: 5, reason: '📓 Wpis w dzienniku' });
       showToast('✅ Wpis zapisany! +5 Punktów Zdrowienia 💪');
       document.getElementById('write-textarea').value = '';
@@ -408,8 +420,14 @@
     setTimeout(() => t.classList.remove('show'), 3000);
   }
 
-  function openNav() { document.getElementById('sidenav').classList.add('open'); document.getElementById('nav-overlay').classList.add('open'); }
-  function closeNav() { document.getElementById('sidenav').classList.remove('open'); document.getElementById('nav-overlay').classList.remove('open'); }
+  function openNav() {
+    document.getElementById('sidenav').classList.add('open');
+    document.getElementById('nav-overlay').classList.add('open');
+  }
+  function closeNav() {
+    document.getElementById('sidenav').classList.remove('open');
+    document.getElementById('nav-overlay').classList.remove('open');
+  }
   document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 
   init();
@@ -417,9 +435,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('WolnaGra PWA ready'))
-        .catch(err => console.log('SW error:', err));
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
     });
   }
 </script>
