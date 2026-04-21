@@ -1,4 +1,4 @@
-const CACHE_NAME = 'wolnagra-v1';
+const CACHE_NAME = 'wolnagra-v3';
 const URLS_TO_CACHE = [
   '/wolnagra.html',
   '/wolnagra-auth.html',
