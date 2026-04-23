@@ -993,7 +993,13 @@
   const sb = createClient(SUPABASE_URL, SUPABASE_KEY);
 
   // Load user stories from Supabase and display them
+  let currentUserId = null;
+
   async function loadUserStories() {
+    // Check if user logged in
+    const { data: { session } } = await sb.auth.getSession();
+    currentUserId = session ? session.user.id : null;
+
     const { data: stories, error } = await sb
       .from('stories')
       .select('*')
@@ -1011,11 +1017,17 @@
 
     document.getElementById('stories-count').textContent = 3 + stories.length;
 
+    // Store stories globally for modal access
+    window.userStories = {};
+    stories.forEach(s => { window.userStories[s.id] = s; });
+
     const userStoriesHtml = `<div class="stories-grid">` + stories.map(story => {
       const date = new Date(story.created_at);
       const dateStr = date.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+      const isOwner = currentUserId && story.user_id === currentUserId;
+
       return `
-        <div class="story-card user-story-card">
+        <div class="story-card user-story-card" onclick="openUserStoryModal('${story.id}')">
           <div class="sc-top" style="background:linear-gradient(135deg,var(--accent) 0%,#A0612A 100%);">
             <div class="sc-avatar">✍️</div>
             <div class="sc-info">
@@ -1029,11 +1041,69 @@
           </div>
           <div class="sc-footer">
             <div class="sc-source">✍️ Historia użytkownika · ${dateStr}</div>
+            <div style="display:flex;gap:6px;">
+              ${isOwner ? `
+                <button onclick="event.stopPropagation(); editUserStory('${story.id}')" style="padding:4px 10px;background:var(--sage-light);color:var(--sage-dark);border:none;border-radius:8px;font-size:0.7rem;font-weight:700;cursor:pointer;">✏️ Edytuj</button>
+                <button onclick="event.stopPropagation(); deleteUserStory('${story.id}')" style="padding:4px 10px;background:#F5C6CB;color:#C0392B;border:none;border-radius:8px;font-size:0.7rem;font-weight:700;cursor:pointer;">🗑️ Usuń</button>
+              ` : ''}
+              <button onclick="event.stopPropagation(); openUserStoryModal('${story.id}')" class="sc-read">Czytaj →</button>
+            </div>
           </div>
         </div>`;
     }).join('');
 
     grid.innerHTML = userStoriesHtml + `</div>`;
+  }
+
+  function openUserStoryModal(storyId) {
+    const story = window.userStories[storyId];
+    if (!story) return;
+
+    const date = new Date(story.created_at);
+    const dateStr = date.toLocaleDateString('pl-PL', { day: 'numeric', month: 'long', year: 'numeric' });
+
+    document.getElementById('modal-avatar').textContent = '✍️';
+    document.getElementById('modal-name').textContent = story.title || 'Historia użytkownika';
+    document.getElementById('modal-meta').textContent = `${story.addiction_type || 'Hazard'} · Dodano: ${dateStr}`;
+    document.getElementById('modal-days').textContent = `🔥 ${story.days_free || 0} dni wolności`;
+    document.getElementById('modal-title').textContent = story.title || '';
+    document.getElementById('modal-text').textContent = story.content || '';
+    document.getElementById('modal-source').textContent = `✍️ Historia użytkownika WolnaGra · ${dateStr}`;
+
+    document.getElementById('modal').classList.add('show');
+    document.body.style.overflow = 'hidden';
+  }
+
+  async function editUserStory(storyId) {
+    const story = window.userStories[storyId];
+    if (!story) return;
+
+    // Scroll to write section and fill with existing data
+    document.getElementById('story-title').value = story.title || '';
+    document.getElementById('story-text').value = story.content || '';
+    document.getElementById('story-days').value = story.days_free || '';
+    updateStoryCount();
+
+    // Change button to update mode
+    const submitBtn = document.querySelector('.submit-btn');
+    submitBtn.textContent = '💾 Zaktualizuj historię';
+    submitBtn.dataset.editId = storyId;
+
+    document.getElementById('write-section').scrollIntoView({ behavior: 'smooth' });
+    showToast('✏️ Edytuj swoją historię i zapisz zmiany');
+  }
+
+  async function deleteUserStory(storyId) {
+    if (!confirm('Czy na pewno chcesz usunąć tę historię? Tego nie można cofnąć.')) return;
+
+    const { error } = await sb.from('stories').delete().eq('id', storyId);
+
+    if (error) {
+      showToast('❌ Błąd. Spróbuj ponownie.');
+    } else {
+      showToast('🗑️ Historia usunięta.');
+      loadUserStories();
+    }
   }
 
   loadUserStories();
@@ -1056,21 +1126,41 @@
     const { data: { session } } = await sb.auth.getSession();
 
     if (session) {
-      const { error } = await sb.from('stories').insert({
-        user_id: session.user.id,
-        title,
-        content: text,
-        is_public: true,
-        days_free: days,
-        addiction_type: tags.join(', ') || 'Hazard'
-      });
+      const editId = btn.dataset.editId;
+      let error;
+
+      if (editId) {
+        // Update existing story
+        const result = await sb.from('stories')
+          .update({
+            title,
+            content: text,
+            days_free: days,
+            addiction_type: tags.join(', ') || 'Hazard'
+          })
+          .eq('id', editId)
+          .eq('user_id', session.user.id);
+        error = result.error;
+      } else {
+        // Insert new story
+        const result = await sb.from('stories').insert({
+          user_id: session.user.id,
+          title,
+          content: text,
+          is_public: true,
+          days_free: days,
+          addiction_type: tags.join(', ') || 'Hazard'
+        });
+        error = result.error;
+      }
 
       btn.textContent = '🌿 Opublikuj historię'; btn.disabled = false;
+      delete btn.dataset.editId;
 
       if (error) {
         showToast('❌ Błąd zapisu. Spróbuj ponownie.');
       } else {
-        showToast('🌿 Historia opublikowana! Dziękujemy za odwagę.');
+        showToast(editId ? '✅ Historia zaktualizowana!' : '🌿 Historia opublikowana! Dziękujemy za odwagę.');
         document.getElementById('story-author').value = '';
         document.getElementById('story-title').value = '';
         document.getElementById('story-text').value = '';
