@@ -600,7 +600,7 @@
       <button class="sidenav-close" onclick="closeNav()">✕</button>
     </div>
     <div class="sidenav-streak">
-      <span class="sidenav-streak-num">47</span>
+      <span class="sidenav-streak-num" id="nav-days">—</span>
       <div>
         <div style="color:white;font-size:0.78rem;font-weight:700;">🔥 dni bez hazardu</div>
         <div class="sidenav-streak-label">Twoja passa</div>
@@ -615,7 +615,7 @@
     <a href="/wolnagra-historie.html" class="sidenav-link active"><span class="sidenav-link-icon">📚</span> Historie</a>
       <div class="sidenav-section">Wsparcie</div>
       <a href="/wolnagra-kryzys.html" class="sidenav-link "><span class="sidenav-link-icon">🛡️</span> Plan kryzysowy</a>
-      <a href="/wolnagra-auth.html" class="sidenav-link "><span class="sidenav-link-icon">👤</span> Mój profil</a>
+      <a href="/wolnagra-profil.html" class="sidenav-link"><span class="sidenav-link-icon">👤</span> Mój profil</a>
     </div>
     <div class="sidenav-bottom">
       <a href="tel:116123" class="sidenav-crisis">📞 Pomoc teraz — 116 123</a>
@@ -656,8 +656,8 @@
   <div class="topbar-sep">/</div>
   <div class="topbar-title">📚 Historie Zdrowienia</div>
   <div class="topbar-right">
-    <div class="streak-pill">🔥 47 dni</div>
-    <div class="avatar">👤</div>
+    <div class="streak-pill" id="dynamic-streak">Ładowanie...</div>
+    <div class="avatar" id="dynamic-avatar" onclick="location.href='/wolnagra-profil.html'" style="display:none;cursor:pointer;" onclick="location.href='/wolnagra-profil.html'" title="Mój profil">👤</div>
   </div>
 </div>
 
@@ -1215,5 +1215,91 @@
     });
   }
 </script>
+
+<script>
+  // Dynamic streak counter and profile avatar
+  (async function() {
+    const { createClient } = supabase;
+    const sb = createClient('https://mbmpvbiqcuwiqetoobel.supabase.co', 'sb_publishable_tGtede4fQckZ7WIbtQT_5Q_41KXqX4a');
+    const { data: { session } } = await sb.auth.getSession();
+
+    const streakEl = document.getElementById('dynamic-streak');
+    const avatarEl = document.getElementById('dynamic-avatar');
+
+    if (session) {
+      // Logged in - fetch streak
+      const { data: profile } = await sb.from('profiles').select('streak_start_date, streak').eq('id', session.user.id).single();
+      let streak = 0;
+      if (profile && profile.streak_start_date) {
+        const start = new Date(profile.streak_start_date);
+        start.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        streak = Math.max(0, Math.floor((today - start) / 86400000));
+      }
+      if (streakEl) streakEl.textContent = '🔥 ' + streak + ' dni';
+      if (avatarEl) {
+        avatarEl.style.display = 'flex';
+        avatarEl.onclick = () => location.href = '/wolnagra-profil.html';
+        avatarEl.title = 'Mój profil';
+      }
+    } else {
+      // Not logged in - show text
+      if (streakEl) streakEl.textContent = 'Dni trzeźwienia';
+      if (avatarEl) avatarEl.style.display = 'none';
+    }
+  })();
+</script>
+
+
+<script>
+  // Dynamic streak and profile avatar
+  (async function() {
+    const { createClient } = supabase;
+    const sb = createClient('https://mbmpvbiqcuwiqetoobel.supabase.co', 'sb_publishable_tGtede4fQckZ7WIbtQT_5Q_41KXqX4a');
+    const { data: { session } } = await sb.auth.getSession();
+
+    // Fix sidebar streak "47"
+    const sideStreak = document.querySelector('.sidenav-streak-num');
+    const navDays = document.getElementById('nav-days');
+
+    if (session) {
+      const { data: profile } = await sb.from('profiles').select('*').eq('id', session.user.id).single();
+      let streak = 0;
+      if (profile && profile.streak_start_date) {
+        const start = new Date(profile.streak_start_date);
+        start.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        streak = Math.max(0, Math.floor((today - start) / 86400000));
+      }
+      if (sideStreak) sideStreak.textContent = streak;
+      if (navDays) navDays.textContent = streak;
+
+      // Replace "Mój profil" auth link with profile link
+      document.querySelectorAll('a[href="/wolnagra-auth.html"]').forEach(a => {
+        if (a.textContent.includes('Mój profil') || a.querySelector('.sidenav-link-icon')?.textContent === '👤') {
+          a.href = '/wolnagra-profil.html';
+        }
+      });
+
+      // Topbar - streak and profile link
+      const dynStreak = document.getElementById('dynamic-streak');
+      const dynAvatar = document.getElementById('dynamic-avatar');
+      if (dynStreak) dynStreak.innerHTML = '🔥 ' + streak + ' dni';
+      if (dynAvatar) dynAvatar.style.display = 'flex';
+    } else {
+      // Not logged in
+      if (sideStreak) sideStreak.textContent = '—';
+      if (navDays) navDays.textContent = '—';
+
+      const dynStreak = document.getElementById('dynamic-streak');
+      const dynAvatar = document.getElementById('dynamic-avatar');
+      if (dynStreak) dynStreak.innerHTML = 'Dni trzeźwienia';
+      if (dynAvatar) dynAvatar.style.display = 'none';
+    }
+  })();
+</script>
+
 </body>
 </html>

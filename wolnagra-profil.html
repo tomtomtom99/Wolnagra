@@ -12,7 +12,6 @@
 <title>WolnaGra — Mój Profil</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=Lato:wght@300;400;700&display=swap" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-VM69YWV5TY"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -35,6 +34,7 @@
     --danger: #C0392B;
     --danger-light: #FDECEA;
   }
+
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body { font-family: 'Lato', sans-serif; background: var(--cream); color: var(--text-dark); min-height: 100vh; }
 
@@ -44,107 +44,61 @@
   .topbar-logo span { color: var(--accent); }
   .topbar-sep { color: var(--sand); }
   .topbar-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 700; color: var(--text-mid); }
-  .topbar-right { margin-left: auto; display: flex; align-items: center; gap: 10px; }
-  .logout-btn { padding: 6px 12px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; }
+  .topbar-right { margin-left: auto; }
+  .logout-btn { padding: 6px 14px; border: 1px solid var(--sand); border-radius: 10px; background: white; font-size: 0.75rem; font-weight: 700; cursor: pointer; color: var(--text-light); font-family: 'Lato', sans-serif; }
 
   /* LAYOUT */
-  .layout { max-width: 600px; margin: 0 auto; padding: 24px 16px 60px; }
+  .layout { max-width: 580px; margin: 0 auto; padding: 24px 16px 60px; }
 
-  /* PROFILE HERO */
-  .profile-hero {
-    background: linear-gradient(135deg, var(--sage-dark) 0%, #3D5E40 100%);
-    border-radius: 24px; padding: 28px;
-    text-align: center; margin-bottom: 24px;
-    position: relative; overflow: hidden;
-  }
-  .profile-hero::before { content: '👤'; position: absolute; right: 16px; top: 50%; transform: translateY(-50%); font-size: 7rem; opacity: 0.07; }
-  .profile-avatar { width: 72px; height: 72px; border-radius: 50%; background: var(--sage-light); display: flex; align-items: center; justify-content: center; font-size: 2rem; margin: 0 auto 12px; }
-  .profile-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: white; margin-bottom: 4px; }
-  .profile-email { font-size: 0.78rem; color: rgba(255,255,255,0.5); margin-bottom: 16px; }
-  .profile-streak { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.12); color: white; padding: 8px 18px; border-radius: 20px; font-size: 0.88rem; font-weight: 700; }
-  .profile-streak-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: #A8C5AC; }
+  /* HERO */
+  .hero { background: linear-gradient(135deg, var(--sage-dark) 0%, #3D5E40 100%); border-radius: 22px; padding: 28px 24px; text-align: center; margin-bottom: 24px; }
+  .hero-avatar { width: 68px; height: 68px; border-radius: 50%; background: var(--sage-light); display: flex; align-items: center; justify-content: center; font-size: 1.8rem; margin: 0 auto 12px; }
+  .hero-name { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: white; margin-bottom: 4px; }
+  .hero-email { font-size: 0.76rem; color: rgba(255,255,255,0.45); margin-bottom: 18px; }
+  .hero-streak { display: inline-flex; align-items: center; gap: 10px; background: rgba(255,255,255,0.1); padding: 10px 20px; border-radius: 20px; }
+  .hero-streak-num { font-family: 'Playfair Display', serif; font-size: 2rem; font-weight: 900; color: #A8C5AC; line-height: 1; }
+  .hero-streak-label { text-align: left; }
+  .hero-streak-label div:first-child { font-size: 0.82rem; font-weight: 700; color: white; }
+  .hero-streak-label div:last-child { font-size: 0.68rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
 
-  /* SECTION */
+  /* STATS */
+  .stats-row { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 24px; }
+  .stat-box { background: white; border-radius: 14px; border: 1px solid var(--sand); padding: 14px; text-align: center; }
+  .stat-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--sage-dark); display: block; }
+  .stat-label { font-size: 0.63rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
+
   .section-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 14px; display: flex; align-items: center; gap: 10px; }
   .section-title::after { content: ''; flex: 1; height: 1px; background: var(--sand); }
 
-  /* CARD */
   .card { background: white; border-radius: 18px; border: 1px solid var(--sand); padding: 20px 22px; margin-bottom: 16px; }
 
-  /* FORM */
-  .field { margin-bottom: 16px; }
+  .field { margin-bottom: 14px; }
   .field label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
-  .field input { width: 100%; padding: 12px 14px; border: 2px solid var(--sand); border-radius: 12px; background: var(--warm-white); font-family: 'Lato', sans-serif; font-size: 0.92rem; color: var(--text-dark); outline: none; transition: all 0.2s; }
-  .field input:focus { border-color: var(--sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
+  .field input { width: 100%; padding: 12px 14px; border: 2px solid var(--sand); border-radius: 12px; background: var(--warm-white); font-family: 'Lato', sans-serif; font-size: 0.92rem; color: var(--text-dark); outline: none; transition: border-color 0.2s; }
+  .field input:focus { border-color: var(--sage); }
 
-  .save-btn { width: 100%; padding: 13px; background: var(--sage); color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.95rem; font-weight: 700; cursor: pointer; transition: all 0.25s; }
-  .save-btn:hover { background: var(--sage-dark); transform: translateY(-1px); }
+  .btn { width: 100%; padding: 12px; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.92rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
+  .btn-sage { background: var(--sage); color: white; }
+  .btn-sage:hover { background: var(--sage-dark); }
+  .btn-danger { background: var(--danger); color: white; }
+  .btn-danger:hover { background: #A93226; }
 
-  /* STREAK RESET */
-  .streak-card {
-    background: white; border-radius: 18px;
-    border: 2px solid var(--sand); padding: 22px;
-    margin-bottom: 16px;
-  }
+  .danger-card { background: var(--danger-light); border: 2px solid rgba(192,57,43,0.15); border-radius: 18px; padding: 20px 22px; margin-bottom: 16px; }
+  .danger-card h3 { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 900; color: var(--danger); margin-bottom: 6px; }
+  .danger-card p { font-size: 0.82rem; color: var(--text-mid); line-height: 1.6; margin-bottom: 14px; }
 
-  .streak-display {
-    display: flex; align-items: center; gap: 16px;
-    margin-bottom: 20px;
-  }
+  .modal-overlay { position: fixed; inset: 0; background: rgba(44,36,22,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+  .modal-overlay.show { display: flex; }
+  .modal-box { background: white; border-radius: 20px; padding: 28px 24px; max-width: 340px; width: 100%; text-align: center; }
+  .modal-icon { font-size: 2.5rem; margin-bottom: 10px; }
+  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; }
+  .modal-desc { font-size: 0.83rem; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
+  .modal-btns { display: flex; gap: 10px; }
+  .modal-btn-cancel { flex: 1; padding: 11px; border: 2px solid var(--sand); border-radius: 12px; background: white; font-size: 0.88rem; font-weight: 700; cursor: pointer; color: var(--text-mid); font-family: 'Lato', sans-serif; }
+  .modal-btn-confirm { flex: 1; padding: 11px; background: var(--danger); color: white; border: none; border-radius: 12px; font-size: 0.88rem; font-weight: 700; cursor: pointer; font-family: 'Lato', sans-serif; }
 
-  .streak-big {
-    width: 72px; height: 72px; border-radius: 50%;
-    background: linear-gradient(135deg, var(--sage), var(--sage-dark));
-    display: flex; flex-direction: column; align-items: center; justify-content: center;
-    flex-shrink: 0;
-  }
-  .streak-big-num { font-family: 'Playfair Display', serif; font-size: 1.5rem; font-weight: 900; color: white; line-height: 1; }
-  .streak-big-label { font-size: 0.5rem; color: rgba(255,255,255,0.7); font-weight: 700; text-transform: uppercase; }
-
-  .streak-info { flex: 1; }
-  .streak-info-title { font-family: 'Playfair Display', serif; font-size: 1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 4px; }
-  .streak-info-desc { font-size: 0.82rem; color: var(--text-light); line-height: 1.5; }
-
-  .streak-date-field { margin-bottom: 16px; }
-  .streak-date-field label { display: block; font-size: 0.75rem; font-weight: 700; color: var(--text-mid); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 7px; }
-  .streak-date-field input { width: 100%; padding: 12px 14px; border: 2px solid var(--sand); border-radius: 12px; background: var(--warm-white); font-family: 'Lato', sans-serif; font-size: 0.92rem; color: var(--text-dark); outline: none; transition: all 0.2s; }
-  .streak-date-field input:focus { border-color: var(--sage); box-shadow: 0 0 0 4px rgba(122,158,126,0.1); }
-
-  .streak-update-btn { width: 100%; padding: 12px; background: var(--sage); color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.9rem; font-weight: 700; cursor: pointer; transition: all 0.25s; margin-bottom: 10px; }
-  .streak-update-btn:hover { background: var(--sage-dark); }
-
-  /* DANGER ZONE */
-  .danger-card {
-    background: var(--danger-light);
-    border: 2px solid rgba(192,57,43,0.2);
-    border-radius: 18px; padding: 20px 22px;
-    margin-bottom: 16px;
-  }
-  .danger-title { font-family: 'Playfair Display', serif; font-size: 0.95rem; font-weight: 900; color: var(--danger); margin-bottom: 6px; }
-  .danger-desc { font-size: 0.82rem; color: var(--text-mid); line-height: 1.5; margin-bottom: 14px; }
-  .danger-btn { width: 100%; padding: 11px; background: var(--danger); color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; transition: all 0.2s; }
-  .danger-btn:hover { background: #A93226; }
-
-  /* STATS */
-  .stats-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 10px; margin-bottom: 16px; }
-  .stat-box { background: white; border-radius: 14px; border: 1px solid var(--sand); padding: 14px; text-align: center; }
-  .stat-box-num { font-family: 'Playfair Display', serif; font-size: 1.4rem; font-weight: 900; color: var(--sage-dark); display: block; }
-  .stat-box-label { font-size: 0.65rem; color: var(--text-light); font-weight: 700; text-transform: uppercase; letter-spacing: 0.04em; }
-
-  /* TOAST */
   .toast { position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%) translateY(80px); background: var(--sage-dark); color: white; padding: 12px 24px; border-radius: 40px; font-size: 0.88rem; font-weight: 700; box-shadow: 0 8px 24px rgba(0,0,0,0.2); z-index: 998; transition: transform 0.4s cubic-bezier(0.34,1.56,0.64,1); white-space: nowrap; }
   .toast.show { transform: translateX(-50%) translateY(0); }
-
-  /* CONFIRM MODAL */
-  .modal-overlay { position: fixed; inset: 0; background: rgba(44,36,22,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 24px; }
-  .modal-overlay.show { display: flex; }
-  .modal-box { background: white; border-radius: 20px; padding: 28px; max-width: 340px; width: 100%; text-align: center; }
-  .modal-icon { font-size: 2.5rem; margin-bottom: 12px; }
-  .modal-title { font-family: 'Playfair Display', serif; font-size: 1.1rem; font-weight: 900; color: var(--text-dark); margin-bottom: 8px; }
-  .modal-desc { font-size: 0.85rem; color: var(--text-light); line-height: 1.6; margin-bottom: 20px; }
-  .modal-btns { display: flex; gap: 10px; }
-  .modal-btn-cancel { flex: 1; padding: 11px; border: 2px solid var(--sand); border-radius: 12px; background: white; font-family: 'Lato', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; color: var(--text-mid); }
-  .modal-btn-confirm { flex: 1; padding: 11px; background: var(--danger); color: white; border: none; border-radius: 12px; font-family: 'Lato', sans-serif; font-size: 0.88rem; font-weight: 700; cursor: pointer; }
 
   /* SIDEBAR */
   .sidenav { position: fixed; left: 0; top: 0; bottom: 0; width: 220px; background: #2C4430; z-index: 200; display: flex; flex-direction: column; transform: translateX(-100%); transition: transform 0.3s cubic-bezier(0.4,0,0.2,1); box-shadow: 4px 0 24px rgba(0,0,0,0.2); }
@@ -153,9 +107,12 @@
   .sidenav-logo-text { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: white; text-decoration: none; }
   .sidenav-logo-text span { color: #A8C5AC; }
   .sidenav-close { width: 28px; height: 28px; border-radius: 8px; background: rgba(255,255,255,0.08); border: none; color: rgba(255,255,255,0.6); font-size: 0.9rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+  .sidenav-streak { margin: 12px 14px; background: rgba(255,255,255,0.06); border-radius: 12px; padding: 10px 14px; display: flex; align-items: center; gap: 8px; }
+  .sidenav-streak-num { font-family: 'Playfair Display', serif; font-size: 1.3rem; font-weight: 900; color: #A8C5AC; }
+  .sidenav-streak-label { font-size: 0.72rem; color: rgba(255,255,255,0.5); font-weight: 700; text-transform: uppercase; letter-spacing: 0.05em; }
   .sidenav-links { flex: 1; padding: 8px 10px; overflow-y: auto; }
   .sidenav-section { font-size: 0.62rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.1em; color: rgba(255,255,255,0.3); padding: 12px 8px 6px; }
-  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; border: none; background: none; font-family: 'Lato', sans-serif; width: 100%; text-align: left; }
+  .sidenav-link { display: flex; align-items: center; gap: 10px; padding: 10px; border-radius: 10px; text-decoration: none; color: rgba(255,255,255,0.65); font-size: 0.88rem; font-weight: 700; transition: all 0.2s; margin-bottom: 2px; }
   .sidenav-link:hover { background: rgba(255,255,255,0.08); color: white; }
   .sidenav-link.active { background: rgba(168,197,172,0.18); color: #A8C5AC; }
   .sidenav-link-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
@@ -165,12 +122,12 @@
   .hamburger span { display: block; width: 16px; height: 2px; background: white; border-radius: 2px; }
   .nav-overlay { position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 199; display: none; backdrop-filter: blur(2px); }
   .nav-overlay.open { display: block; }
-  @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(600px + 220px); padding-left: 236px; } }
+  @media (min-width: 900px) { .sidenav { transform: translateX(0); } .hamburger { display: none; } .nav-overlay { display: none !important; } .topbar { padding-left: 236px !important; } .layout { margin-left: 220px; max-width: calc(580px + 220px); padding-left: 236px; } }
 </style>
 </head>
 <body>
 
-<!-- Confirm modal -->
+<!-- Reset modal -->
 <div class="modal-overlay" id="reset-modal">
   <div class="modal-box">
     <div class="modal-icon">🔄</div>
@@ -188,6 +145,13 @@
   <div class="sidenav-logo">
     <a href="/wolnagra.html" class="sidenav-logo-text">Wolna<span>Gra</span></a>
     <button class="sidenav-close" onclick="closeNav()">✕</button>
+  </div>
+  <div class="sidenav-streak">
+    <span class="sidenav-streak-num" id="nav-days">—</span>
+    <div>
+      <div style="color:white;font-size:0.78rem;font-weight:700;">🔥 dni bez hazardu</div>
+      <div class="sidenav-streak-label">Twoja passa</div>
+    </div>
   </div>
   <div class="sidenav-links">
     <div class="sidenav-section">Główne</div>
@@ -219,67 +183,62 @@
 
 <div class="layout">
 
-  <!-- Profile hero -->
-  <div class="profile-hero">
-    <div class="profile-avatar">👤</div>
-    <div class="profile-name" id="profile-name">Ładowanie...</div>
-    <div class="profile-email" id="profile-email"></div>
-    <div class="profile-streak">
-      🔥 <span class="profile-streak-num" id="profile-streak-num">0</span>&nbsp;dni bez hazardu
+  <!-- Hero -->
+  <div class="hero">
+    <div class="hero-avatar">👤</div>
+    <div class="hero-name" id="hero-name">Ładowanie...</div>
+    <div class="hero-email" id="hero-email"></div>
+    <div class="hero-streak">
+      🔥
+      <span class="hero-streak-num" id="hero-streak-num">0</span>
+      <div class="hero-streak-label">
+        <div>dni bez hazardu</div>
+        <div>Twoja passa</div>
+      </div>
     </div>
   </div>
 
   <!-- Stats -->
-  <div class="stats-grid">
+  <div class="stats-row">
     <div class="stat-box">
-      <span class="stat-box-num" id="stat-entries">—</span>
-      <span class="stat-box-label">Wpisów</span>
+      <span class="stat-num" id="stat-entries">—</span>
+      <span class="stat-label">Wpisów</span>
     </div>
     <div class="stat-box">
-      <span class="stat-box-num" id="stat-tasks">—</span>
-      <span class="stat-box-label">Zadań</span>
+      <span class="stat-num" id="stat-tasks">—</span>
+      <span class="stat-label">Zadań</span>
     </div>
     <div class="stat-box">
-      <span class="stat-box-num" id="stat-points">—</span>
-      <span class="stat-box-label">Punktów</span>
+      <span class="stat-num" id="stat-points">—</span>
+      <span class="stat-label">Punktów</span>
     </div>
   </div>
 
-  <!-- Edit profile -->
+  <!-- Profile edit -->
   <div class="section-title">✏️ Dane profilu</div>
   <div class="card">
     <div class="field">
       <label>Pseudonim</label>
       <input type="text" id="edit-username" placeholder="Twój pseudonim">
     </div>
-    <button class="save-btn" onclick="saveProfile()">💾 Zapisz zmiany</button>
+    <button class="btn btn-sage" onclick="saveProfile()">💾 Zapisz zmiany</button>
   </div>
 
   <!-- Streak management -->
   <div class="section-title">🔥 Licznik trzeźwości</div>
-  <div class="streak-card">
-    <div class="streak-display">
-      <div class="streak-big">
-        <div class="streak-big-num" id="streak-display-num">0</div>
-        <div class="streak-big-label">dni</div>
-      </div>
-      <div class="streak-info">
-        <div class="streak-info-title">Twoja passa bez hazardu</div>
-        <div class="streak-info-desc">Licznik automatycznie liczy dni od daty którą ustawisz. Możesz zmienić datę startu jeśli popełniłeś/aś błąd przy rejestracji lub chcesz zaktualizować datę po nawrocie.</div>
-      </div>
-    </div>
-    <div class="streak-date-field">
+  <div class="card">
+    <div class="field">
       <label>Data ostatniego dnia bez hazardu (kiedy zacząłeś/aś)</label>
       <input type="date" id="streak-start-date">
     </div>
-    <button class="streak-update-btn" onclick="updateStreakDate()">✅ Zaktualizuj datę startu</button>
+    <button class="btn btn-sage" onclick="updateStreakDate()">✅ Zaktualizuj datę startu</button>
   </div>
 
-  <!-- Reset streak -->
+  <!-- Danger zone -->
   <div class="danger-card">
-    <div class="danger-title">🔄 Zresetuj licznik</div>
-    <div class="danger-desc">Jeśli doszło do nawrotu — naciśnij ten przycisk. Licznik wróci do 0 i zaczynasz od nowa od dziś. To wymaga odwagi — ale powrót to też zwycięstwo.</div>
-    <button class="danger-btn" onclick="openResetModal()">🔄 Zresetuj licznik do dziś</button>
+    <h3>🔄 Zresetuj licznik</h3>
+    <p>Jeśli doszło do nawrotu — naciśnij ten przycisk. Licznik wróci do 0 i zaczynasz od nowa od dziś. To wymaga odwagi — ale powrót to też zwycięstwo.</p>
+    <button class="btn btn-danger" onclick="openResetModal()">🔄 Zresetuj licznik do dziś</button>
   </div>
 
 </div>
@@ -294,41 +253,47 @@
 
   let currentUser = null;
 
+  function calcDays(dateStr) {
+    const start = new Date(dateStr);
+    start.setHours(0, 0, 0, 0);
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return Math.max(0, Math.floor((today - start) / 86400000));
+  }
+
   async function init() {
     const { data: { session } } = await sb.auth.getSession();
     if (!session) { location.href = '/wolnagra-auth.html'; return; }
     currentUser = session.user;
 
-    document.getElementById('profile-email').textContent = currentUser.email || '';
+    document.getElementById('hero-email').textContent = currentUser.email || '';
 
-    // Load profile
     const { data: profile } = await sb.from('profiles').select('*').eq('id', currentUser.id).single();
 
     if (profile) {
-      // Calculate streak
       let streak = 0;
-      let startDate = profile.streak_start_date || new Date().toISOString().split('T')[0];
+      let startDate = profile.streak_start_date;
 
-      if (profile.streak_start_date) {
-        const start = new Date(profile.streak_start_date);
-        const today = new Date();
-        streak = Math.floor((today - start) / (1000 * 60 * 60 * 24));
+      if (!startDate) {
+        startDate = new Date().toISOString().split('T')[0];
+        await sb.from('profiles').update({ streak_start_date: startDate, streak: 0 }).eq('id', currentUser.id);
+      } else {
+        streak = calcDays(startDate);
       }
 
-      document.getElementById('profile-name').textContent = profile.username || 'Użytkownik';
+      document.getElementById('hero-name').textContent = profile.username || 'Użytkownik';
       document.getElementById('edit-username').value = profile.username || '';
-      document.getElementById('profile-streak-num').textContent = streak;
-      document.getElementById('streak-display-num').textContent = streak;
+      document.getElementById('hero-streak-num').textContent = streak;
+      document.getElementById('nav-days').textContent = streak;
       document.getElementById('streak-start-date').value = startDate;
 
-      // Update streak in DB
       await sb.from('profiles').update({ streak }).eq('id', currentUser.id);
     }
 
     // Load stats
     const [entriesRes, tasksRes, pointsRes] = await Promise.all([
-      sb.from('diary_entries').select('id', { count: 'exact' }).eq('user_id', currentUser.id),
-      sb.from('daily_tasks').select('id', { count: 'exact' }).eq('user_id', currentUser.id),
+      sb.from('diary_entries').select('id', { count: 'exact', head: true }).eq('user_id', currentUser.id),
+      sb.from('daily_tasks').select('id', { count: 'exact', head: true }).eq('user_id', currentUser.id),
       sb.from('points').select('amount').eq('user_id', currentUser.id)
     ]);
 
@@ -345,7 +310,7 @@
     const { error } = await sb.from('profiles').update({ username }).eq('id', currentUser.id);
 
     if (error) { showToast('❌ Błąd zapisu'); return; }
-    document.getElementById('profile-name').textContent = username;
+    document.getElementById('hero-name').textContent = username;
     showToast('✅ Profil zaktualizowany!');
   }
 
@@ -353,10 +318,7 @@
     const dateVal = document.getElementById('streak-start-date').value;
     if (!dateVal) { showToast('⚠️ Wybierz datę'); return; }
 
-    const startDate = new Date(dateVal);
-    const today = new Date();
-    const streak = Math.floor((today - startDate) / (1000 * 60 * 60 * 24));
-
+    const streak = calcDays(dateVal);
     if (streak < 0) { showToast('⚠️ Data nie może być w przyszłości'); return; }
 
     const { error } = await sb.from('profiles')
@@ -365,32 +327,24 @@
 
     if (error) { showToast('❌ Błąd zapisu'); return; }
 
-    document.getElementById('profile-streak-num').textContent = streak;
-    document.getElementById('streak-display-num').textContent = streak;
+    document.getElementById('hero-streak-num').textContent = streak;
+    document.getElementById('nav-days').textContent = streak;
     showToast(`✅ Licznik zaktualizowany — ${streak} dni! 🔥`);
   }
 
-  function openResetModal() {
-    document.getElementById('reset-modal').classList.add('show');
-  }
-
-  function closeResetModal() {
-    document.getElementById('reset-modal').classList.remove('show');
-  }
+  function openResetModal() { document.getElementById('reset-modal').classList.add('show'); }
+  function closeResetModal() { document.getElementById('reset-modal').classList.remove('show'); }
 
   async function confirmReset() {
     const today = new Date().toISOString().split('T')[0];
-
     const { error } = await sb.from('profiles')
       .update({ streak_start_date: today, streak: 0 })
       .eq('id', currentUser.id);
-
     closeResetModal();
-
     if (error) { showToast('❌ Błąd zapisu'); return; }
 
-    document.getElementById('profile-streak-num').textContent = 0;
-    document.getElementById('streak-display-num').textContent = 0;
+    document.getElementById('hero-streak-num').textContent = 0;
+    document.getElementById('nav-days').textContent = 0;
     document.getElementById('streak-start-date').value = today;
     showToast('🌿 Licznik zresetowany. Zaczynasz od nowa — to też odwaga.');
   }
@@ -416,9 +370,7 @@
 <script>
   if ('serviceWorker' in navigator) {
     window.addEventListener('load', () => {
-      navigator.serviceWorker.register('/sw.js')
-        .then(() => console.log('WolnaGra PWA ready'))
-        .catch(err => console.log('SW error:', err));
+      navigator.serviceWorker.register('/sw.js').catch(() => {});
     });
   }
 </script>

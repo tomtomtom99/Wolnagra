@@ -480,5 +480,55 @@
     });
   }
 </script>
+
+<script>
+  // Dynamic streak and profile avatar
+  (async function() {
+    const { createClient } = supabase;
+    const sb = createClient('https://mbmpvbiqcuwiqetoobel.supabase.co', 'sb_publishable_tGtede4fQckZ7WIbtQT_5Q_41KXqX4a');
+    const { data: { session } } = await sb.auth.getSession();
+
+    // Fix sidebar streak "47"
+    const sideStreak = document.querySelector('.sidenav-streak-num');
+    const navDays = document.getElementById('nav-days');
+
+    if (session) {
+      const { data: profile } = await sb.from('profiles').select('*').eq('id', session.user.id).single();
+      let streak = 0;
+      if (profile && profile.streak_start_date) {
+        const start = new Date(profile.streak_start_date);
+        start.setHours(0,0,0,0);
+        const today = new Date();
+        today.setHours(0,0,0,0);
+        streak = Math.max(0, Math.floor((today - start) / 86400000));
+      }
+      if (sideStreak) sideStreak.textContent = streak;
+      if (navDays) navDays.textContent = streak;
+
+      // Replace "Mój profil" auth link with profile link
+      document.querySelectorAll('a[href="/wolnagra-auth.html"]').forEach(a => {
+        if (a.textContent.includes('Mój profil') || a.querySelector('.sidenav-link-icon')?.textContent === '👤') {
+          a.href = '/wolnagra-profil.html';
+        }
+      });
+
+      // Topbar - streak and profile link
+      const dynStreak = document.getElementById('dynamic-streak');
+      const dynAvatar = document.getElementById('dynamic-avatar');
+      if (dynStreak) dynStreak.innerHTML = '🔥 ' + streak + ' dni';
+      if (dynAvatar) dynAvatar.style.display = 'flex';
+    } else {
+      // Not logged in
+      if (sideStreak) sideStreak.textContent = '—';
+      if (navDays) navDays.textContent = '—';
+
+      const dynStreak = document.getElementById('dynamic-streak');
+      const dynAvatar = document.getElementById('dynamic-avatar');
+      if (dynStreak) dynStreak.innerHTML = 'Dni trzeźwienia';
+      if (dynAvatar) dynAvatar.style.display = 'none';
+    }
+  })();
+</script>
+
 </body>
 </html>
